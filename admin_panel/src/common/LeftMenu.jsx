@@ -2,6 +2,9 @@ import React from 'react';
 import {left_menu_list} from '../../util';
 
 export const LeftMenu = () => {
+
+  console.log("left menu");
+  
   return (
     <nav className='h-full text-black w-64'>
       <ol className=' flex flex-col gap-y-5'>
