@@ -1,43 +1,77 @@
-{
-  "name": "admin_panel",
-  "version": "1.0.0",
-  "scripts": {
-    "build": "webpack --mode production",
-    "build:dev": "webpack --mode development",
-    "build:start": "cd dist && PORT=8080 npx serve",
-    "start": "webpack serve --open --mode development",
-    "start:live": "webpack serve --open --mode development --live-reload --hot"
+const HtmlWebPackPlugin = require("html-webpack-plugin");
+const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+const Dotenv = require('dotenv-webpack');
+const deps = require("./package.json").dependencies;
+module.exports = (_, argv) => ({
+  output: {
+    publicPath: "http://localhost:8080/",
   },
-  "license": "MIT",
-  "author": {
-    "name": "Jack Herrington",
-    "email": "jherr@pobox.com"
+
+  resolve: {
+    extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
   },
-  "devDependencies": {
-    "@babel/core": "^7.15.8",
-    "@babel/plugin-transform-runtime": "^7.15.8",
-    "@babel/preset-env": "^7.15.8",
-    "@babel/preset-react": "^7.14.5",
-    "autoprefixer": "^10.1.0",
-    "babel-loader": "^8.2.2",
-    "css-loader": "^6.3.0",
-    "dotenv-webpack": "^8.0.1",
-    "file-loader": "^6.2.0",
-    "html-webpack-plugin": "^5.3.2",
-    "postcss": "^8.2.1",
-    "postcss-loader": "^4.1.0",
-    "style-loader": "^3.3.0",
-    "tailwindcss": "^3.4.1",
-    "webpack": "^5.57.1",
-    "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^4.3.1"
+
+  devServer: {
+    port: 8080,
+    historyApiFallback: true,
   },
-  "dependencies": {
-    "@babel/runtime": "^7.13.10",
-    "chart.js": "^4.4.2",
-    "react": "^18.2.0",
-    "react-chartjs-2": "^5.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.23.0"
-  }
-}
+
+  module: {
+    rules: [
+      {
+        test: /\.m?js/,
+        type: "javascript/auto",
+        resolve: {
+          fullySpecified: false,
+        },
+      },
+      {
+        test: /\.(css|s[ac]ss)$/i,
+        use: ["style-loader", "css-loader", "postcss-loader"],
+      },
+      {
+        test: /\.(ts|tsx|js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+        },
+      },
+      {
+        test: /\.(png|jpg|jpeg|gif|svg)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'images/', // This is where your images will go in the output folder
+            },
+          },
+        ]
+      },
+    ],
+  },
+
+  plugins: [
+    new ModuleFederationPlugin({
+      name: "admin_panel",
+      filename: "remoteEntry.js",
+      remotes: {},
+      exposes: {},
+      shared: {
+        ...deps,
+        react: {
+          singleton: true,
+          requiredVersion: deps.react,
+        },
+        "react-dom": {
+          singleton: true,
+          requiredVersion: deps["react-dom"],
+        },
+      },
+    }),
+    new HtmlWebPackPlugin({
+      template: "./src/index.html",
+    }),
+    new Dotenv()
+  ],
+});
