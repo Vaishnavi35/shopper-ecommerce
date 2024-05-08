@@ -10,3 +10,28 @@ html, body, #app {
   padding: 0;
   margin: 0;
 }
+.sidebar li:hover{
+  background-color: #F6F6F6;
+  color: #0E1422;
+  cursor: pointer;
+}
+nav, .dashboard{
+  width: calc(100% - 16rem);
+}
+img{
+  width: 24px;
+  height: 24px;
+}
+.grey_color{
+  color: #5C5F6A;
+}
+.dashboard{
+  height: calc(100% - 72px);
+  margin-left: 256px;
+  margin-top: 72px;
+  width: calc(100% - 255px);
+}
+canvas{
+  width: 100% !important;
+  height: 100% !important;
+}
