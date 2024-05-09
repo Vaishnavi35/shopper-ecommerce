@@ -34,10 +34,13 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
+    "bootstrap": "^5.3.3",
     "chart.js": "^4.4.2",
     "react": "^18.2.0",
+    "react-bootstrap": "^2.10.2",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.23.0"
+    "react-router-dom": "^6.23.0",
+    "recharts": "^2.12.7"
   }
 }
