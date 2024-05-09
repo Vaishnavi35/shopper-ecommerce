@@ -2,6 +2,7 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 const Dotenv = require('dotenv-webpack');
 const deps = require("./package.json").dependencies;
+const path = require("path");
 module.exports = (_, argv) => ({
   output: {
     publicPath: "http://localhost:8080/",
@@ -9,6 +10,13 @@ module.exports = (_, argv) => ({
 
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
+    alias: {
+      // Add alias for resolving Bootstrap SCSS files
+      "~bootstrap/scss/bootstrap": path.resolve(
+        __dirname,
+        "node_modules/bootstrap/scss/bootstrap.scss"
+      ),
+    },
   },
 
   devServer: {

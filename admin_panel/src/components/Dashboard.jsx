@@ -11,19 +11,10 @@ const Dashboard = () => {
 
     const options = {
         plugins: {
-            legend: {
-                display: true,
-                position: 'top'
-            },
+            
             title: {
                 display: true,
                 text: 'Total Sales\nTHIS MONTH\n $54546',
-                // font: {
-                //     size: 16
-                // },
-                callback: (context) => {
-                    return 'Total Sales\nTHIS MONTH\n $54546';
-                }
             }
         },
         scales: {
@@ -39,7 +30,7 @@ const Dashboard = () => {
         labels : labels,
         datasets : [
             {
-                label : "Weekly report",
+                label : "Sales",
                 backgroundColor: '#4078FF',
                 borderColor: '#4078FF',
                 borderWidth: 1,
@@ -51,6 +42,37 @@ const Dashboard = () => {
         ]
     }
 
+    const lineData = 
+        {
+            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5'],
+            datasets: [
+              {
+                label: 'Customers',
+                data: [65, 59, 80, 81, 56, 55, 40],
+                fill: false,
+                borderColor: '#4078FF',
+                tension: 0.1
+              }
+            ]
+        };
+
+    const lineOptions = {
+        plugins: {
+            title: {
+              display: true,
+              text: 'Customers\nTHIS MONTH\n 54546', // Title text
+              font: {
+                size: 20 // Title font size
+              }
+            }
+          },
+          scales: {
+            x: {
+              display: false // Hide x-axis labels
+            }
+          }
+    };
+
     return(
         <div className="p-10 grid gap-10 dashboard justify-center items-center grid-cols-3"  style={{ gridTemplateRows: '30% auto' }}>
             <div className="w-full border-[#E9E9EB] border-2 rounded-lg p-5 h-full">
@@ -61,7 +83,7 @@ const Dashboard = () => {
             <div>
                 <div className="w-full border-[#E9E9EB] border-2 rounded-lg p-5 h-full">
                     <div style={{width: '100%', height: '100%'}}>
-                        <Bar data={data} options={options}/>
+                        <Line data={lineData} options={lineOptions}/>
                     </div>
                 </div>
             </div>
