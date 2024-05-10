@@ -2,8 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 @import 'bootstrap/dist/css/bootstrap.min.css';
-/* The following line can be included in a src/App.scss */
-
 
 html, body, #app {
   font-family: Arial, Helvetica, sans-serif;
@@ -37,4 +35,18 @@ img{
 canvas{
   width: 100% !important;
   height: 100% !important;
+}
+/* Override default styling for table cells */
+.p-datatable .p-datatable-tbody td {
+  border-bottom: 1px solid #F6F6F6; /* Adjust color and style as needed */
+}
+
+/* Optionally, you can also specify borders for the header cells */
+.p-datatable .p-datatable-thead th {
+  border-bottom: 1px solid #F6F6F6; /* Adjust color and style as needed */
+  border-top: 1px solid #F6F6F6; 
+}
+
+.p-datatable .p-datatable-thead {
+  height: 45px;
 }
