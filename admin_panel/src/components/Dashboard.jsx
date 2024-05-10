@@ -1,8 +1,11 @@
 import { Chart, registerables } from 'chart.js';
-import {  Line,Bar } from "react-chartjs-2";
+// import {  Bar } from "react-chartjs-2";
 import ProgressBar from "react-bootstrap/ProgressBar";
-// import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-
+// import {} from 'recharts';
+import { PieChart, Pie, Sector, Legend, BarChart, Bar, Cell, ResponsiveContainer,Tooltip,  LineChart, Line, CartesianGrid, XAxis, YAxis  } from 'recharts';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import { ordered_products } from "../../util";
   
 
 
@@ -11,6 +14,8 @@ const Dashboard = () => {
     const orders = 734;
     const orders_left = 266;
     const total_sales = 2400;
+    const customers = 2571;
+    const orders_columns = Object.keys(ordered_products[0] || {});
     const Rdata = [
         { name: 'Page A', uv: 400, pv: 2400, amt: 2400 },
         { name: 'Page B', uv: 300, pv: 1398, amt: 2210 },
@@ -67,6 +72,14 @@ const Dashboard = () => {
         ]
     }
 
+    const BarData = [
+        { name: 'A', value: 10 },
+        { name: 'B', value: 20 },
+        { name: 'C', value: 30 },
+        { name: 'D', value: 40 },
+        { name: 'E', value: 50 },
+      ];
+
     const lineData = 
         {
             labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5'],
@@ -109,36 +122,56 @@ const Dashboard = () => {
         }
     ];
 
+    const best_selling_colors = ['#4078FF', '#728FFF', '#A8B2FF'];
+
+
     return(
         <div className="tw-p-10 tw-grid tw-gap-10 dashboard tw-justify-center tw-items-center tw-grid-cols-3 tw-bg-[#F6F6F6]" style={{ gridTemplateRows: '30% auto' }}>
             <div className="tw-w-full tw-border-[#E9E9EB] tw-border-2 tw-rounded-lg tw-p-5 tw-h-full tw-bg-white">
-                <div style={{width: '100%', height: '100%'}}>
-                    <Bar data={data} options={options}/>
+            <div className=' tw-grid tw-grid-cols-2 tw-justify-between'>
+                            <div>
+                                <div className='tw-text-base tw-font-semibold'>Total Sales</div>
+                                <div className='grey_color tw-text-xs tw-font-medium'>THIS MONTH</div>
+                            </div>
+                            <div className=' tw-text-right tw-text-2xl tw-font-bold'>{total_sales.toLocaleString()}</div>
+                        </div>
+                <div style={{width: '100%', height: 'calc(100% - 40px)'}}>
+                <ResponsiveContainer width="100%" height="100%" >
+                <BarChart  data={BarData}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    {/* <XAxis dataKey="uv" />
+                    <YAxis /> */}
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="value" fill="#4078FF" />
+                </BarChart>
+                </ResponsiveContainer>
+                    {/* <Bar data={data} options={options}/> */}
                 </div>
             </div>
             {/* <div> */}
                 <div className="tw-w-full tw-border-[#E9E9EB] tw-border-2 tw-rounded-lg tw-p-5 tw-h-full tw-bg-white">
-                    <div className='tw-grid' style={{ gridTemplateRows: '40px minmax(0, 1fr)' }}>
+                    {/* <div className='tw-grid' style={{ gridTemplateRows: '40px minmax(0, 1fr)' }}> */}
                         <div className=' tw-grid tw-grid-cols-2 tw-justify-between'>
                             <div>
                                 <div className='tw-text-base tw-font-semibold'>Customers</div>
                                 <div className='grey_color tw-text-xs tw-font-medium'>THIS MONTH</div>
                             </div>
-                            <div className=' tw-text-right tw-text-2xl tw-font-bold'>{orders.toLocaleString()}</div>
+                            <div className=' tw-text-right tw-text-2xl tw-font-bold'>{customers.toLocaleString()}</div>
                         </div>
-                        <div style={{ width: '100%', height: '100%' }}>
-                            {/* <ResponsiveContainer width='100%' aspect={4.0/3.0}>
-                        <LineChart  data={Rdata}>
-                            <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-                            <CartesianGrid stroke="#ccc" />
-                            <XAxis dataKey="name" />
-                            <YAxis />
-                            <Tooltip />
-                        </LineChart>
-                        </ResponsiveContainer> */}
-                            <Line data={lineData} options={lineOptions}/>
+                        <div style={{ width: '100%', height: 'calc(100% - 40px)'}}>
+                            <ResponsiveContainer width='100%' height="100%">
+                                <LineChart  data={Rdata}  >
+                                    <Line type="monotone" dataKey="uv" stroke="#4078FF" />
+                                    <CartesianGrid stroke="#ccc" />
+                                    {/* <XAxis dataKey="name" />
+                                    <YAxis /> */}
+                                    <Tooltip />
+                                </LineChart>
+                        </ResponsiveContainer>
+                            {/* <Line data={lineData} options={lineOptions}/> */}
                         </div>
-                    </div>
+                    {/* </div> */}
                 </div>
             {/* </div> */}
             {/* <div> */}
@@ -166,16 +199,42 @@ const Dashboard = () => {
                     {
                         best_selling.map((v,i) => {
                             return(
-                                <div key={`best_selling_${v.name}`} className='border-[#E6E7E8] tw-mb-3 border tw-rounded-full tw-text-xs tw-text-center tw-h-6 grey_color tw-flex tw-gap-1 tw-justify-center tw-items-center'>{v.name} —-  <span className='tw-text-black'>${v.amount.toLocaleString()} Sales</span></div>
+                                <div key={`best_selling_${v.name}`} className='border-[#E6E7E8] tw-h-7 tw-mb-3 border tw-rounded-full tw-text-xs tw-text-center tw-h-6 grey_color tw-flex tw-gap-1 tw-justify-center tw-items-center'>{v.name} —-  <span className='tw-text-black'>${v.amount.toLocaleString()} Sales</span></div>
                             )
                         })
                     }
-                    <div>
-
+                    <div className='tw-flex tw-justify-center'>
+                        <PieChart width={150} height={150}>
+                            <Pie data={best_selling} dataKey="amount" 
+          cx="50%"
+          cy="50%"
+          innerRadius={40}
+          outerRadius={60}
+          fill="#8884d8">
+                                {best_selling.map((entry, index) => (
+                                            <Cell key={`cell-${index}`} fill={best_selling_colors[index % best_selling_colors.length]} />
+                                        ))}
+                            </Pie>
+                            <Tooltip />
+                        </PieChart>
                     </div>
                 </div>
             </div>
-            <div className='tw-col-span-2 tw-bg-white'>5</div>
+            <div className='tw-col-span-2 tw-w-full tw-border-[#E9E9EB] tw-border-2 tw-rounded-lg tw-p-5 tw-h-full tw-bg-white'>
+                <div className='tw-flex tw-gap-5 tw-bg-white tw-pb-5 tw-items-center'>
+                    <div className='tw-text-base tw-font-semibold'>Recent Orders</div>
+                    <button className='grey_color tw-bg-[#F6F6F6] tw-h-7 tw-w-20 tw-flex tw-items-center tw-justify-center tw-rounded-full tw-text-xs tw-font-medium'>View All</button>
+                </div>
+                <DataTable value={ordered_products} tableStyle={{ minWidth: '50rem', height: '100%', background: 'white' }} >
+                    {
+                        orders_columns.map((col,i) => {
+                            return(
+                                <Column key={`order_dt_col_${col}`} field={col} header={col.replace(/^\w/,c => c.toUpperCase())}></Column>
+                            )
+                        })
+                    }
+                </DataTable>
+            </div>
         </div>
     )
 }
