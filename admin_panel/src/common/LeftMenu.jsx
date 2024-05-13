@@ -1,24 +1,42 @@
-import React, { useState } from 'react';
-import {left_menu_list} from '../../util';
+import React, { useState, useRef } from 'react';
+import {left_menu_list, extras_menus} from '../../util';
 import Add from '../../assets/Add.png';
 import Right from '../../assets/Chevron Right.png';
 import Logout from '../../assets/Logout.png';
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+import { selectLeftMenu } from '../slices/leftMenuSlice';
+import { Menu } from 'primereact/menu'; 
 
 export const LeftMenu = () => {
-  const [leftMenu, setLeftMenu] = useState("Dashboard");
+  // const [leftMenu, setLeftMenu] = useState("Dashboard");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const leftMenu = useSelector((state) => state.leftMenu.leftMenu);
+  const extrasMenuRef = useRef(null);
+  const [showExtrasMenus, setShowExtrasMenus] = useState(false);
 
-  function leftMenuFn(param) {
-    setLeftMenu(param);
+  const leftMenuFn = (param,event = '') =>  {
+    // setLeftMenu(param);
     let path = param.toLowerCase();
-    if(path != "dashboard"){
-      path = `/${path}`;
+    dispatch(selectLeftMenu(path));
+    if(path != 'extras'){
+      if(path == "dashboard"){
+        path = `/`;
+      }else if (path == "settings") {
+        path = "/settings";
+      }else{
+        path = `/dataTable/${path}`;
+      }
+      navigate(path);
     }else{
-      path = "/";
+      setShowExtrasMenus(true);
+      extrasMenuRef.current.toggle(event)
     }
-   
-    navigate(path);
+  }
+
+  const extrasMenuClicked = (action) => {
+    console.log("action : ",action);
   }
 
   return (
@@ -32,7 +50,7 @@ export const LeftMenu = () => {
           {
             left_menu_list.map((v,i) => {
               return( 
-                <li key={`left_menu_${v.name}`}  className={` ${leftMenu === v.name? 'shopper-color' : ''} tw-flex tw-gap-x-3 tw-h-10 tw-w-full grey_color tw-items-center tw-px-6 tw-rounded-md`} onClick={() => leftMenuFn(v.name)}>
+                <li key={`left_menu_${v.name}`}  className={` ${leftMenu === v.name? 'shopper-color' : ''} tw-flex tw-gap-x-3 tw-h-10 tw-w-full grey_color tw-items-center tw-px-6 tw-rounded-md tw-capitalize`} onClick={() => leftMenuFn(v.name)}>
                   <img src={v.image} alt={`left_menu_image_${v.name}`}/>
                   {v.name}
                 </li>
@@ -42,20 +60,21 @@ export const LeftMenu = () => {
         </ol>
         <div className='tw-border-[#E9E9EB] tw-border'></div>
         <div className='tw-px-5'>
-          <li className='tw-flex tw-gap-x-3 tw-h-10 tw-w-full grey_color tw-items-center tw-px-6 tw-rounded-md tw-mt-12' onClick={() => leftMenuFn("Extras")}>
+          <li className='tw-flex tw-gap-x-3 tw-h-10 tw-w-full grey_color tw-items-center tw-px-6 tw-rounded-md tw-mt-12' aria-controls="extras_menu" aria-haspopup onClick={() => leftMenuFn("Extras",event)}>
             <img src={Add} alt="extra_add_icon"/>
             Extras
           </li>
         </div>
       </div>
       <nav className='tw-flex tw-justify-between tw-px-10 tw-fixed tw-top-0 tw-left-64 tw-h-[72px] tw-items-center tw-shadow-md tw-z-10 tw-bg-white'>
-        <div className='tw-flex tw-gap-x-1 tw-text-black'>
+        <div className='tw-flex tw-gap-x-1 tw-text-black tw-capitalize'>
           <span className='grey_color'>Admin</span> 
           <img src={Right} alt="Right" />
           {leftMenu}
         </div>
         <img src={Logout} alt="Logout" className='tw-cursor-pointer'/>
       </nav>
+      {/* <Menu model={extras_menus} id="extras_menu" popupAlignment="right" ref={extrasMenuRef} popup className=' tw-w-32' /> */}
     </div>
   )
 }
