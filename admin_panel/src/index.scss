@@ -25,7 +25,7 @@ html, body, #app {
   color: #0E1422;
   cursor: pointer;
 }
-nav, .dashboard, .products, .product_details, .orders, .data_table{
+nav, .dashboard, .products, .product_details, .orders, .data_table, .page_not_found{
   width: calc(100% - 16rem);
 }
 img{
@@ -35,7 +35,7 @@ img{
 .grey_color{
   color: #5C5F6A;
 }
-.dashboard, .products, .product_details, .orders, .data_table{
+.dashboard, .products, .product_details, .orders, .data_table, .page_not_found{
   height: calc(100% - 72px);
   margin-left: 256px;
   margin-top: 72px;
