@@ -4,10 +4,6 @@ import "./index.scss";
 import { LeftMenu } from "./common/LeftMenu";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import Dashboard from "./components/Dashboard";
-import Products from "./components/Products";
-import Orders from "./components/Orders";
-import Customers from "./components/Customers";
-import Reviews from "./components/Reviews";
 import Settings from "./components/Settings";
 // import 'primereact/resources/themes/saga-blue/theme.css'; // Theme
 // import 'primereact/resources/primereact.min.css'; 
@@ -16,25 +12,28 @@ import "primereact/resources/themes/lara-light-cyan/theme.css";
 import 'primereact/resources/primereact.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import ProductDetails from "./components/ProductDetails";
-
-
+import { leftMenuStore } from "./store/leftMenuStore";
+import { Provider } from "react-redux";
+import GeneralDataTable from "./common/GeneralDataTable";
+import PageNotFound from "./common/PageNotFound";
 
 const App = () => (
     <>
-        <PrimeReactProvider>
-        <BrowserRouter>
-            <LeftMenu></LeftMenu>
-                <Routes>
-                    <Route path="/" exact index element={<Dashboard />}/>
-                    <Route path="/products" element={<Products />} />
-                    <Route path="/productDetails/:id" element={<ProductDetails />} />
-                    <Route path="/orders" element={<Orders />} />
-                    <Route path="/customers" element={<Customers />} />
-                    <Route path="/reviews" element={<Reviews />} />
-                    <Route path="/settings" element={<Settings />} />
-                </Routes>
-            </BrowserRouter>
-        </PrimeReactProvider>
+        <Provider store={leftMenuStore}>
+            <PrimeReactProvider>
+                <BrowserRouter>
+                    <LeftMenu></LeftMenu>
+                        <Routes>
+                            <Route path="/" exact index element={<Dashboard />}/>
+                            <Route path="/productDetails" element={<ProductDetails />} />
+                            <Route path="/productDetails/:id" element={<ProductDetails />} />
+                            <Route path="/settings" element={<Settings />} />
+                            <Route path="dataTable/:section" element={<GeneralDataTable />} />
+                            <Route path="*" element={<PageNotFound />} />
+                        </Routes>
+                    </BrowserRouter>
+            </PrimeReactProvider>
+        </Provider>
     </>
 );
 
