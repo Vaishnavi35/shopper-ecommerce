@@ -6,10 +6,13 @@ import { BsSearch } from "react-icons/bs";
 import { Menu } from 'primereact/menu'; 
 import { useNavigate, Link } from "react-router-dom";
 import {dataTableDetails} from '../../dataTableDetails';
+import { useSelector } from 'react-redux';
 
 export default function GeneralDataTable() {
 
-    const sectionType = "orders";
+    const sectionType = useSelector((state) => state.leftMenu.leftMenu);
+    console.log("sectionType : ",sectionType);
+    
     const navigate = useNavigate();
     const {data, loading, error} = apiIntegration({ url: "http://localhost:3000/orders" });
     const [globalFilter, setGlobalFilter] = useState('');
@@ -31,6 +34,12 @@ export default function GeneralDataTable() {
                 break;
             case 'customers': 
                 action =  dataTableDetails?.customers.actions;
+                break;
+            case 'categories': 
+                id =  dataTableDetails?.categories.actions;
+                break;
+            case 'attributes': 
+                id =  dataTableDetails?.attributes.actions;
                 break;
             // Add more cases for other section types if needed
             default:
@@ -54,6 +63,12 @@ export default function GeneralDataTable() {
             case 'customers': 
                 columns = dataTableDetails?.customers.columns;
                 break;
+            case 'categories': 
+                id =  dataTableDetails?.categories.columns;
+                break;
+            case 'attributes': 
+                id =  dataTableDetails?.attributes.columns;
+                break;
             // Add more cases for other section types if needed
             default:
                 columns = null; // Handle default case appropriately
@@ -62,45 +77,6 @@ export default function GeneralDataTable() {
     };
     
     const columns = getColumns();
-
-    const orders_items = [
-        {
-            label: 'Change Status',
-            action: 'change_status',
-            command: (event) => handleActionClick('change_status')
-        },
-        {
-            label: 'View Details',
-            action: 'view_details',
-            command: (event) => handleActionClick('view_details')
-        },
-    ];
-  
-    const orders_column = [
-        {
-          field: "",
-          name : "Image"
-        },
-        {
-          field: "product_name",
-          name : "Ordered Item"
-        },
-        {
-          field: "ordered_date",
-          name : "Date"
-        },
-        {
-          field: "total_amount",
-          name : "Total"
-        }, {
-          field: "status",
-          name : "Status"
-        },
-        {
-          field: "",
-          name : "Action"
-        },
-    ];
 
     const getId = (rowData) => {
         let id;
@@ -116,6 +92,40 @@ export default function GeneralDataTable() {
                 break;
             case 'customers': 
                 id =  rowData?.customer_id;
+                break;
+            case 'categories': 
+                id =  rowData?.category_id;
+                break;
+            case 'attributes': 
+                id =  rowData?.attribute_id;
+                break;
+            // Add more cases for other section types if needed
+            default:
+                id = null; // Handle default case appropriately
+        }
+        return id;
+    }
+
+    const getDataTableDataKeyId = () => {
+        let id;
+        switch (sectionType) {
+            case 'products':
+                id = "product_id";
+                break;
+            case 'orders':
+                id = "order_id";
+                break;
+            case 'reviews':
+                id = "review_id";
+                break;
+            case 'customers': 
+                id =  "customer_id";
+                break;
+            case 'categories': 
+                id =  "category_id";
+                break;
+            case 'attributes': 
+                id =  "attribute_id";
                 break;
             // Add more cases for other section types if needed
             default:
@@ -146,27 +156,47 @@ export default function GeneralDataTable() {
       }
     
       const handleActionClick = (action) => {
-        if (action === 'change_status') {
+        if (action === 'product_edit' || action === 'product_view') {
+            // Navigate to product/:id for Edit or View actions
+            navigate(`/productDetails/${selectedAction}`);
+        } else if (action === 'product_delete') {
+            // Trigger API call for Delete action
+            // You can add your API call here
+            // For example:
+            // fetch(`/api/products/${rowData.product_id}`, {
+            //     method: 'DELETE'
+            // }).then(response => {
+            //     // Handle response
+            // });
+        }else if (action === 'order_change_status') {
            // open a popup which allows admin to change the status of the order
-        } else if (action === 'view_details') {
+        } else if (action === 'order_view_details') {
           // open a popup which shows the details of order like customer details, product size, color, 
+        }else if (action === 'customer_edit') {
+            
+        }else if (action === 'reply_review') {
+            // open a popup which allows admin to change the status of the order
+        } else if (action === 'delete_review') {
+        // open a popup which shows the details of order like customer details, product size, color, 
+        }else if (action === 'view_review') {
+            
         }
     };
 
     const header = (
         <div className=' tw-flex tw-justify-between tw-px-10 tw-py-5 tw-items-center'>
-            <div className=' tw-text-lg tw-text-[#0E1422] tw-font-medium'>
-                Products
+            <div className=' tw-text-lg tw-text-[#0E1422] tw-font-medium tw-capitalize'>
+                {sectionType}
             </div>
             <div className="tw-flex tw-gap-5">
-                { sectionType === 'products' && 
+                { (sectionType === 'products' ||  sectionType === 'categories' ||  sectionType === 'attributes') && 
                     <button className=' tw-h-10  tw-w-32 shopper-bgcolor tw-text-white tw-rounded-md  tw-text-sm tw-font-medium'> 
-                        <Link to="/productDetails">Add product </Link>
+                        <Link to="/productDetails">Add {sectionType} </Link>
                     </button>
                 }
                 <div className=' tw-relative tw-w-64 tw-h-10'>
                     <BsSearch className=' tw-absolute tw-top-3 tw-w-5 tw-h-5 tw-left-3'/>
-                    <input type='text' className=' tw-h-10  tw-w-64 tw-border-2 tw-border-[#E6E7E8] tw-pl-10  tw-rounded-lg' value={globalFilter} onChange={(e) => setGlobalFilter(e.target.value)} placeholder="Search products" />
+                    <input type='text' className=' tw-h-10  tw-w-64 tw-border-2 tw-border-[#E6E7E8] tw-pl-10  tw-rounded-lg tw-capitalize' value={globalFilter} onChange={(e) => setGlobalFilter(e.target.value)} placeholder={`Search ${sectionType}`} />
                 </div>
             </div>
         </div>
@@ -175,16 +205,16 @@ export default function GeneralDataTable() {
 
   return (
     <div className='data_table  tw-p-10'>
-        <DataTable value={data} dataKey={sectionType === 'orders' ? 'order_id' : sectionType === 'products' ? 'product_id' : sectionType === 'customers' ? 'customer_id' : 'review_id'} selectionMode="checkbox"  selection={selectedRows}  onSelectionChange={(e) => setSelectedRows(e.value)} paginator header={header} rows={5} tableStyle={{ minWidth: '50rem', paddingInline: '40px' }} emptyMessage="No products are available.">
+        <DataTable value={data} dataKey={getDataTableDataKeyId} selectionMode="checkbox"  selection={selectedRows}  onSelectionChange={(e) => setSelectedRows(e.value)} paginator header={header} rows={5} tableStyle={{ minWidth: '50rem', paddingInline: '40px' }} emptyMessage={`No ${sectionType} are available.`}>
             <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} ></Column>    
-            { columns.map((col,i) => {
+            { columns && columns.map((col,i) => {
                     if(i === 0 || i === columns?.length - 1 ){
                         return(
-                            <Column key={`product_col_${col.name}`} field={col.field} header={col.name} body={(rowData) => rederCustomTemplate(rowData, i)}></Column>
+                            <Column key={`${sectionType}_${col.name}`} field={col.field} header={col.name} body={(rowData) => rederCustomTemplate(rowData, i)}></Column>
                         )
                     }else{
                         return(
-                            <Column key={`product_col_${col.name}`} field={col.field} header={col.name}></Column>
+                            <Column key={`${sectionType}_${col.name}`} field={col.field} header={col.name}></Column>
                         )
                     }
                     
