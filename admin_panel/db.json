@@ -1,0 +1,653 @@
+{
+  "products": [
+    {
+      "product_id": 1,
+      "image": "https://example.com/product1.jpg",
+      "name": "Product 1",
+      "SKU": "SKU001",
+      "price": "$19.99",
+      "category": "Clothing",
+      "stock": true,
+      "available_quantity": 50,
+      "size": "M",
+      "color": "Blue"
+    },
+    {
+      "product_id": 2,
+      "image": "https://example.com/product2.jpg",
+      "name": "Product 2",
+      "SKU": "SKU002",
+      "price": "$24.99",
+      "category": "Electronics",
+      "stock": true,
+      "available_quantity": 20,
+      "size": null,
+      "color": "Black"
+    },
+    {
+      "product_id": 3,
+      "image": "https://example.com/product3.jpg",
+      "name": "Product 3",
+      "SKU": "SKU003",
+      "price": "$49.99",
+      "category": "Home & Kitchen",
+      "stock": false,
+      "available_quantity": 0,
+      "size": "L",
+      "color": "Red"
+    },
+    {
+      "product_id": 4,
+      "image": "https://example.com/product4.jpg",
+      "name": "Product 4",
+      "SKU": "SKU004",
+      "price": "$9.99",
+      "category": "Books",
+      "stock": true,
+      "available_quantity": 100,
+      "size": null,
+      "color": null
+    },
+    {
+      "product_id": 5,
+      "image": "https://example.com/product5.jpg",
+      "name": "Product 5",
+      "SKU": "SKU005",
+      "price": "$34.99",
+      "category": "Sports & Outdoors",
+      "stock": true,
+      "available_quantity": 10,
+      "size": "XL",
+      "color": "Green"
+    },
+    {
+      "product_id": 6,
+      "image": "https://example.com/product6.jpg",
+      "name": "Product 6",
+      "SKU": "SKU006",
+      "price": "$14.99",
+      "category": "Toys & Games",
+      "stock": true,
+      "available_quantity": 30,
+      "size": null,
+      "color": "Yellow"
+    },
+    {
+      "product_id": 7,
+      "image": "https://example.com/product7.jpg",
+      "name": "Product 7",
+      "SKU": "SKU007",
+      "price": "$39.99",
+      "category": "Electronics",
+      "stock": true,
+      "available_quantity": 15,
+      "size": null,
+      "color": "Silver"
+    },
+    {
+      "product_id": 8,
+      "image": "https://example.com/product8.jpg",
+      "name": "Product 8",
+      "SKU": "SKU008",
+      "price": "$29.99",
+      "category": "Beauty & Personal Care",
+      "stock": false,
+      "available_quantity": 0,
+      "size": null,
+      "color": null
+    },
+    {
+      "product_id": 9,
+      "image": "https://example.com/product9.jpg",
+      "name": "Product 9",
+      "SKU": "SKU009",
+      "price": "$49.99",
+      "category": "Clothing",
+      "stock": true,
+      "available_quantity": 25,
+      "size": "S",
+      "color": "Pink"
+    },
+    {
+      "product_id": 10,
+      "image": "https://example.com/product10.jpg",
+      "name": "Product 10",
+      "SKU": "SKU010",
+      "price": "$79.99",
+      "category": "Home & Kitchen",
+      "stock": true,
+      "available_quantity": 5,
+      "size": null,
+      "color": "White"
+    },
+    {
+      "product_id": 11,
+      "image": "https://example.com/product11.jpg",
+      "name": "Product 11",
+      "SKU": "SKU011",
+      "price": "$54.99",
+      "category": "Electronics",
+      "stock": true,
+      "available_quantity": 12,
+      "size": null,
+      "color": "Blue"
+    },
+    {
+      "product_id": 12,
+      "image": "https://example.com/product12.jpg",
+      "name": "Product 12",
+      "SKU": "SKU012",
+      "price": "$64.99",
+      "category": "Sports & Outdoors",
+      "stock": true,
+      "available_quantity": 8,
+      "size": "M",
+      "color": "Black"
+    },
+    {
+      "product_id": 13,
+      "image": "https://example.com/product13.jpg",
+      "name": "Product 13",
+      "SKU": "SKU013",
+      "price": "$44.99",
+      "category": "Books",
+      "stock": true,
+      "available_quantity": 20,
+      "size": null,
+      "color": null
+    },
+    {
+      "product_id": 14,
+      "image": "https://example.com/product14.jpg",
+      "name": "Product 14",
+      "SKU": "SKU014",
+      "price": "$29.99",
+      "category": "Toys & Games",
+      "stock": true,
+      "available_quantity": 40,
+      "size": null,
+      "color": "Red"
+    },
+    {
+      "product_id": 15,
+      "image": "https://example.com/product15.jpg",
+      "name": "Product 15",
+      "SKU": "SKU015",
+      "price": "$19.99",
+      "category": "Beauty & Personal Care",
+      "stock": false,
+      "available_quantity": 0,
+      "size": null,
+      "color": "Pink"
+    },
+    {
+      "product_id": 16,
+      "image": "https://example.com/product16.jpg",
+      "name": "Product 16",
+      "SKU": "SKU016",
+      "price": "$39.99",
+      "category": "Clothing",
+      "stock": true,
+      "available_quantity": 30,
+      "size": "L",
+      "color": "Green"
+    },
+    {
+      "product_id": 17,
+      "image": "https://example.com/product17.jpg",
+      "name": "Product 17",
+      "SKU": "SKU017",
+      "price": "$49.99",
+      "category": "Home & Kitchen",
+      "stock": true,
+      "available_quantity": 10,
+      "size": null,
+      "color": "Blue"
+    },
+    {
+      "product_id": 18,
+      "image": "https://example.com/product18.jpg",
+      "name": "Product 18",
+      "SKU": "SKU018",
+      "price": "$14.99",
+      "category": "Electronics",
+      "stock": true,
+      "available_quantity": 60,
+      "size": null,
+      "color": "Black"
+    },
+    {
+      "product_id": 19,
+      "image": "https://example.com/product19.jpg",
+      "name": "Product 19",
+      "SKU": "SKU019",
+      "price": "$69.99",
+      "category": "Sports & Outdoors",
+      "stock": true,
+      "available_quantity": 7,
+      "size": "XL",
+      "color": "White"
+    },
+    {
+      "product_id": 20,
+      "image": "https://example.com/product20.jpg",
+      "name": "Product 20",
+      "SKU": "SKU020",
+      "price": "$24.99",
+      "category": "Toys & Games",
+      "stock": false,
+      "available_quantity": 0,
+      "size": null,
+      "color": "Red"
+    }
+  ],
+
+  "orders": [
+    {
+        "order_id": "ORD001",
+        "product_image": "image_url_1",
+        "product_name": "Product 1",
+        "ordered_date": "2024-05-12",
+        "total_amount": "$50.00",
+        "status": "Shipped"
+    },
+    {
+        "order_id": "ORD002",
+        "product_image": "image_url_2",
+        "product_name": "Product 2",
+        "ordered_date": "2024-05-11",
+        "total_amount": "$35.00",
+        "status": "Pending"
+    },
+    {
+        "order_id": "ORD003",
+        "product_image": "image_url_3",
+        "product_name": "Product 3",
+        "ordered_date": "2024-05-10",
+        "total_amount": "$75.00",
+        "status": "Delivered"
+    },
+    {
+        "order_id": "ORD004",
+        "product_image": "image_url_4",
+        "product_name": "Product 4",
+        "ordered_date": "2024-05-09",
+        "total_amount": "$90.00",
+        "status": "Cancelled"
+    },
+    {
+        "order_id": "ORD005",
+        "product_image": "image_url_5",
+        "product_name": "Product 5",
+        "ordered_date": "2024-05-08",
+        "total_amount": "$120.00",
+        "status": "Shipped"
+    },
+    {
+        "order_id": "ORD006",
+        "product_image": "image_url_6",
+        "product_name": "Product 6",
+        "ordered_date": "2024-05-07",
+        "total_amount": "$25.00",
+        "status": "Pending"
+    },
+    {
+        "order_id": "ORD007",
+        "product_image": "image_url_7",
+        "product_name": "Product 7",
+        "ordered_date": "2024-05-06",
+        "total_amount": "$80.00",
+        "status": "Delivered"
+    },
+    {
+        "order_id": "ORD008",
+        "product_image": "image_url_8",
+        "product_name": "Product 8",
+        "ordered_date": "2024-05-05",
+        "total_amount": "$65.00",
+        "status": "Shipped"
+    },
+    {
+        "order_id": "ORD009",
+        "product_image": "image_url_9",
+        "product_name": "Product 9",
+        "ordered_date": "2024-05-04",
+        "total_amount": "$110.00",
+        "status": "Pending"
+    },
+    {
+        "order_id": "ORD010",
+        "product_image": "image_url_10",
+        "product_name": "Product 10",
+        "ordered_date": "2024-05-03",
+        "total_amount": "$150.00",
+        "status": "Delivered"
+    },
+    {
+        "order_id": "ORD011",
+        "product_image": "image_url_11",
+        "product_name": "Product 11",
+        "ordered_date": "2024-05-02",
+        "total_amount": "$200.00",
+        "status": "Cancelled"
+    },
+    {
+        "order_id": "ORD012",
+        "product_image": "image_url_12",
+        "product_name": "Product 12",
+        "ordered_date": "2024-05-01",
+        "total_amount": "$95.00",
+        "status": "Shipped"
+    },
+    {
+        "order_id": "ORD013",
+        "product_image": "image_url_13",
+        "product_name": "Product 13",
+        "ordered_date": "2024-04-30",
+        "total_amount": "$45.00",
+        "status": "Delivered"
+    },
+    {
+        "order_id": "ORD014",
+        "product_image": "image_url_14",
+        "product_name": "Product 14",
+        "ordered_date": "2024-04-29",
+        "total_amount": "$85.00",
+        "status": "Pending"
+    },
+    {
+        "order_id": "ORD015",
+        "product_image": "image_url_15",
+        "product_name": "Product 15",
+        "ordered_date": "2024-04-28",
+        "total_amount": "$60.00",
+        "status": "Shipped"
+    },
+    {
+        "order_id": "ORD016",
+        "product_image": "image_url_16",
+        "product_name": "Product 16",
+        "ordered_date": "2024-04-27",
+        "total_amount": "$70.00",
+        "status": "Cancelled"
+    },
+    {
+        "order_id": "ORD017",
+        "product_image": "image_url_17",
+        "product_name": "Product 17",
+        "ordered_date": "2024-04-26",
+        "total_amount": "$40.00",
+        "status": "Delivered"
+    },
+    {
+        "order_id": "ORD018",
+        "product_image": "image_url_18",
+        "product_name": "Product 18",
+        "ordered_date": "2024-04-25",
+        "total_amount": "$55.00",
+        "status": "Pending"
+    },
+    {
+        "order_id": "ORD019",
+        "product_image": "image_url_19",
+        "product_name": "Product 19",
+        "ordered_date": "2024-04-24",
+        "total_amount": "$105.00",
+        "status": "Shipped"
+    },
+    {
+        "order_id": "ORD020",
+        "product_image": "image_url_20",
+        "product_name": "Product 20",
+        "ordered_date": "2024-04-23",
+        "total_amount": "$125.00",
+        "status": "Delivered"
+    }
+  ],
+
+  "customers" : [
+      {
+          "customer_id": "CUST001",
+          "customer_name": "John Doe",
+          "customer_email": "john.doe@example.com",
+          "customer_address": "123 Main St, Anytown, USA"
+      },
+      {
+          "customer_id": "CUST002",
+          "customer_name": "Jane Smith",
+          "customer_email": "jane.smith@example.com",
+          "customer_address": "456 Elm St, Othertown, USA"
+      },
+      {
+          "customer_id": "CUST003",
+          "customer_name": "David Johnson",
+          "customer_email": "david.johnson@example.com",
+          "customer_address": "789 Oak St, Anycity, USA"
+      },
+      {
+          "customer_id": "CUST004",
+          "customer_name": "Emily Brown",
+          "customer_email": "emily.brown@example.com",
+          "customer_address": "101 Pine St, Somecity, USA"
+      },
+      {
+          "customer_id": "CUST005",
+          "customer_name": "Michael Wilson",
+          "customer_email": "michael.wilson@example.com",
+          "customer_address": "111 Maple St, Othertown, USA"
+      },
+      {
+          "customer_id": "CUST006",
+          "customer_name": "Sarah Davis",
+          "customer_email": "sarah.davis@example.com",
+          "customer_address": "222 Birch St, Anycity, USA"
+      },
+      {
+          "customer_id": "CUST007",
+          "customer_name": "Christopher Martinez",
+          "customer_email": "christopher.martinez@example.com",
+          "customer_address": "333 Cedar St, Anytown, USA"
+      },
+      {
+          "customer_id": "CUST008",
+          "customer_name": "Amanda Taylor",
+          "customer_email": "amanda.taylor@example.com",
+          "customer_address": "444 Walnut St, Othertown, USA"
+      },
+      {
+          "customer_id": "CUST009",
+          "customer_name": "Matthew Anderson",
+          "customer_email": "matthew.anderson@example.com",
+          "customer_address": "555 Pine St, Anycity, USA"
+      },
+      {
+          "customer_id": "CUST010",
+          "customer_name": "Jessica Thomas",
+          "customer_email": "jessica.thomas@example.com",
+          "customer_address": "666 Oak St, Somecity, USA"
+      },
+      {
+          "customer_id": "CUST011",
+          "customer_name": "Daniel White",
+          "customer_email": "daniel.white@example.com",
+          "customer_address": "777 Elm St, Anytown, USA"
+      },
+      {
+          "customer_id": "CUST012",
+          "customer_name": "Ashley Garcia",
+          "customer_email": "ashley.garcia@example.com",
+          "customer_address": "888 Maple St, Othertown, USA"
+      },
+      {
+          "customer_id": "CUST013",
+          "customer_name": "James Martinez",
+          "customer_email": "james.martinez@example.com",
+          "customer_address": "999 Birch St, Anycity, USA"
+      },
+      {
+          "customer_id": "CUST014",
+          "customer_name": "Jennifer Hernandez",
+          "customer_email": "jennifer.hernandez@example.com",
+          "customer_address": "123 Pine St, Anytown, USA"
+      },
+      {
+          "customer_id": "CUST015",
+          "customer_name": "Robert Young",
+          "customer_email": "robert.young@example.com",
+          "customer_address": "456 Elm St, Othertown, USA"
+      },
+      {
+          "customer_id": "CUST016",
+          "customer_name": "Michelle King",
+          "customer_email": "michelle.king@example.com",
+          "customer_address": "789 Oak St, Anycity, USA"
+      },
+      {
+          "customer_id": "CUST017",
+          "customer_name": "William Clark",
+          "customer_email": "william.clark@example.com",
+          "customer_address": "101 Pine St, Somecity, USA"
+      },
+      {
+          "customer_id": "CUST018",
+          "customer_name": "Stephanie Wright",
+          "customer_email": "stephanie.wright@example.com",
+          "customer_address": "111 Maple St, Othertown, USA"
+      },
+      {
+          "customer_id": "CUST019",
+          "customer_name": "David Hall",
+          "customer_email": "david.hall@example.com",
+          "customer_address": "222 Birch St, Anycity, USA"
+      },
+      {
+          "customer_id": "CUST020",
+          "customer_name": "Kimberly Adams",
+          "customer_email": "kimberly.adams@example.com",
+          "customer_address": "333 Cedar St, Anytown, USA"
+      }
+    ],
+
+    "reviews" : [
+      {
+          "review_id": "REV001",
+          "customer_name": "John Doe",
+          "review_rate": 4.5,
+          "review_submitted_at": "2024-05-12T10:30:00Z"
+      },
+      {
+          "review_id": "REV002",
+          "customer_name": "Jane Smith",
+          "review_rate": 3.8,
+          "review_submitted_at": "2024-05-11T09:45:00Z"
+      },
+      {
+          "review_id": "REV003",
+          "customer_name": "David Johnson",
+          "review_rate": 5,
+          "review_submitted_at": "2024-05-10T14:20:00Z"
+      },
+      {
+          "review_id": "REV004",
+          "customer_name": "Emily Brown",
+          "review_rate": 4.2,
+          "review_submitted_at": "2024-05-09T11:00:00Z"
+      },
+      {
+          "review_id": "REV005",
+          "customer_name": "Michael Wilson",
+          "review_rate": 4.9,
+          "review_submitted_at": "2024-05-08T13:30:00Z"
+      },
+      {
+          "review_id": "REV006",
+          "customer_name": "Sarah Davis",
+          "review_rate": 3.5,
+          "review_submitted_at": "2024-05-07T16:40:00Z"
+      },
+      {
+          "review_id": "REV007",
+          "customer_name": "Christopher Martinez",
+          "review_rate": 4.7,
+          "review_submitted_at": "2024-05-06T12:15:00Z"
+      },
+      {
+          "review_id": "REV008",
+          "customer_name": "Amanda Taylor",
+          "review_rate": 4,
+          "review_submitted_at": "2024-05-05T08:20:00Z"
+      },
+      {
+          "review_id": "REV009",
+          "customer_name": "Matthew Anderson",
+          "review_rate": 4.6,
+          "review_submitted_at": "2024-05-04T17:55:00Z"
+      },
+      {
+          "review_id": "REV010",
+          "customer_name": "Jessica Thomas",
+          "review_rate": 4.3,
+          "review_submitted_at": "2024-05-03T09:10:00Z"
+      },
+      {
+          "review_id": "REV011",
+          "customer_name": "Daniel White",
+          "review_rate": 4.8,
+          "review_submitted_at": "2024-05-02T14:25:00Z"
+      },
+      {
+          "review_id": "REV012",
+          "customer_name": "Ashley Garcia",
+          "review_rate": 3.9,
+          "review_submitted_at": "2024-05-01T10:05:00Z"
+      },
+      {
+          "review_id": "REV013",
+          "customer_name": "James Martinez",
+          "review_rate": 4.1,
+          "review_submitted_at": "2024-04-30T11:45:00Z"
+      },
+      {
+          "review_id": "REV014",
+          "customer_name": "Jennifer Hernandez",
+          "review_rate": 4.4,
+          "review_submitted_at": "2024-04-29T09:20:00Z"
+      },
+      {
+          "review_id": "REV015",
+          "customer_name": "Robert Young",
+          "review_rate": 4.7,
+          "review_submitted_at": "2024-04-28T13:00:00Z"
+      },
+      {
+          "review_id": "REV016",
+          "customer_name": "Michelle King",
+          "review_rate": 3.7,
+          "review_submitted_at": "2024-04-27T15:30:00Z"
+      },
+      {
+          "review_id": "REV017",
+          "customer_name": "William Clark",
+          "review_rate": 4.6,
+          "review_submitted_at": "2024-04-26T08:45:00Z"
+      },
+      {
+          "review_id": "REV018",
+          "customer_name": "Stephanie Wright",
+          "review_rate": 4.2,
+          "review_submitted_at": "2024-04-25T12:10:00Z"
+      },
+      {
+          "review_id": "REV019",
+          "customer_name": "David Hall",
+          "review_rate": 4.9,
+          "review_submitted_at": "2024-04-24T14:55:00Z"
+      },
+      {
+          "review_id": "REV020",
+          "customer_name": "Kimberly Adams",
+          "review_rate": 3.8,
+          "review_submitted_at": "2024-04-23T10:20:00Z"
+      }
+  ]
+}

@@ -1,16 +1,13 @@
-import { Chart, registerables } from 'chart.js';
-// import {  Bar } from "react-chartjs-2";
 import ProgressBar from "react-bootstrap/ProgressBar";
-// import {} from 'recharts';
 import { PieChart, Pie, Sector, Legend, BarChart, Bar, Cell, ResponsiveContainer,Tooltip,  LineChart, Line, CartesianGrid, XAxis, YAxis  } from 'recharts';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { ordered_products } from "../../util";
-  
+import { dashboard } from "../../util";
+import { Link } from "react-router-dom";
 
 
 const Dashboard = () => {
-    Chart.register(...registerables);
     const orders = 734;
     const orders_left = 266;
     const total_sales = 2400;
@@ -24,53 +21,6 @@ const Dashboard = () => {
         { name: 'Page E', uv: 189, pv: 4800, amt: 2181 },
         // Add more records as needed
       ];
-    const labels = [
-        'day1', 'day2', 'day3', 'day4', 'day5', 'day6', 'day7', 'day8', 'day9', 'day10',
-        'day11', 'day12', 'day13', 'day14', 'day15', 'day16', 'day17', 'day18', 'day19', 'day20',
-        'day21', 'day22', 'day23', 'day24', 'day25', 'day26', 'day27', 'day28', 'day29', 'day30', 'day31'
-      ];
-
-    const options = {
-        plugins: {
-            legend: {
-                display: true,
-                position: 'top'
-            },
-            title: {
-                display: true,
-                text: 'Total Sales\nTHIS MONTH\n $54546',
-                // font: {
-                //     size: 16
-                // },
-                callback: (context) => {
-                    return 'Total Sales\nTHIS MONTH\n $54546';
-                }
-            }
-        },
-        scales: {
-            x: {
-                ticks: {
-                    display: false // Hide x-axis ticks
-                }
-            }
-        }
-    };
-      
-    const data = {
-        labels : labels,
-        datasets : [
-            {
-                label : "Weekly report",
-                backgroundColor: '#4078FF',
-                borderColor: '#4078FF',
-                borderWidth: 1,
-                hoverBackgroundColor: 'rgba(75,192,192,0.4)',
-                hoverBorderColor: 'rgba(75,192,192,1)',
-                data: [65, 59, 80, 81, 56, 55, 40, 45, 50, 30, 20, 70, 75, 85, 90, 85, 80, 75, 70, 65, 60, 55, 50, 45, 40, 35, 30, 25, 20, 15, 10]
-
-            }
-        ]
-    }
 
     const BarData = [
         { name: 'A', value: 10 },
@@ -79,33 +29,6 @@ const Dashboard = () => {
         { name: 'D', value: 40 },
         { name: 'E', value: 50 },
       ];
-
-    const lineData = 
-        {
-            labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5'],
-            datasets: [
-              {
-                label: '',
-                data: [65, 59, 80, 81, 56, 55, 40],
-                fill: false,
-                borderColor: '#4078FF',
-                tension: 0.1
-              }
-            ]
-        };
-
-    const lineOptions = {
-        plugins: {
-            title: {
-              display: false,
-            }
-          },
-          scales: {
-            x: {
-              display: false // Hide x-axis labels
-            }
-          }
-    };
 
     const best_selling = [
         {
@@ -126,24 +49,22 @@ const Dashboard = () => {
 
 
     return(
-        <div className="tw-p-10 tw-grid tw-gap-10 dashboard tw-justify-center tw-items-center tw-grid-cols-3 tw-bg-[#F6F6F6]" style={{ gridTemplateRows: '30% auto' }}>
+        <div className="dashboard tw-p-10 tw-grid tw-gap-10  tw-justify-center tw-items-center tw-grid-cols-3 tw-bg-[#ECECEC]" style={{ gridTemplateRows: '187px auto' }}>
             <div className="tw-w-full tw-border-[#E9E9EB] tw-border-2 tw-rounded-lg tw-p-5 tw-h-full tw-bg-white">
             <div className=' tw-grid tw-grid-cols-2 tw-justify-between'>
                             <div>
                                 <div className='tw-text-base tw-font-semibold'>Total Sales</div>
                                 <div className='grey_color tw-text-xs tw-font-medium'>THIS MONTH</div>
                             </div>
-                            <div className=' tw-text-right tw-text-2xl tw-font-bold'>{total_sales.toLocaleString()}</div>
+                            <div className=' tw-text-right tw-text-2xl tw-font-bold'>${total_sales.toLocaleString()}</div>
                         </div>
                 <div style={{width: '100%', height: 'calc(100% - 40px)'}}>
                 <ResponsiveContainer width="100%" height="100%" >
-                <BarChart  data={BarData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    {/* <XAxis dataKey="uv" />
-                    <YAxis /> */}
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="value" fill="#4078FF" />
+                <BarChart  data={dashboard}>
+                    <XAxis dataKey="day" hide="true"/>
+                    <YAxis  hide="true"/> 
+                    <Tooltip labelFormatter={(val) => `Day${val}`} formatter={(value, name) => [`$${value}`, name === 'sales_amount' ? 'Sales' : name]}/>
+                    <Bar dataKey="sales_amount" fill="#4078FF" name="Sales" />
                 </BarChart>
                 </ResponsiveContainer>
                     {/* <Bar data={data} options={options}/> */}
@@ -161,12 +82,11 @@ const Dashboard = () => {
                         </div>
                         <div style={{ width: '100%', height: 'calc(100% - 40px)'}}>
                             <ResponsiveContainer width='100%' height="100%">
-                                <LineChart  data={Rdata}  >
-                                    <Line type="monotone" dataKey="uv" stroke="#4078FF" />
-                                    <CartesianGrid stroke="#ccc" />
-                                    {/* <XAxis dataKey="name" />
-                                    <YAxis /> */}
-                                    <Tooltip />
+                                <LineChart  data={dashboard} className="lineChart" >
+                                    <Line type="monotone" dataKey="customers" stroke="#4078FF" name="Customers"/>
+                                    <XAxis dataKey="day" hide="true"/>
+                                    <YAxis hide="true"/>
+                                    <Tooltip labelFormatter={(val) => `Day${val}`}/>
                                 </LineChart>
                         </ResponsiveContainer>
                             {/* <Line data={lineData} options={lineOptions}/> */}
@@ -195,11 +115,11 @@ const Dashboard = () => {
                     <div className='grey_color tw-text-xs tw-font-medium'>THIS MONTH</div>
                 </div>
                 <div className='tw-p-5 '>
-                    <div className='tw-text-2xl tw-font-bold tw-mb-3'>${total_sales.toLocaleString()} <span className='grey_color tw-text-sm tw-font-medium'>-- Total Sales</span></div>
+                    <div className='tw-text-2xl tw-font-bold tw-mb-3'>${total_sales.toLocaleString()} <span className='grey_color tw-text-sm tw-font-medium'> --- Total Sales</span></div>
                     {
                         best_selling.map((v,i) => {
                             return(
-                                <div key={`best_selling_${v.name}`} className='border-[#E6E7E8] tw-h-7 tw-mb-3 border tw-rounded-full tw-text-xs tw-text-center tw-h-6 grey_color tw-flex tw-gap-1 tw-justify-center tw-items-center'>{v.name} —-  <span className='tw-text-black'>${v.amount.toLocaleString()} Sales</span></div>
+                                <div key={`best_selling_${v.name}`} className='border-[#E6E7E8] tw-h-7 tw-mb-3 border tw-rounded-full tw-text-xs tw-text-center grey_color tw-flex tw-gap-1 tw-justify-center tw-items-center'>{v.name} —-  <span className='tw-text-black tw-font-semibold'>${v.amount.toLocaleString()} Sales</span></div>
                             )
                         })
                     }
@@ -223,7 +143,7 @@ const Dashboard = () => {
             <div className='tw-col-span-2 tw-w-full tw-border-[#E9E9EB] tw-border-2 tw-rounded-lg tw-p-5 tw-h-full tw-bg-white'>
                 <div className='tw-flex tw-gap-5 tw-bg-white tw-pb-5 tw-items-center'>
                     <div className='tw-text-base tw-font-semibold'>Recent Orders</div>
-                    <button className='grey_color tw-bg-[#F6F6F6] tw-h-7 tw-w-20 tw-flex tw-items-center tw-justify-center tw-rounded-full tw-text-xs tw-font-medium'>View All</button>
+                    <Link to="/orders" className='grey_color tw-bg-[#ECECEC] tw-h-7 tw-w-20 tw-flex tw-items-center tw-justify-center tw-rounded-full tw-text-xs tw-font-medium'>View All</Link>
                 </div>
                 <DataTable value={ordered_products} tableStyle={{ minWidth: '50rem', height: '100%', background: 'white' }} >
                     {
