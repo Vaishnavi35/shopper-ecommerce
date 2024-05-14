@@ -50,7 +50,7 @@ export const LeftMenu = () => {
           {
             left_menu_list.map((v,i) => {
               return( 
-                <li key={`left_menu_${v.name}`}  className={` ${leftMenu === v.name? 'shopper-color' : ''} tw-flex tw-gap-x-3 tw-h-10 tw-w-full grey_color tw-items-center tw-px-6 tw-rounded-md tw-capitalize`} onClick={() => leftMenuFn(v.name)}>
+                <li key={`left_menu_${v.name}`}  className={` ${leftMenu === v.name.toLowerCase()? 'shopper-color' : ''} tw-flex tw-gap-x-3 tw-h-10 tw-w-full grey_color tw-items-center tw-px-6 tw-rounded-md tw-capitalize`} onClick={() => leftMenuFn(v.name)}>
                   <img src={v.image} alt={`left_menu_image_${v.name}`}/>
                   {v.name}
                 </li>
