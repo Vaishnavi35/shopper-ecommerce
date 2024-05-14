@@ -127,6 +127,34 @@ export const extras_menus = () => [
       command: (event) => leftMenuFn('extras_newsletters')
   }
 ];
+
+export const categories = [
+  { label: 'Home and Living', value: 'Home and Living' },
+  { label: 'Kitchen and Dining', value: 'Kitchen and Dining' }
+];
+
+export const subCategories = {
+  'Home and Living': [
+      { label: 'Home Decoration', value: 'Home Decoration' },
+      { label: 'Furniture', value: 'Furniture' },
+      { label: 'Lighting', value: 'Lighting' },
+      { label: 'Bedding and Bath', value: 'Bedding and Bath' },
+      { label: 'Storage and Organization', value: 'Storage and Organization' },
+      { label: 'Rugs and Carpets', value: 'Rugs and Carpets' },
+      { label: 'Curtains and Blinds', value: 'Curtains and Blinds' },
+      { label: 'Wall Art and Paintings', value: 'Wall Art and Paintings' },
+      { label: 'Home Improvement', value: 'Home Improvement' }
+  ],
+  'Kitchen and Dining': [
+      { label: 'Cookware', value: 'Cookware' },
+      { label: 'Dinnerware', value: 'Dinnerware' },
+      { label: 'Serveware', value: 'Serveware' },
+      { label: 'Kitchen Storage', value: 'Kitchen Storage' },
+      { label: 'Kitchen Tools', value: 'Kitchen Tools' },
+      { label: 'Table Linen', value: 'Table Linen' },
+      { label: 'Dining Furniture', value: 'Dining Furniture' }
+  ]
+};
     
     // export {left_menu_list};
     
