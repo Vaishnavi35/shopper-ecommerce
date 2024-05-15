@@ -1,34 +1,22 @@
 import ProgressBar from "react-bootstrap/ProgressBar";
-import { PieChart, Pie, Sector, Legend, BarChart, Bar, Cell, ResponsiveContainer,Tooltip,  LineChart, Line, CartesianGrid, XAxis, YAxis  } from 'recharts';
+import { PieChart, Pie, BarChart, Bar, Cell, ResponsiveContainer,Tooltip,  LineChart, Line, XAxis, YAxis  } from 'recharts';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { ordered_products } from "../../util";
 import { dashboard } from "../../util";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { selectLeftMenu } from "../slices/leftMenuSlice";
 
 const Dashboard = () => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const orders = 734;
     const orders_left = 266;
     const total_sales = 2400;
     const customers = 2571;
     const orders_columns = Object.keys(ordered_products[0] || {});
-    const Rdata = [
-        { name: 'Page A', uv: 400, pv: 2400, amt: 2400 },
-        { name: 'Page B', uv: 300, pv: 1398, amt: 2210 },
-        { name: 'Page C', uv: 200, pv: 9800, amt: 2290 },
-        { name: 'Page D', uv: 278, pv: 3908, amt: 2000 },
-        { name: 'Page E', uv: 189, pv: 4800, amt: 2181 },
-        // Add more records as needed
-      ];
-
-    const BarData = [
-        { name: 'A', value: 10 },
-        { name: 'B', value: 20 },
-        { name: 'C', value: 30 },
-        { name: 'D', value: 40 },
-        { name: 'E', value: 50 },
-      ];
 
     const best_selling = [
         {
@@ -47,6 +35,10 @@ const Dashboard = () => {
 
     const best_selling_colors = ['#4078FF', '#728FFF', '#A8B2FF'];
 
+    const goToOrders = () => {
+        navigate('dataTable/orders');
+        dispatch(selectLeftMenu('Orders'));
+    }
 
     return(
         <div className="dashboard tw-p-10 tw-grid tw-gap-10  tw-justify-center tw-items-center tw-grid-cols-3 tw-bg-[#ECECEC]" style={{ gridTemplateRows: '187px auto' }}>
@@ -143,7 +135,7 @@ const Dashboard = () => {
             <div className='tw-col-span-2 tw-w-full tw-border-[#E9E9EB] tw-border-2 tw-rounded-lg tw-p-5 tw-h-full tw-bg-white'>
                 <div className='tw-flex tw-gap-5 tw-bg-white tw-pb-5 tw-items-center'>
                     <div className='tw-text-base tw-font-semibold'>Recent Orders</div>
-                    <Link to="/orders" className='grey_color tw-bg-[#ECECEC] tw-h-7 tw-w-20 tw-flex tw-items-center tw-justify-center tw-rounded-full tw-text-xs tw-font-medium'>View All</Link>
+                    <buttton to="dataTable/orders" onClick={goToOrders} className='grey_color tw-bg-[#ECECEC] tw-h-7 tw-w-20 tw-flex tw-items-center tw-justify-center tw-rounded-full tw-text-xs tw-font-medium'>View All</buttton>
                 </div>
                 <DataTable value={ordered_products} tableStyle={{ minWidth: '50rem', height: '100%', background: 'white' }} >
                     {
