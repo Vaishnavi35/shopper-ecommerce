@@ -35,8 +35,14 @@ export default function ProductDetails() {
   const addColor = () => {
     let selected_color = getValues('colorPicker');
     let colors = getValues('colors');
-    if(selected_color && colors && !colors.includes(selected_color)){
-      setValue('colors', [...colors, selected_color]);
+    let color_name = getValues("color_name");
+    
+    if(selected_color && color_name && colors && !colors.includes(selected_color)){
+      let color = {
+        name : color_name,
+        color : selected_color
+      }
+      setValue('colors', [...colors, color]);
     }
     console.log(" color :", colors);
   }
@@ -125,22 +131,27 @@ export default function ProductDetails() {
                           />
                         )}
                       />
-                      <button type='button' onClick={addColor}>Add Color</button>
+                      
                   </div>
+                  <div className=' tw-grid'>
+                    <label htmlFor="">Color name</label>
+                    <input type="text" {...register("color_name")} className='tw-border-2 tw-border-[#E6E7E8] tw-rounded-lg'/>
+                  </div>
+                  <button type='button' onClick={addColor}>Add Color</button>
                   <div>
                     <ul>
-                      {getValues('colors').map((color, index) => (
-                        <li key={index} style={{ display: 'flex', alignItems: 'center' }}>
+                      {getValues('colors').map((val, index) => (
+                        <li key={`color_${val.color}`} style={{ display: 'flex', alignItems: 'center' }}>
                           <div
                             style={{
-                              backgroundColor: `#${color}`,
+                              backgroundColor: `#${val.color}`,
                               width: '20px',
                               height: '20px',
                               marginRight: '10px',
                               border: '1px solid #000',
                             }}
                           />
-                          #{color}
+                          #{val.name}
                         </li>
                       ))}
                     </ul>
