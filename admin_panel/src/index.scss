@@ -82,3 +82,22 @@ input[type = "checkbox"]{
 .p-menu .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover .p-menuitem-link .p-menuitem-text{
   color: #8bc34a !important;
 }
+input[type = "text"], input[type = "number"]{
+  border: 2px solid #E6E7E8;
+  height: 40px;
+  padding-inline: 12px;
+  border-radius: 0.5rem;
+}
+.p-dropdown-label.p-inputtext{
+  padding-inline: 12px;
+  padding-top: 0;
+  padding-bottom: 0;
+  display: grid;
+  align-items: center;
+}
+.p-chips-multiple-container{
+  width: 100%;
+}
+.p-chips-input-token{
+  height: 40px;
+}
