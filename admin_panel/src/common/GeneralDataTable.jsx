@@ -196,7 +196,7 @@ export default function GeneralDataTable() {
                 }
                 <div className=' tw-relative tw-w-64 tw-h-10'>
                     <BsSearch className=' tw-absolute tw-top-3 tw-w-5 tw-h-5 tw-left-3'/>
-                    <input type='text' className=' tw-h-10  tw-w-64 tw-border-2 tw-border-[#E6E7E8] tw-pl-10  tw-rounded-lg tw-capitalize' value={globalFilter} onChange={(e) => setGlobalFilter(e.target.value)} placeholder={`Search ${sectionType}`} />
+                    <input type='text' className=' tw-h-10  tw-w-64 tw-border-2 tw-border-[#E6E7E8] !tw-pl-10  tw-rounded-lg tw-capitalize' value={globalFilter} onChange={(e) => setGlobalFilter(e.target.value)} placeholder={`Search ${sectionType}`} />
                 </div>
             </div>
         </div>
