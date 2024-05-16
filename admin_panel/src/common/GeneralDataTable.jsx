@@ -7,6 +7,7 @@ import { Menu } from 'primereact/menu';
 import { useNavigate, Link } from "react-router-dom";
 import {dataTableDetails} from '../../dataTableDetails';
 import { useSelector } from 'react-redux';
+import { Button } from 'primereact/button';
 
 export default function GeneralDataTable() {
 
@@ -183,6 +184,10 @@ export default function GeneralDataTable() {
         }
     };
 
+    const goToProductDetails = () => {
+        navigate("/productDetails");
+    }
+
     const header = (
         <div className=' tw-flex tw-justify-between tw-px-10 tw-py-5 tw-items-center'>
             <div className=' tw-text-lg tw-text-[#0E1422] tw-font-medium tw-capitalize'>
@@ -190,9 +195,9 @@ export default function GeneralDataTable() {
             </div>
             <div className="tw-flex tw-gap-5">
                 { (sectionType === 'products' ||  sectionType === 'categories' ||  sectionType === 'attributes') && 
-                    <button className=' tw-h-10  tw-w-32 shopper-bgcolor tw-text-white tw-rounded-md  tw-text-sm tw-font-medium'> 
-                        <Link to="/productDetails">Add {sectionType} </Link>
-                    </button>
+                    <Button className=' tw-h-10 tw-grid tw-w-32 shopper-bgcolor tw-text-white tw-rounded-md  tw-text-sm tw-font-medium' onClick={goToProductDetails}> 
+                        Add {sectionType}
+                    </Button>
                 }
                 <div className=' tw-relative tw-w-64 tw-h-10'>
                     <BsSearch className=' tw-absolute tw-top-3 tw-w-5 tw-h-5 tw-left-3'/>
