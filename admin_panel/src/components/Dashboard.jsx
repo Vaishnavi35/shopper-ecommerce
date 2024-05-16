@@ -37,7 +37,7 @@ const Dashboard = () => {
 
     const goToOrders = () => {
         navigate('dataTable/orders');
-        dispatch(selectLeftMenu('Orders'));
+        dispatch(selectLeftMenu('orders'));
     }
 
     return(
