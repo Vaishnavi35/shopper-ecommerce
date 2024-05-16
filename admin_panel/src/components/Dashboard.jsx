@@ -135,7 +135,7 @@ const Dashboard = () => {
             <div className='tw-col-span-2 tw-w-full tw-border-[#E9E9EB] tw-border-2 tw-rounded-lg tw-p-5 tw-h-full tw-bg-white'>
                 <div className='tw-flex tw-gap-5 tw-bg-white tw-pb-5 tw-items-center'>
                     <div className='tw-text-base tw-font-semibold'>Recent Orders</div>
-                    <buttton to="dataTable/orders" onClick={goToOrders} className='grey_color tw-bg-[#ECECEC] tw-h-7 tw-w-20 tw-flex tw-items-center tw-justify-center tw-rounded-full tw-text-xs tw-font-medium'>View All</buttton>
+                    <button to="dataTable/orders" onClick={goToOrders} className='grey_color tw-bg-[#ECECEC] tw-h-7 tw-w-20 tw-flex tw-items-center tw-justify-center tw-rounded-full tw-text-xs tw-font-medium'>View All</button>
                 </div>
                 <DataTable value={ordered_products} tableStyle={{ minWidth: '50rem', height: '100%', background: 'white' }} >
                     {
