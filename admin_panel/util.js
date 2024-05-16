@@ -5,7 +5,7 @@ import Product from './assets/Product.png';
 import Settings from './assets/Settings.png';
 import Users from './assets/Users.png';
 const moment = require('moment');
-// import {LeftMenu} from "./src/common/LeftMenu";
+
 
 function changeDateFormat(dateString) {
     return moment(dateString).format('DD MMM, YYYY');
@@ -104,30 +104,7 @@ export const dashboard = [
   {"day": 30, "sales_amount": 1300, "customers": 24},
   {"day": 31, "sales_amount": 1200, "customers": 20}
 ]
-
-export const extras_menus = () => [
-  {
-      label: 'Contact form',
-      action: 'extras_contact_form',
-      command: (event) => leftMenuFn('extras_contact_form')
-  },
-  {
-      label: 'Categories',
-      action: 'extras_categories',
-      command: (event) => leftMenuFn('extras_categories')
-  },
-  {
-      label: 'Attributes',
-      action: 'extras_attributes',
-      command: (event) => leftMenuFn('extras_attributes')
-  },
-  {
-      label: 'Newsletters',
-      action: 'extras_newsletters',
-      command: (event) => leftMenuFn('extras_newsletters')
-  }
-];
-
+    
 export const categories = [
   { label: 'Home and Living', value: 'Home and Living' },
   { label: 'Kitchen and Dining', value: 'Kitchen and Dining' }
@@ -155,6 +132,4 @@ export const subCategories = {
       { label: 'Dining Furniture', value: 'Dining Furniture' }
   ]
 };
-    
-    // export {left_menu_list};
     
