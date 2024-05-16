@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import {left_menu_list, extras_menus} from '../../util';
+import {left_menu_list} from '../../util';
 import Add from '../../assets/Add.png';
 import Right from '../../assets/Chevron Right.png';
 import Logout from '../../assets/Logout.png';
@@ -14,26 +14,34 @@ export const LeftMenu = () => {
   const dispatch = useDispatch();
   const leftMenu = useSelector((state) => state.leftMenu.leftMenu);
   const extrasMenuRef = useRef(null);
-  const [showExtrasMenus, setShowExtrasMenus] = useState(false);
 
-  const leftMenuFn = (param,event = '') =>  {
+  const leftMenuFn = (param) =>  {
     // setLeftMenu(param);
     let path = param.toLowerCase();
     dispatch(selectLeftMenu(path));
-    if(path != 'extras'){
-      if(path == "dashboard"){
-        path = `/`;
-      }else if (path == "settings") {
-        path = "/settings";
-      }else{
-        path = `/dataTable/${path}`;
-      }
-      navigate(path);
+    if(path == "dashboard"){
+      path = `/`;
+    }else if (path == "settings") {
+      path = "/settings";
     }else{
-      setShowExtrasMenus(true);
-      extrasMenuRef.current.toggle(event)
+      path = `/dataTable/${path}`;
     }
+    navigate(path);
   }
+
+  const extras_menus = [
+    {
+        label: 'Categories',
+        action: 'extras_categories',
+        command: (event) => leftMenuFn('extras_categories')
+    },
+    {
+        label: 'Attributes',
+        action: 'extras_attributes',
+        // url: '/dataTable/extras_attributes'
+        command: (event) => leftMenuFn('extras_attributes')
+    },
+  ];
 
   const extrasMenuClicked = (action) => {
     console.log("action : ",action);
@@ -60,7 +68,7 @@ export const LeftMenu = () => {
         </ol>
         <div className='tw-border-[#E9E9EB] tw-border'></div>
         <div className='tw-px-5'>
-          <li className='tw-flex tw-gap-x-3 tw-h-10 tw-w-full grey_color tw-items-center tw-px-6 tw-rounded-md tw-mt-12' aria-controls="extras_menu" aria-haspopup onClick={() => leftMenuFn("Extras",event)}>
+          <li className='tw-flex tw-gap-x-3 tw-h-10 tw-w-full grey_color tw-items-center tw-px-6 tw-rounded-md tw-mt-12' aria-controls="extras_menu" aria-haspopup onClick={(event) => extrasMenuRef.current.toggle(event)}>
             <img src={Add} alt="extra_add_icon"/>
             Extras
           </li>
@@ -74,7 +82,7 @@ export const LeftMenu = () => {
         </div>
         <img src={Logout} alt="Logout" className='tw-cursor-pointer'/>
       </nav>
-      {/* <Menu model={extras_menus} id="extras_menu" popupAlignment="right" ref={extrasMenuRef} popup className=' tw-w-32' /> */}
+      <Menu model={extras_menus} id="extras_menu" popupAlignment="right" ref={extrasMenuRef} popup className=' tw-w-32' />
     </div>
   )
 }
