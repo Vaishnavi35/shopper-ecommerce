@@ -1,0 +1,49 @@
+
+  /* Optionally, you can also specify borders for the header cells */
+.p-datatable {
+    .p-datatable-thead th {
+      border-bottom: 1px solid #ECECEC; /* Adjust color and style as needed */
+      border-top: 1px solid #ECECEC; 
+    }
+    .p-datatable-tbody td {
+      border-bottom: 1px solid #ECECEC; /* Adjust color and style as needed */
+    }
+    .p-datatable-thead {
+      height: 45px;
+    }
+} 
+
+.p-datatable-header{
+  padding: 0;
+}
+.p-dropdown-label.p-inputtext{
+  padding-inline: 12px;
+  padding-top: 0;
+  padding-bottom: 0;
+  display: grid;
+  align-items: center;
+}
+.p-chips-multiple-container{
+  width: 100%;
+}
+.p-chips-input-token{
+  height: 40px;
+}
+.p-menu-list a{
+  display: flex;
+  justify-content: center;
+  background: #fff;
+}
+.p-menu .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover .p-menuitem-link .p-menuitem-text{
+  color: #8bc34a !important;
+}
+.p-datatable-table{
+  padding-inline: 0 !important;
+}
+.p-button:focus {
+  box-shadow: none;
+}
+.p-button{
+  border: none;
+  padding: 0;
+}
