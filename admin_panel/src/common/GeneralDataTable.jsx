@@ -68,7 +68,7 @@ export default function GeneralDataTable() {
                 id =  dataTableDetails?.categories.columns;
                 break;
             case 'attributes': 
-                id =  dataTableDetails?.attributes.columns;
+                columns =  dataTableDetails?.attributes.columns;
                 break;
             // Add more cases for other section types if needed
             default:
