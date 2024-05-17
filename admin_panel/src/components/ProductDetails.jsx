@@ -14,6 +14,9 @@ import { ColorPicker } from 'primereact/colorpicker';
 import { Stepper } from 'primereact/stepper';
 import { StepperPanel } from 'primereact/stepperpanel';
 import { FileUpload } from 'primereact/fileupload';
+import { IoCloseOutline } from "react-icons/io5";
+import { ImImages } from "react-icons/im";
+
 
 export default function ProductDetails() {
 
@@ -75,9 +78,6 @@ export default function ProductDetails() {
     );
   };
 
-  const chooseOptions = { icon: 'pi pi-fw pi-images', iconOnly: true, className: 'custom-choose-btn' };
-  const uploadOptions = { icon: 'pi pi-fw pi-upload', iconOnly: true, className: 'custom-upload-btn' };
-  const cancelOptions = { icon: 'pi pi-fw pi-times', iconOnly: true, className: 'custom-cancel-btn' };
 
   const onUpload = (event) => {
     const file = event.files[0];
@@ -103,6 +103,38 @@ export default function ProductDetails() {
       fileUploadRef.current.click()();
     }
   };
+
+  const onTemplateRemove = ( callback) => {
+    callback();
+  };
+
+  const chooseOptions = { icon: 'pi pi-fw pi-images', iconOnly: true, className: 'custom-choose-btn p-button-rounded p-button-outlined' };
+  const uploadOptions = { icon: 'pi pi-fw pi-cloud-upload', iconOnly: true, className: 'custom-upload-btn p-button-success p-button-rounded p-button-outlined' };
+  const cancelOptions = { icon: 'pi pi-fw pi-times', iconOnly: true, className: 'custom-cancel-btn p-button-danger p-button-rounded p-button-outlined' };
+
+  
+
+  const imageList = (file, props) => {
+    return (
+            <div className=" tw-flex tw-items-center tw-bg-[#ECECEC] tw-rounded-md tw-relative">
+                <img alt={file.name} role="presentation" src={file.objectURL} />
+                <div className=' tw-absolute -tw-top-2 -tw-right-2 tw-bg-[#ECECEC] tw-rounded-full tw-w-6 tw-h-6 tw-text-center'>
+                  <Button type="button" icon="pi pi-times" className=" grey_color tw-bg-transparent p-button-rounded p-button-danger ml-auto tw-w-4 tw-h-4 tw-border-0" onClick={() => onTemplateRemove(props.onRemove)} />
+                </div>
+            </div>
+    );
+};
+
+const emptyTemplate = () => {
+  return (
+      <div className="flex align-items-center flex-column">
+          <i className="pi pi-image mt-3 p-5" style={{ fontSize: '5em', borderRadius: '50%', backgroundColor: 'var(--surface-b)', color: 'var(--surface-d)' }}></i>
+          <span style={{ fontSize: '1.2em', color: 'var(--text-color-secondary)' }} className="my-5">
+              Drag and Drop Image Here
+          </span>
+      </div>
+  );
+};
 
 
   return (
@@ -149,21 +181,23 @@ export default function ProductDetails() {
                           <label htmlFor="">Description</label>
                             <Editor className=' tw-h-40 tw-max-w-[675px]' headerTemplate={renderEditorHeader}/>
                           </div>
-                          <Button type='button' label="Next" className=' tw-mt-20 tw-h-10  tw-w-32 shopper-bgcolor tw-text-white tw-rounded-md  tw-text-sm tw-font-medium' onClick={() => stepperRef.current.nextCallback()}/>
+                          <Button type='button' label="Next" className=' tw-mt-20 tw-h-10  tw-w-32' onClick={() => stepperRef.current.nextCallback()}/>
+
+                          {/* <Button type='button' label="Next" className=' tw-mt-20 tw-h-10  tw-w-32 shopper-bgcolor tw-text-white tw-rounded-md  tw-text-sm tw-font-medium' onClick={() => stepperRef.current.nextCallback()}/> */}
                         </div>
                     </StepperPanel>
                     <StepperPanel>
                       <div  className=' tw-grid tw-gap-4'>
                         <div className=' tw-grid'>
                           <label htmlFor="">Images</label>
-                          <FileUpload  ref={fileUploadRef} mode="basic" name="demo[]" url="/api/upload" accept="image/*" maxFileSize={1000000} auto chooseLabel="Browse" />
-                          <label htmlFor="fileUpload" style={{ display: 'inline-block' }}>
+                          <FileUpload ref={fileUploadRef} multiple name="demo[]" url="/api/upload" accept="image/*" maxFileSize={1000000} itemTemplate={imageList} emptyTemplate={emptyTemplate} chooseOptions={chooseOptions} uploadOptions={uploadOptions} cancelOptions={cancelOptions}/>
+                          {/* <label htmlFor="fileUpload" style={{ display: 'inline-block' }}> */}
                           {/* <Button type='button'
                           label="Upload Image"
                           icon="pi pi-upload"
                           
                         /> */}
-                        </label>
+                        {/* </label> */}
                         {/* <FileUpload
                         id="fileUpload"
                           ref={fileUploadRef}
@@ -173,12 +207,12 @@ export default function ProductDetails() {
                           customUpload
                           auto
                         /> */}
-                        {uploadedImage && (
+                        {/* {uploadedImage && (
                           <div className="p-d-flex p-ai-center p-jc-between" style={{ marginTop: '10px' }}>
                             <img src={uploadedImage} alt="Uploaded" style={{ width: '100px' }} />
                             <Button icon="pi pi-times" className="p-button-danger" onClick={onRemove} />
                           </div>
-                        )}
+                        )} */}
                           {/* <input type='file' name="" id="" className='tw-border-2 tw-border-[#E6E7E8] tw-rounded-lg'/> */}
                           {/* <FileUpload name="demo[]" url={'/api/upload'}  customUpload accept="image/*" maxFileSize={1000000} auto
       itemTemplate={itemTemplate}
