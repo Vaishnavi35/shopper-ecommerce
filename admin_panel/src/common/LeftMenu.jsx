@@ -16,6 +16,8 @@ export const LeftMenu = () => {
   const extrasMenuRef = useRef(null);
 
   const leftMenuFn = (param) =>  {
+  
+    // throw new Error("error throw")
     // setLeftMenu(param);
     let path = param.toLowerCase();
     dispatch(selectLeftMenu(path));
@@ -33,13 +35,13 @@ export const LeftMenu = () => {
     {
         label: 'Categories',
         action: 'extras_categories',
-        command: (event) => leftMenuFn('extras_categories')
+        command: (event) => leftMenuFn('categories')
     },
     {
         label: 'Attributes',
         action: 'extras_attributes',
         // url: '/dataTable/extras_attributes'
-        command: (event) => leftMenuFn('extras_attributes')
+        command: (event) => leftMenuFn('attributes')
     },
   ];
 
@@ -68,7 +70,7 @@ export const LeftMenu = () => {
         </ol>
         <div className='tw-border-[#E9E9EB] tw-border'></div>
         <div className='tw-px-5'>
-          <li className='tw-flex tw-gap-x-3 tw-h-10 tw-w-full grey_color tw-items-center tw-px-6 tw-rounded-md tw-mt-12' aria-controls="extras_menu" aria-haspopup onClick={(event) => extrasMenuRef.current.toggle(event)}>
+          <li className={` ${['attributes', 'categories'].includes(leftMenu)? 'shopper-color' : ''} tw-flex tw-gap-x-3 tw-h-10 tw-w-full grey_color tw-items-center tw-px-6 tw-rounded-md tw-mt-12' aria-controls="extras_menu" aria-haspopup`} onClick={(event) => extrasMenuRef.current.toggle(event)}>
             <img src={Add} alt="extra_add_icon"/>
             Extras
           </li>
@@ -82,7 +84,7 @@ export const LeftMenu = () => {
         </div>
         <img src={Logout} alt="Logout" className='tw-cursor-pointer'/>
       </nav>
-      <Menu model={extras_menus} id="extras_menu" popupAlignment="right" ref={extrasMenuRef} popup className=' tw-w-32' />
+      <Menu model={extras_menus.map(item => ({...item, className : item.label.toLowerCase() == leftMenu ? 'shopper-color' : ''}))} id="extras_menu" popupAlignment="right" ref={extrasMenuRef} popup className='tw-w-32'/>
     </div>
   )
 }
