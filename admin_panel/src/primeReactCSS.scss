@@ -49,4 +49,24 @@
 .p-fileupload-row{
   width: 56px;
   height: 56px;
+  margin-bottom: 10px;
+}
+.p-fileupload-row:last-child{
+  margin-bottom: 0;
+}
+div:has(> .p-fileupload-row){
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  gap: 10px;
+  justify-items: center;
+}
+.p-chips-input-token {
+    padding: 0;
+    input[type = "text"]{
+      border : 0px;
+    }
+}
+.p-chips-multiple-container{
+  padding: 0;
 }
