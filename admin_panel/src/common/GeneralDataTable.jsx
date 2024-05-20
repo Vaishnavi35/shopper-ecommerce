@@ -37,10 +37,10 @@ export default function GeneralDataTable() {
                 action =  dataTableDetails?.customers.actions;
                 break;
             case 'categories': 
-                id =  dataTableDetails?.categories.actions;
+                action =  dataTableDetails?.categories.actions;
                 break;
             case 'attributes': 
-                id =  dataTableDetails?.attributes.actions;
+                action =  dataTableDetails?.attributes.actions;
                 break;
             // Add more cases for other section types if needed
             default:
@@ -65,7 +65,7 @@ export default function GeneralDataTable() {
                 columns = dataTableDetails?.customers.columns;
                 break;
             case 'categories': 
-                id =  dataTableDetails?.categories.columns;
+                columns =  dataTableDetails?.categories.columns;
                 break;
             case 'attributes': 
                 columns =  dataTableDetails?.attributes.columns;
