@@ -20,6 +20,9 @@ import GeneralDataTable from "./common/GeneralDataTable";
 import PageNotFound from "./common/PageNotFound";
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from "./service/ErrorFallback";
+import AuthProvider from "./service/AuthProvider";
+import PrivateRoute from "./service/PrivateRoute";
+import Login from "./common/Login";
 
 
 const App = () => {
@@ -39,16 +42,20 @@ const App = () => {
                 <Provider store={leftMenuStore}>
                     <PrimeReactProvider value={prime_react_values}>
                         <BrowserRouter>
-                            <LeftMenu></LeftMenu>
-                                <Routes>
+                            <AuthProvider>
+                            <Routes>
+                                <Route path="/login" element={<Login />} />
+                                <Route element={<PrivateRoute />}>
                                     <Route path="/" exact index element={<Dashboard />}/>
                                     <Route path="/productDetails" element={<ProductDetails />} />
                                     <Route path="/productDetails/:id" element={<ProductDetails />} />
                                     <Route path="/settings" element={<Settings />} />
                                     <Route path="dataTable/:section" element={<GeneralDataTable />} />
                                     <Route path="*" element={<PageNotFound />} />
+                                </Route>
                                 </Routes>
-                            </BrowserRouter>
+                            </AuthProvider>
+                        </BrowserRouter>
                     </PrimeReactProvider>
                 </Provider>
             </ErrorBoundary>
