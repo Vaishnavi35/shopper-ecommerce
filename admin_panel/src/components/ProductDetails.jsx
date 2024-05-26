@@ -177,8 +177,8 @@ const emptyTemplate = () => {
 
   const listProductsUI = (product, index) => {
       return (
-        <div className=' tw-flex' key={`product_${product.title}_${index}`}>
-            <Carousel value={product.image} numVisible={3} numScroll={3} itemTemplate={productImageTemplate} />
+        <div className=' tw-flex tw-h-40 tw-justify-between tw-px-5 tw-gap-y-5' key={`product_${product.title}_${index}`}>
+            <Carousel value={product.image} numVisible={1} numScroll={1} containerClassName="CarouselContainer" contentClassName="CarouselContent" itemTemplate={productImageTemplate} />
             <div>
               Quantity : {product.quantity}<br />
               Size : {product?.sizes?.map((v,i) => {
@@ -193,14 +193,14 @@ const emptyTemplate = () => {
                   {
                     product?.colors?.map((val, index) => {
                       return(
-                        <>
+                        <div className=' tw-flex'>
                           <div key={`product_color_list_${val}`} className=' tw-w-5 tw-h-5 tw-mr-3 tw-rounded-full'
                               style={{
                                 backgroundColor: `#${val.color}`,
                               }}
                             />
                             #{val.name}
-                        </>
+                        </div>
                       )
                     })
                   }
@@ -216,7 +216,7 @@ const emptyTemplate = () => {
         <div className=' tw-h-20 tw-border-2 tw-border-b-[#ECECEC] tw-grid tw-items-center tw-pl-10'>
           Add Product
         </div>
-        <div className=' tw-max-h-[80%] tw-overflow-y-auto tw-scroll-smooth tw-flex tw-justify-center'>
+        <div className=' tw-max-h-[80%] tw-overflow-y-auto tw-scroll-smooth tw-flex tw-items-center tw-flex-col'>
           <form className='tw-p-10 tw-w-1/2' onSubmit={handleSubmit(productSubmit)}>
               <Stepper ref={stepperRef} linear = "true">
                     <StepperPanel>
@@ -342,7 +342,7 @@ const emptyTemplate = () => {
               </Stepper>
           </form>
           { products && 
-              <div className=' w-full '>
+              <div className=' tw-w-full'>
                 <DataView value={products} listTemplate={listProducts} />
               </div>
           }

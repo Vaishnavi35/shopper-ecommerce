@@ -6,9 +6,9 @@ import Login from '../common/Login';
 import { LeftMenu } from '../common/LeftMenu';
 
 export default function PrivateRoute() {
- const {loggedIn} = useAuth();
+ const {login} = useAuth();
 
-    if(!loggedIn){
+    if(!login){
         return <Navigate to="/login" />
     }else{
         return (

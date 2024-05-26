@@ -43,16 +43,16 @@ const App = () => {
                     <PrimeReactProvider value={prime_react_values}>
                         <BrowserRouter>
                             <AuthProvider>
-                            <Routes>
-                                <Route path="/login" element={<Login />} />
-                                <Route element={<PrivateRoute />}>
-                                    <Route path="/" exact index element={<Dashboard />}/>
-                                    <Route path="/productDetails" element={<ProductDetails />} />
-                                    <Route path="/productDetails/:id" element={<ProductDetails />} />
-                                    <Route path="/settings" element={<Settings />} />
-                                    <Route path="dataTable/:section" element={<GeneralDataTable />} />
-                                    <Route path="*" element={<PageNotFound />} />
-                                </Route>
+                                <Routes>
+                                    <Route path="/login" element={<Login />} />
+                                    <Route element={<PrivateRoute />}>
+                                        <Route path="/" exact index element={<Dashboard />}/>
+                                        <Route path="/productDetails" element={<ProductDetails />} />
+                                        <Route path="/productDetails/:id" element={<ProductDetails />} />
+                                        <Route path="/settings" element={<Settings />} />
+                                        <Route path="dataTable/:section" element={<GeneralDataTable />} />
+                                        <Route path="*" element={<PageNotFound />} />
+                                    </Route>
                                 </Routes>
                             </AuthProvider>
                         </BrowserRouter>

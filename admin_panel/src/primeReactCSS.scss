@@ -70,3 +70,20 @@ div:has(> .p-fileupload-row){
 .p-chips-multiple-container{
   padding: 0;
 }
+.CarouselContainer{
+  height: 160px;
+}
+.CarouselContent{
+  height: 160px;
+  width: 200px;
+}
+.CarouselContainer img
+{
+  width: 100px;
+  height: 100px;
+}
+.CarouselContainer div :has(> img)
+{
+  display: flex;
+  justify-content: center;
+}

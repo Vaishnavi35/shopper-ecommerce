@@ -1,11 +1,23 @@
-import React, { useContext, createContext } from 'react';
+import React, { useContext, createContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 export default function AuthProvider({children}) {
-    const loggedIn = false;
+    const[login, setLogin] = useState(false);
+    const navigate = useNavigate();
+
+    const loginFn = () => {
+      setLogin(true);
+      navigate("/");
+    }
+
+    const logout = () => {
+      setLogin(false);
+      navigate("/login");
+    }
 
   return (
-    <AuthContext.Provider value={loggedIn}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{login,loginFn,logout}}>{children}</AuthContext.Provider>
   )
 }
 

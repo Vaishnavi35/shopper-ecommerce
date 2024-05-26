@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import { selectLeftMenu } from '../slices/leftMenuSlice';
 import { Menu } from 'primereact/menu'; 
+import { useAuth } from '../service/AuthProvider';
 
 export const LeftMenu = () => {
   // const [leftMenu, setLeftMenu] = useState("Dashboard");
@@ -14,6 +15,7 @@ export const LeftMenu = () => {
   const dispatch = useDispatch();
   const leftMenu = useSelector((state) => state.leftMenu.leftMenu);
   const extrasMenuRef = useRef(null);
+  const auth = useAuth();
 
   const leftMenuFn = (param) =>  {
   
@@ -82,7 +84,7 @@ export const LeftMenu = () => {
           <img src={Right} alt="Right" />
           {leftMenu}
         </div>
-        <img src={Logout} alt="Logout" className='tw-cursor-pointer'/>
+        <img src={Logout} alt="Logout" className='tw-cursor-pointer' onClick={()=>auth.logout()}/>
       </nav>
       <Menu model={extras_menus.map(item => ({...item, className : item.label.toLowerCase() == leftMenu ? 'shopper-color' : ''}))} id="extras_menu" popupAlignment="right" ref={extrasMenuRef} popup className='tw-w-32'/>
     </div>
