@@ -22,7 +22,8 @@ import { Carousel } from 'primereact/carousel';
 
 export default function ProductDetails() {
 
-  const {register, handleSubmit, control, setValue, watch, formState: { errors }, getValues} = useForm({
+  const {register, handleSubmit, control, setValue, watch, formState: { errors, isValid, isSubmitting }, getValues} = useForm({
+    mode: "onSubmit",
     defaultValues: {
       colors: []
     }
@@ -172,12 +173,12 @@ const emptyTemplate = () => {
           return listProductsUI(product, index);
       });
 
-      return <div className="grid grid-nogutter">{list}</div>;
+      return <div className="grid grid-nogutter tw-grid tw-gap-y-5 tw-mb-10">{list}</div>;
   };
 
   const listProductsUI = (product, index) => {
       return (
-        <div className=' tw-flex tw-h-40 tw-justify-between tw-px-5 tw-gap-y-5' key={`product_${product.title}_${index}`}>
+        <div className=' tw-flex tw-h-40 tw-justify-between tw-px-5 tw-shadow-[0px_1px_4px_rgba(0,0,0,0.16)] tw-items-center tw-rounded-lg' key={`product_${product.title}_${index}`}>
             <Carousel value={product.image} numVisible={1} numScroll={1} containerClassName="CarouselContainer" contentClassName="CarouselContent" itemTemplate={productImageTemplate} />
             <div>
               Quantity : {product.quantity}<br />
@@ -223,54 +224,75 @@ const emptyTemplate = () => {
                       <div className=' tw-grid tw-gap-4'>
                           <div className=' tw-grid'>
                             <label htmlFor="">Title</label>
-                            <input type="text" name="" id="" {...register("title")} className='tw-border-2 tw-border-[#E6E7E8] tw-rounded-lg'/>
+                            <input type="text" {...register("title", {required: true})} defaultValue={""} className='tw-border-2 tw-border-[#E6E7E8] tw-rounded-lg'/>
+                            {errors.title?.type == "required" && (
+                              <p className=' p-error'>Title is required.</p>
+                            )}
                           </div>
                           <div className=' tw-grid'>
                             <label htmlFor="">Category</label>
-                            <Controller name='category' control={control} render={({field}) => (
+                            <Controller name='category' control={control} rules={{required: "Category is required."}} defaultValue={""} render={({field}) => (
                                   <Dropdown {...field}  options={categories} optionLabel="value" placeholder="Select category" className="  tw-border-2 tw-h-11 tw-border-[#E6E7E8] tw-rounded-lg" />
                               )} 
                             />
+                            {errors.category && (
+                              <p className=' p-error'>{errors.category.message}</p>
+                            )}
                           </div>
                           <div className=' tw-grid'>
                             <label htmlFor="">Sub Category</label>
-                            <Controller name='sub_category' control={control} render={({field}) => (
+                            <Controller name='sub_category' control={control} rules={{required: "Sub Category is required."}} defaultValue={""} render={({field}) => (
                                   <Dropdown {...field}  options={subCategoryOptions} optionLabel="value" placeholder="Select sub-category" className="  tw-border-2 tw-h-11 tw-border-[#E6E7E8] tw-rounded-lg" />
                               )} 
                             />
+                            {errors.sub_category && (
+                              <p className=' p-error'>{errors.sub_category.message}</p>
+                            )}
                           </div>
                           <div className=' tw-grid'>
                               <label htmlFor="">Stock status</label>
-                              <Controller name='stock_status' control={control} render={({field}) => (
+                              <Controller name='stock_status' control={control} rules={{required: "Stock status is required."}} defaultValue={""} render={({field}) => (
                                   <Dropdown {...field}  options={stock_status_list} optionLabel="name" placeholder="Select stock status" className="  tw-border-2 tw-h-11 tw-border-[#E6E7E8] tw-rounded-lg" />
                                 )} 
                               />
+                              
                           </div>
                           <div className=' tw-grid'>
-                            <label htmlFor="">SKU</label>
-                            <input type="text" {...register("sku")} className='tw-border-2 tw-border-[#E6E7E8] tw-rounded-lg'/>
+                              <label htmlFor="">SKU</label>
+                              <input type="text" {...register("sku",{required: true})} defaultValue={""} className='tw-border-2 tw-border-[#E6E7E8] tw-rounded-lg'/>
+                              {errors.sku?.type == "required" && (
+                                <p className=' p-error'>SKU is required.</p>
+                              )}
                           </div>
                           <div className=''>
-                          <label htmlFor="">Description</label>
-                            <Editor className=' tw-h-40 tw-max-w-[675px]' headerTemplate={renderEditorHeader}/>
+                              <label htmlFor="">Description</label>
+                              <Controller name='description' control={control} rules={{required: "Description is required."}} defaultValue={""} render={({field}) => (
+                                      <Editor className=' tw-h-40 tw-max-w-[675px]'  {...field} headerTemplate={renderEditorHeader}/>
+                                    )} 
+                                />
+                                {errors.description && (
+                                  <p className=' p-error'>{errors.description.message}</p>
+                                )}
                           </div>
-                          <Button type='button' label="Next" className=' tw-mt-20 tw-h-10  tw-w-32' onClick={() => stepperRef.current.nextCallback()}/>
-
-                          {/* <Button type='button' label="Next" className=' tw-mt-20 tw-h-10  tw-w-32 shopper-bgcolor tw-text-white tw-rounded-md  tw-text-sm tw-font-medium' onClick={() => stepperRef.current.nextCallback()}/> */}
+                          <Button type='button' label="Next" className=' tw-mt-20 tw-h-10  tw-w-32'  onClick={() => stepperRef.current.nextCallback()} />
                         </div>
                     </StepperPanel>
                     <StepperPanel>
                       <div  className=' tw-grid tw-gap-4'>
                         <div className=' tw-grid'>
-                          <label htmlFor="">Images</label>
-                          <Controller name='image[]' control={control} defaultValue={[]} render={({field}) => (
-                            <FileUpload ref={fileUploadRef} name={field.name} multiple  url="/api/upload" accept="image/*" maxFileSize={1000000} itemTemplate={imageList} emptyTemplate={emptyTemplate} chooseOptions={chooseOptions} uploadOptions={uploadOptions} cancelOptions={cancelOptions} onSelect={(e) => field.onChange(e.files)}
-                            onRemove={(e) => {
-                              const updatedFiles = field.value.filter(file => !e.files.includes(file));
-                              field.onChange(updatedFiles);
-                            }}
-                            onClear={() => field.onChange([])}/>
-                          )} />
+                            <label htmlFor="">Images</label>
+                            <Controller name='image[]' control={control} defaultValue={[]} rules={{required: "Image is required."}} render={({field}) => (
+                                <FileUpload ref={fileUploadRef} name={field.name} multiple  url="/api/upload" accept="image/*" maxFileSize={1000000} itemTemplate={imageList} emptyTemplate={emptyTemplate} chooseOptions={chooseOptions} uploadOptions={uploadOptions} cancelOptions={cancelOptions} onSelect={(e) => field.onChange(e.files)}
+                                  onRemove={(e) => {
+                                    const updatedFiles = field.value.filter(file => !e.files.includes(file));
+                                    field.onChange(updatedFiles);
+                                  }}
+                                  onClear={() => field.onChange([])}/>
+                                )} 
+                            />
+                            {errors.image && (
+                                <p className=' p-error'>{errors.image.message}</p>
+                            )}
                         </div>
                         <div className=' tw-grid'>
                             <label htmlFor="">Colors</label>
@@ -278,6 +300,7 @@ const emptyTemplate = () => {
                                 name="colorPicker"
                                 control={control}
                                 defaultValue={"ff0000"}
+                                rules={{required: "Color is required."}}
                                 render={({ field }) => (
                                   <ColorPicker
                                     value={field.value}
@@ -286,10 +309,16 @@ const emptyTemplate = () => {
                                   />
                                 )}
                               />
+                              {errors.colorPicker && (
+                                <p className=' p-error'>{errors.colorPicker.message}</p>
+                              )}
                         </div>
                         <div className=' tw-grid'>
                             <label htmlFor="">Color name</label>
-                            <input type="text" {...register("color_name")} className='tw-border-2 tw-border-[#E6E7E8] tw-rounded-lg'/>
+                            <input type="text" {...register("color_name",{required: "Color name is required."})}  className='tw-border-2 tw-border-[#E6E7E8] tw-rounded-lg'/>
+                            {errors.color_name && (
+                                <p className=' p-error'>{errors.color_name.message}</p>
+                            )}
                         </div>
                         <Button type='button' label="Add Color" onClick={addColor} className='tw-h-10  tw-w-32 shopper-bgcolor tw-text-white tw-rounded-md  tw-text-sm tw-font-medium' />
                         {colors.length > 0 && <div>
@@ -311,6 +340,7 @@ const emptyTemplate = () => {
                             <Controller
                                 name="sizes"
                                 control={control}
+                                rules={{required: "Size is required."}}
                                 defaultValue={[]}
                                 render={({ field }) => (
                                   <Chips
@@ -320,30 +350,58 @@ const emptyTemplate = () => {
                                   />
                                 )}
                               />
+                              {errors.sizes && (
+                                <p className=' p-error'>{errors.sizes.message}</p>
+                              )}
                         </div>
                         <div className=' tw-grid'>
                           <label htmlFor="">Price</label>
-                          <Controller control={control} name='price' defaultValue={0.00} render={({field}) => (
+                          <Controller control={control} name='price' rules={{required: "Price is required.", min: 1}} defaultValue={0.00} render={({field}) => (
                               <InputNumber value={field.value} onValueChange={(e) => field.onChange(e.value)} mode="currency" currency="USD" locale="en-US" />
                           )}/>
+                          {errors.price && (
+                              <>
+                                {errors.price.type == "required" && (
+                                  <p className=' p-error'>{errors.price.message}</p>
+                                )}
+                                
+                                {errors.price.type == "min" && (
+                                  <p className=' p-error'>Price should be greater than 1.</p>
+                                )}
+                              </>
+                                
+                          )}
                         </div>
                         <div className=' tw-grid'>
                           <label htmlFor="">Quantity</label>
-                          <Controller control={control} name='quantity' defaultValue={0.00} render={({field}) => (
+                          <Controller control={control} name='quantity' rules={{required: "Quantity is required.", min: 1}} defaultValue={0.00} render={({field}) => (
                               <InputNumber value={field.value} onValueChange={(e) => field.onChange(e.value)} />
                           )}/>
+                          {errors.quantity && (
+                              <>
+                                {errors.quantity.type == "required" && (
+                                  <p className=' p-error'>{errors.quantity.message}</p>
+                                )}
+                                
+                                {errors.quantity.type == "min" && (
+                                  <p className=' p-error'>Quantity should be greater than 1.</p>
+                                )}
+                              </>
+                                
+                          )}
                         </div>
                         <div className=' tw-flex tw-justify-between'>
                             <Button type='button' label="Back" className=' tw-mt-20 tw-h-10  tw-w-32 shopper-bgcolor tw-text-white tw-rounded-md  tw-text-sm tw-font-medium' onClick={() => stepperRef.current.prevCallback()}/>
-                            <Button type='submit' label="Add Product" className=' tw-mt-20 tw-h-10  tw-w-32 shopper-bgcolor tw-text-white tw-rounded-md  tw-text-sm tw-font-medium' />
+                            <Button type='submit' label="Add" className=' tw-mt-20 tw-h-10  tw-w-32 shopper-bgcolor tw-text-white tw-rounded-md  tw-text-sm tw-font-medium' />
                         </div>
                       </div>
                     </StepperPanel>
               </Stepper>
           </form>
-          { products && 
-              <div className=' tw-w-full'>
+          { products && products.length > 0 && 
+              <div className=' tw-w-full tw-px-5'>
                 <DataView value={products} listTemplate={listProducts} />
+                <Button type='button' label="Add Product(s)" className=' tw-float-right tw-mt-10 tw-h-10 tw-w-32 shopper-bgcolor tw-text-white tw-rounded-md  tw-text-sm tw-font-medium' />
               </div>
           }
         </div>
