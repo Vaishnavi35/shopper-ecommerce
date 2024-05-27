@@ -1,4 +1,3 @@
-import ProgressBar from "react-bootstrap/ProgressBar";
 import { PieChart, Pie, BarChart, Bar, Cell, ResponsiveContainer,Tooltip,  LineChart, Line, XAxis, YAxis  } from 'recharts';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
@@ -9,6 +8,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { selectLeftMenu } from "../slices/leftMenuSlice";
 
+import { MeterGroup } from 'primereact/metergroup';
+        
+import { ProgressBar } from 'primereact/progressbar';
+        
 const Dashboard = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -17,6 +20,8 @@ const Dashboard = () => {
     const total_sales = 2400;
     const customers = 2571;
     const orders_columns = Object.keys(ordered_products[0] || {});
+    const progressbar_values = [{ label: '', value: 734, color: '#8bc34a' }];
+
 
     const best_selling = [
         {
@@ -97,7 +102,7 @@ const Dashboard = () => {
                             <div className=' tw-text-right tw-text-2xl tw-font-bold'>{orders}</div>
                         </div>
                         <div className='grey_color tw-text-xs tw-self-end tw-mb-1 tw-font-medium'>{orders_left} Left</div>
-                        <ProgressBar animated now={orders} className='tw-h-2 tw-self-end ' max={1000} min={0}/>
+                        <MeterGroup values={progressbar_values} className='tw-h-2 tw-self-end ' max={1000} min={0}/>
                     </div>
                 </div>
             {/* </div> */}
