@@ -19,13 +19,17 @@ import { ImImages } from "react-icons/im";
 import { DataView } from 'primereact/dataview';
 import { InputNumber } from 'primereact/inputnumber';
 import { Carousel } from 'primereact/carousel';
+import { useSearchParams } from 'react-router-dom';
 
 export default function ProductDetails() {
-
+  const [searchParams] = useSearchParams();
+  const [id, setId] = useState(searchParams.get("id") || 0);
+  console.log("id : ",id);
   const {register, handleSubmit, control, setValue, watch, formState: { errors, isValid, isSubmitting }, getValues} = useForm({
     mode: "onSubmit",
     defaultValues: {
-      colors: []
+      colors: [],
+      category: ""
     }
   });
   const stepperRef = useRef(null);
@@ -42,6 +46,7 @@ export default function ProductDetails() {
 
   const productSubmit = (data) => {
     console.log("data : ", data);
+    
     setProducts([...products, data]);
     const files = fileUploadRef.current.getFiles(); // Retrieve selected files
       console.log(files);
@@ -65,7 +70,11 @@ export default function ProductDetails() {
 
   useEffect(() => {
     setSubCategoryOptions(subCategories[selectedCategory] || [])
-  },[selectedCategory, setValue])
+  },[selectedCategory, setValue]);
+
+  useEffect(() => {
+    console.log("errors " , errors);
+  },[errors]);
 
   const renderEditorHeader = (
       <span className="ql-formats">
@@ -224,9 +233,9 @@ const emptyTemplate = () => {
                       <div className=' tw-grid tw-gap-4'>
                           <div className=' tw-grid'>
                             <label htmlFor="">Title</label>
-                            <input type="text" {...register("title", {required: true})} defaultValue={""} className='tw-border-2 tw-border-[#E6E7E8] tw-rounded-lg'/>
+                            <input type="text" {...register("title", {required: "Title is required."})} defaultValue={""} className='tw-border-2 tw-border-[#E6E7E8] tw-rounded-lg'/>
                             {errors.title?.type == "required" && (
-                              <p className=' p-error'>Title is required.</p>
+                              <p className=' p-error'> {errors.title.message} </p>
                             )}
                           </div>
                           <div className=' tw-grid'>
