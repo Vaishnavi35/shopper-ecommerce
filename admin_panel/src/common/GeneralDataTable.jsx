@@ -8,6 +8,7 @@ import { useNavigate, Link } from "react-router-dom";
 import {dataTableDetails} from '../../dataTableDetails';
 import { useSelector } from 'react-redux';
 import { Button } from 'primereact/button';
+import { Skeleton } from 'primereact/skeleton';
 
 export default function GeneralDataTable() {
 
@@ -211,15 +212,15 @@ export default function GeneralDataTable() {
   return (
     <div className='data_table  tw-p-10'>
         <DataTable value={data} dataKey={getDataTableDataKeyId} selectionMode="checkbox"  selection={selectedRows}  onSelectionChange={(e) => setSelectedRows(e.value)} paginator header={header} rows={5} tableStyle={{ minWidth: '50rem', paddingInline: '40px' }} emptyMessage={`No ${sectionType} are available.`}>
-            <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} ></Column>    
+            <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} body={<Skeleton shape="circle" size="4rem"/>}></Column>    
             { columns && columns.map((col,i) => {
                     if(i === 0 || i === columns?.length - 1 ){
                         return(
-                            <Column key={`${sectionType}_${col.name}`} field={col.field} header={col.name} body={(rowData) => rederCustomTemplate(rowData, i)}></Column>
+                            <Column key={`${sectionType}_${col.name}`} field={col.field} header={col.name}  body={(rowData) => rederCustomTemplate(rowData, i)} ></Column>
                         )
                     }else{
                         return(
-                            <Column key={`${sectionType}_${col.name}`} field={col.field} header={col.name}></Column>
+                            <Column key={`${sectionType}_${col.name}`} field={col.field} header={col.name} body={<Skeleton />}></Column>
                         )
                     }
                     
