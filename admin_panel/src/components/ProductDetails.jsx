@@ -25,6 +25,7 @@ export default function ProductDetails() {
   const [searchParams] = useSearchParams();
   const [id, setId] = useState(searchParams.get("id") || 0);
   console.log("id : ",id);
+
   const {register, handleSubmit, control, setValue, watch, formState: { errors, isValid, isSubmitting }, getValues} = useForm({
     mode: "onSubmit",
     defaultValues: {
@@ -75,6 +76,25 @@ export default function ProductDetails() {
   useEffect(() => {
     console.log("errors " , errors);
   },[errors]);
+
+  useEffect(() => {
+    console.log("id " , id);
+    let data = {
+      "product_id": 1,
+      "image": "https://example.com/product1.jpg",
+      "name": "Product 1",
+      "SKU": "SKU001",
+      "price": "$19.99",
+      "category": "Clothing",
+      "stock": true,
+      "available_quantity": 50,
+      "size": "M",
+      "color": "Blue"
+    };
+
+    setValue("title", data.name);
+    setValue("quantity", data.available_quantity)
+  },[id]);
 
   const renderEditorHeader = (
       <span className="ql-formats">
