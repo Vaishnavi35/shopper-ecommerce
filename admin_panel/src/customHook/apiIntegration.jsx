@@ -9,21 +9,36 @@ export const apiIntegration = (props) => {
     const [loading,setLoading] =  useState(true);
 
     useEffect(() => {
-        axios.get(props.url)
-        .then((response) => 
-            {
-                setLoading(false); 
+        const fetchData = async () => {
+            try {
+              const response = await axios.get(props.url);
+              setLoading(false); 
                 setData(response.data);
                 console.log("data : ", response);
-            }
-        )
-        .catch((error) => 
-            {
+            } catch (error) {
                 setLoading(false); 
                 setError(error);
                 console.error("error : ",error);
+            }finally{
+                setLoading(false); 
             }
-        )
+        }
+        fetchData();
+        // await axios.get(props.url)
+        // .then((response) => 
+        //     {
+        //         setLoading(false); 
+        //         setData(response.data);
+        //         console.log("data : ", response);
+        //     }
+        // )
+        // .catch((error) => 
+        //     {
+        //         setLoading(false); 
+        //         setError(error);
+        //         console.error("error : ",error);
+        //     }
+        // )
     },[])
 
     if (loading) {
