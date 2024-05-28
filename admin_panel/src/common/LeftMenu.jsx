@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectLeftMenu } from '../slices/leftMenuSlice';
 import { Menu } from 'primereact/menu'; 
 import { useAuth } from '../service/AuthProvider';
+import { Ripple } from 'primereact/ripple';
 
 export const LeftMenu = () => {
   // const [leftMenu, setLeftMenu] = useState("Dashboard");
@@ -62,9 +63,10 @@ export const LeftMenu = () => {
           {
             left_menu_list.map((v,i) => {
               return( 
-                <li key={`left_menu_${v.name}`}  className={` ${leftMenu === v.name.toLowerCase()? 'shopper-color' : ''} tw-flex tw-gap-x-3 tw-h-10 tw-w-full grey_color tw-items-center tw-px-6 tw-rounded-md tw-capitalize`} onClick={() => leftMenuFn(v.name)}>
+                <li key={`left_menu_${v.name}`}  className={` ${leftMenu === v.name.toLowerCase()? 'shopper-color' : ''} tw-flex p-ripple tw-gap-x-3 tw-h-10 tw-w-full grey_color tw-items-center tw-px-6 tw-rounded-md tw-capitalize`} onClick={() => leftMenuFn(v.name)}>
                   <img src={v.image} alt={`left_menu_image_${v.name}`}/>
                   {v.name}
+                  <Ripple />
                 </li>
               )
             })
@@ -72,9 +74,10 @@ export const LeftMenu = () => {
         </ol>
         <div className='tw-border-[#E9E9EB] tw-border'></div>
         <div className='tw-px-5'>
-          <li className={` ${['attributes', 'categories'].includes(leftMenu)? 'shopper-color' : ''} tw-flex tw-gap-x-3 tw-h-10 tw-w-full grey_color tw-items-center tw-px-6 tw-rounded-md tw-mt-12' aria-controls="extras_menu" aria-haspopup`} onClick={(event) => extrasMenuRef.current.toggle(event)}>
+          <li className={` ${['attributes', 'categories'].includes(leftMenu)? 'shopper-color' : ''} tw-flex p-ripple tw-gap-x-3 tw-h-10 tw-w-full grey_color tw-items-center tw-px-6 tw-rounded-md tw-mt-12' aria-controls="extras_menu" aria-haspopup`} onClick={(event) => extrasMenuRef.current.toggle(event)}>
             <img src={Add} alt="extra_add_icon"/>
             Extras
+            <Ripple />
           </li>
         </div>
       </div>
