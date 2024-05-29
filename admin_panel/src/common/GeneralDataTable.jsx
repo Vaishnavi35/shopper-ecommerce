@@ -11,6 +11,10 @@ import { Button } from 'primereact/button';
 import { Skeleton } from 'primereact/skeleton';
 import { Dialog } from 'primereact/dialog';
 import { Avatar } from 'primereact/avatar';
+import { Tag } from 'primereact/tag';
+import { Rating } from 'primereact/rating';
+import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
+import { Toast } from 'primereact/toast';
 
 export default function GeneralDataTable() {
 
@@ -23,254 +27,294 @@ export default function GeneralDataTable() {
     const [globalFilter, setGlobalFilter] = useState('');
     const [selectedRows, setSelectedRows] = useState([]);
     const menuRight = useRef(null);
-    const [selectedAction, setSeletedAction] = useState('');
+    const [selectedAction, setSeletedAction] = useState({});
     const [data,setData]= useState();
     const [dialogVisible, setDialogVisible] = useState(false);
+    const toast = useRef(null);
 
     const data_test = {
       "products": [
         {
-          "product_id": 1,
-          "image": "https://example.com/product1.jpg",
-          "name": "Product 1",
-          "SKU": "SKU001",
-          "price": "$19.99",
-          "category": "Clothing",
-          "stock": true,
-          "available_quantity": 50,
-          "size": "M",
-          "color": "Blue"
+            "product_id": 1,
+            "image": "https://example.com/product1.jpg",
+            "name": "T-Shirt",
+            "SKU": "SKU001",
+            "price": "$19.99",
+            "category": "Clothing",
+            "stock": true,
+            "available_quantity": 50,
+            "size": "M",
+            "color": "Blue",
+            "rating": 4.5,
+            "color_code": "#0000FF"
         },
         {
-          "product_id": 2,
-          "image": "https://example.com/product2.jpg",
-          "name": "Product 2",
-          "SKU": "SKU002",
-          "price": "$24.99",
-          "category": "Electronics",
-          "stock": true,
-          "available_quantity": 20,
-          "size": null,
-          "color": "Black"
+            "product_id": 2,
+            "image": "https://example.com/product2.jpg",
+            "name": "Smartphone",
+            "SKU": "SKU002",
+            "price": "$24.99",
+            "category": "Electronics",
+            "stock": true,
+            "available_quantity": 20,
+            "size": null,
+            "color": "Black",
+            "rating": 4.2,
+            "color_code": "#000000"
         },
         {
-          "product_id": 3,
-          "image": "https://example.com/product3.jpg",
-          "name": "Product 3",
-          "SKU": "SKU003",
-          "price": "$49.99",
-          "category": "Home & Kitchen",
-          "stock": false,
-          "available_quantity": 0,
-          "size": "L",
-          "color": "Red"
+            "product_id": 3,
+            "image": "https://example.com/product3.jpg",
+            "name": "Blender",
+            "SKU": "SKU003",
+            "price": "$49.99",
+            "category": "Home & Kitchen",
+            "stock": false,
+            "available_quantity": 0,
+            "size": "L",
+            "color": "Red",
+            "rating": 3.8,
+            "color_code": "#FF0000"
         },
         {
-          "product_id": 4,
-          "image": "https://example.com/product4.jpg",
-          "name": "Product 4",
-          "SKU": "SKU004",
-          "price": "$9.99",
-          "category": "Books",
-          "stock": true,
-          "available_quantity": 100,
-          "size": null,
-          "color": null
+            "product_id": 4,
+            "image": "https://example.com/product4.jpg",
+            "name": "Novel",
+            "SKU": "SKU004",
+            "price": "$9.99",
+            "category": "Books",
+            "stock": true,
+            "available_quantity": 100,
+            "size": null,
+            "color": null,
+            "rating": 4.9,
+            "color_code": null
         },
         {
-          "product_id": 5,
-          "image": "https://example.com/product5.jpg",
-          "name": "Product 5",
-          "SKU": "SKU005",
-          "price": "$34.99",
-          "category": "Sports & Outdoors",
-          "stock": true,
-          "available_quantity": 10,
-          "size": "XL",
-          "color": "Green"
+            "product_id": 5,
+            "image": "https://example.com/product5.jpg",
+            "name": "Tent",
+            "SKU": "SKU005",
+            "price": "$34.99",
+            "category": "Sports & Outdoors",
+            "stock": true,
+            "available_quantity": 10,
+            "size": "XL",
+            "color": "Green",
+            "rating": 4.0,
+            "color_code": "#008000"
         },
         {
-          "product_id": 6,
-          "image": "https://example.com/product6.jpg",
-          "name": "Product 6",
-          "SKU": "SKU006",
-          "price": "$14.99",
-          "category": "Toys & Games",
-          "stock": true,
-          "available_quantity": 30,
-          "size": null,
-          "color": "Yellow"
+            "product_id": 6,
+            "image": "https://example.com/product6.jpg",
+            "name": "Board Game",
+            "SKU": "SKU006",
+            "price": "$14.99",
+            "category": "Toys & Games",
+            "stock": true,
+            "available_quantity": 30,
+            "size": null,
+            "color": "Yellow",
+            "rating": 3.6,
+            "color_code": "#FFFF00"
         },
         {
-          "product_id": 7,
-          "image": "https://example.com/product7.jpg",
-          "name": "Product 7",
-          "SKU": "SKU007",
-          "price": "$39.99",
-          "category": "Electronics",
-          "stock": true,
-          "available_quantity": 15,
-          "size": null,
-          "color": "Silver"
+            "product_id": 7,
+            "image": "https://example.com/product7.jpg",
+            "name": "Laptop",
+            "SKU": "SKU007",
+            "price": "$39.99",
+            "category": "Electronics",
+            "stock": true,
+            "available_quantity": 15,
+            "size": null,
+            "color": "Silver",
+            "rating": 4.7,
+            "color_code": "#C0C0C0"
         },
         {
-          "product_id": 8,
-          "image": "https://example.com/product8.jpg",
-          "name": "Product 8",
-          "SKU": "SKU008",
-          "price": "$29.99",
-          "category": "Beauty & Personal Care",
-          "stock": false,
-          "available_quantity": 0,
-          "size": null,
-          "color": null
+            "product_id": 8,
+            "image": "https://example.com/product8.jpg",
+            "name": "Shampoo",
+            "SKU": "SKU008",
+            "price": "$29.99",
+            "category": "Beauty & Personal Care",
+            "stock": false,
+            "available_quantity": 0,
+            "size": null,
+            "color": null,
+            "rating": 4.3,
+            "color_code": null
         },
         {
-          "product_id": 9,
-          "image": "https://example.com/product9.jpg",
-          "name": "Product 9",
-          "SKU": "SKU009",
-          "price": "$49.99",
-          "category": "Clothing",
-          "stock": true,
-          "available_quantity": 25,
-          "size": "S",
-          "color": "Pink"
+            "product_id": 9,
+            "image": "https://example.com/product9.jpg",
+            "name": "Jacket",
+            "SKU": "SKU009",
+            "price": "$49.99",
+            "category": "Clothing",
+            "stock": true,
+            "available_quantity": 25,
+            "size": "S",
+            "color": "Pink",
+            "rating": 4.1,
+            "color_code": "#FFC0CB"
         },
         {
-          "product_id": 10,
-          "image": "https://example.com/product10.jpg",
-          "name": "Product 10",
-          "SKU": "SKU010",
-          "price": "$79.99",
-          "category": "Home & Kitchen",
-          "stock": true,
-          "available_quantity": 5,
-          "size": null,
-          "color": "White"
+            "product_id": 10,
+            "image": "https://example.com/product10.jpg",
+            "name": "Cookware Set",
+            "SKU": "SKU010",
+            "price": "$79.99",
+            "category": "Home & Kitchen",
+            "stock": true,
+            "available_quantity": 5,
+            "size": null,
+            "color": "White",
+            "rating": 4.8,
+            "color_code": "#FFFFFF"
         },
         {
-          "product_id": 11,
-          "image": "https://example.com/product11.jpg",
-          "name": "Product 11",
-          "SKU": "SKU011",
-          "price": "$54.99",
-          "category": "Electronics",
-          "stock": true,
-          "available_quantity": 12,
-          "size": null,
-          "color": "Blue"
+            "product_id": 11,
+            "image": "https://example.com/product11.jpg",
+            "name": "Headphones",
+            "SKU": "SKU011",
+            "price": "$54.99",
+            "category": "Electronics",
+            "stock": true,
+            "available_quantity": 12,
+            "size": null,
+            "color": "Blue",
+            "rating": 4.4,
+            "color_code": "#0000FF"
         },
         {
-          "product_id": 12,
-          "image": "https://example.com/product12.jpg",
-          "name": "Product 12",
-          "SKU": "SKU012",
-          "price": "$64.99",
-          "category": "Sports & Outdoors",
-          "stock": true,
-          "available_quantity": 8,
-          "size": "M",
-          "color": "Black"
+            "product_id": 12,
+            "image": "https://example.com/product12.jpg",
+            "name": "Fitness Tracker",
+            "SKU": "SKU012",
+            "price": "$64.99",
+            "category": "Sports & Outdoors",
+            "stock": true,
+            "available_quantity": 8,
+            "size": "M",
+            "color": "Black",
+            "rating": 4.5,
+            "color_code": "#000000"
         },
         {
-          "product_id": 13,
-          "image": "https://example.com/product13.jpg",
-          "name": "Product 13",
-          "SKU": "SKU013",
-          "price": "$44.99",
-          "category": "Books",
-          "stock": true,
-          "available_quantity": 20,
-          "size": null,
-          "color": null
+            "product_id": 13,
+            "image": "https://example.com/product13.jpg",
+            "name": "Biography",
+            "SKU": "SKU013",
+            "price": "$44.99",
+            "category": "Books",
+            "stock": true,
+            "available_quantity": 20,
+            "size": null,
+            "color": null,
+            "rating": 4.9,
+            "color_code": null
         },
         {
-          "product_id": 14,
-          "image": "https://example.com/product14.jpg",
-          "name": "Product 14",
-          "SKU": "SKU014",
-          "price": "$29.99",
-          "category": "Toys & Games",
-          "stock": true,
-          "available_quantity": 40,
-          "size": null,
-          "color": "Red"
+            "product_id": 14,
+            "image": "https://example.com/product14.jpg",
+            "name": "Puzzle",
+            "SKU": "SKU014",
+            "price": "$29.99",
+            "category": "Toys & Games",
+            "stock": true,
+            "available_quantity": 40,
+            "size": null,
+            "color": "Red",
+            "rating": 4.0,
+            "color_code": "#FF0000"
         },
         {
-          "product_id": 15,
-          "image": "https://example.com/product15.jpg",
-          "name": "Product 15",
-          "SKU": "SKU015",
-          "price": "$19.99",
-          "category": "Beauty & Personal Care",
-          "stock": false,
-          "available_quantity": 0,
-          "size": null,
-          "color": "Pink"
+            "product_id": 15,
+            "image": "https://example.com/product15.jpg",
+            "name": "Face Cream",
+            "SKU": "SKU015",
+            "price": "$19.99",
+            "category": "Beauty & Personal Care",
+            "stock": false,
+            "available_quantity": 0,
+            "size": null,
+            "color": "Pink",
+            "rating": 3.7,
+            "color_code": "#FFC0CB"
         },
         {
-          "product_id": 16,
-          "image": "https://example.com/product16.jpg",
-          "name": "Product 16",
-          "SKU": "SKU016",
-          "price": "$39.99",
-          "category": "Clothing",
-          "stock": true,
-          "available_quantity": 30,
-          "size": "L",
-          "color": "Green"
+            "product_id": 16,
+            "image": "https://example.com/product16.jpg",
+            "name": "Dress",
+            "SKU": "SKU016",
+            "price": "$39.99",
+            "category": "Clothing",
+            "stock": true,
+            "available_quantity": 30,
+            "size": "L",
+            "color": "Green",
+            "rating": 4.3,
+            "color_code": "#008000"
         },
         {
-          "product_id": 17,
-          "image": "https://example.com/product17.jpg",
-          "name": "Product 17",
-          "SKU": "SKU017",
-          "price": "$49.99",
-          "category": "Home & Kitchen",
-          "stock": true,
-          "available_quantity": 10,
-          "size": null,
-          "color": "Blue"
+            "product_id": 17,
+            "image": "https://example.com/product17.jpg",
+            "name": "Coffee Maker",
+            "SKU": "SKU017",
+            "price": "$49.99",
+            "category": "Home & Kitchen",
+            "stock": true,
+            "available_quantity": 10,
+            "size": null,
+            "color": "Blue",
+            "rating": 4.6,
+            "color_code": "#0000FF"
         },
         {
-          "product_id": 18,
-          "image": "https://example.com/product18.jpg",
-          "name": "Product 18",
-          "SKU": "SKU018",
-          "price": "$14.99",
-          "category": "Electronics",
-          "stock": true,
-          "available_quantity": 60,
-          "size": null,
-          "color": "Black"
+            "product_id": 18,
+            "image": "https://example.com/product18.jpg",
+            "name": "Bluetooth Speaker",
+            "SKU": "SKU018",
+            "price": "$14.99",
+            "category": "Electronics",
+            "stock": true,
+            "available_quantity": 60,
+            "size": null,
+            "color": "Black",
+            "rating": 4.2,
+            "color_code": "#000000"
         },
         {
-          "product_id": 19,
-          "image": "https://example.com/product19.jpg",
-          "name": "Product 19",
-          "SKU": "SKU019",
-          "price": "$69.99",
-          "category": "Sports & Outdoors",
-          "stock": true,
-          "available_quantity": 7,
-          "size": "XL",
-          "color": "White"
+            "product_id": 19,
+            "image": "https://example.com/product19.jpg",
+            "name": "Treadmill",
+            "SKU": "SKU019",
+            "price": "$69.99",
+            "category": "Sports & Outdoors",
+            "stock": true,
+            "available_quantity": 7,
+            "size": "XL",
+            "color": "White",
+            "rating": 4.5,
+            "color_code": "#FFFFFF"
         },
         {
-          "product_id": 20,
-          "image": "https://example.com/product20.jpg",
-          "name": "Product 20",
-          "SKU": "SKU020",
-          "price": "$24.99",
-          "category": "Toys & Games",
-          "stock": false,
-          "available_quantity": 0,
-          "size": null,
-          "color": "Red"
+            "product_id": 20,
+            "image": "https://example.com/product20.jpg",
+            "name": "Action Figure",
+            "SKU": "SKU020",
+            "price": "$24.99",
+            "category": "Toys & Games",
+            "stock": false,
+            "available_quantity": 0,
+            "size": null,
+            "color": "Red",
+            "rating": 4.1,
+            "color_code": "#FF0000"
         }
-      ],
-    
+    ],
       "orders": [
         {
             "order_id": "ORD001",
@@ -811,6 +855,11 @@ export default function GeneralDataTable() {
         ],
         actions: [
           {
+            label: 'View',
+            action: 'product_view',
+            command: (event) => handleActionClick('product_view')
+          },
+          {
             label: 'Edit',
             action: 'product_edit',
             command: (event) => handleActionClick('product_edit')
@@ -819,11 +868,6 @@ export default function GeneralDataTable() {
             label: 'Delete',
             action: 'product_delete',
             command: (event) => handleActionClick('product_delete')
-          },
-          {
-            label: 'View',
-            action: 'product_view',
-            command: (event) => handleActionClick('product_view')
           }
         ]
       },
@@ -887,6 +931,11 @@ export default function GeneralDataTable() {
         ],
         actions: [
           {
+            label: 'View',
+            action: 'view_review',
+            command: (event) => handleActionClick('view_review')
+          },
+          {
             label: 'Reply',
             action: 'reply_review',
             command: (event) => handleActionClick('reply_review')
@@ -896,11 +945,6 @@ export default function GeneralDataTable() {
             action: 'delete_review',
             command: (event) => handleActionClick('delete_review')
           },
-          {
-            label: 'View',
-            action: 'view_review',
-            command: (event) => handleActionClick('view_review')
-          }
         ]
       },
       categories : {
@@ -984,12 +1028,39 @@ export default function GeneralDataTable() {
       }
     },[sectionType])
 
-    
-  
-    
+    const accept = () => {
+        toast.current.show({ severity: 'info', summary: 'Deleted', detail: 'Record is deleted successfully.', life: 3000 });
+    }
 
-    
+    const reject = () => {
+        toast.current.show({ severity: 'warn', summary: 'Cancelled', detail: 'Delete action is cancelled.', life: 3000 });
+    }
 
+    const confirm = () => {
+        confirmDialog({
+            message: 'Do you want to delete this record?',
+            header: 'Delete Confirmation',
+            icon: 'pi pi-exclamation-triangle',
+            defaultFocus: 'reject',
+            acceptClassName: 'p-button-danger',
+            accept,
+            reject
+        });
+    };
+    
+    const getSeverity = (stock) => {
+      switch (stock) {
+          case true:
+              return 'success';
+
+          case false:
+              return 'danger';
+
+          default:
+              return 'danger';
+      }
+  };
+    
     const getActions = () => {
         let action;
         switch (sectionType) {
@@ -1105,9 +1176,9 @@ export default function GeneralDataTable() {
     }
        
 
-    const handleAction = (event, selected_id) => {
+    const handleAction = (event, selected_data) => {
         menuRight.current.toggle(event);
-        setSeletedAction(selected_id);
+        setSeletedAction(selected_data);
       }
     
       const rederCustomTemplate = (rowData, colIndex) => {
@@ -1122,7 +1193,7 @@ export default function GeneralDataTable() {
             let actions = getActions();
               return (
                   <div>
-                      <div className=' tw-cursor-pointer' aria-controls={`product_action_${id}`} aria-haspopup onClick={(event) => handleAction(event,id)}>...</div>
+                      <div className=' tw-cursor-pointer' aria-controls={`product_action_${id}`} aria-haspopup onClick={(event) => handleAction(event,rowData)}>...</div>
                       <Menu model={actions} id={`product_action_${id}`} popupAlignment="right" ref={menuRight} popup className=' tw-w-32'/>
                   </div>
               )
@@ -1132,10 +1203,11 @@ export default function GeneralDataTable() {
       const handleActionClick = (action) => {
         if (action === 'product_edit') {
             // Navigate to product/:id for Edit or View actions
-            navigate(`/productDetails?id=${selectedAction}`);
+            navigate(`/productDetails?id=${selectedAction.product_id}`);
         } else if (action === 'product_view') {
             setDialogVisible(true);
         }else if (action === 'product_delete') {
+            confirm();
             // Trigger API call for Delete action
             // You can add your API call here
             // For example:
@@ -1163,23 +1235,14 @@ export default function GeneralDataTable() {
         navigate("/productDetails");
     }
 
-    const dialogHeader = () => {
-      let product_details = data.filter((val) => val.product_id == selectedAction);
-      return (
-          <div>
-              <img src={product_details.image} alt="" />
+    const dialogHeader = (
+      <div className=' tw-flex tw-justify-between'>
+          <div className=' tw-flex tw-gap-3 tw-items-center'>
+            <i className="pi pi-tag"></i>
+            <div className=' tw-text-lg'>{selectedAction.category}</div>
           </div>
-      )
-    };
-
-    const dialogContent = () => {
-      let product_details = data.filter((val) => val.product_id == selectedAction);
-      return(
-        <div>
-          
-        </div>
-      )
-    }
+      </div>
+    );
 
     const header = (
         <div className=' tw-flex tw-justify-between tw-px-10 tw-py-5 tw-items-center'>
@@ -1203,8 +1266,27 @@ export default function GeneralDataTable() {
 
   return (
     <div className='data_table  tw-p-10'>
-      
-        <Dialog header={dialogHeader} content={dialogContent} visible={dialogVisible} className=' tw-w-80' onHide={() => {if (!dialogVisible) return; setDialogVisible(false); }} />
+        <Toast ref={toast} />
+        <ConfirmDialog />
+        <Dialog header={dialogHeader} visible={dialogVisible} className=' tw-w-80' onHide={() => {if (!dialogVisible) return; setDialogVisible(false); }} resizable={false} draggable={false}>
+            <div className=' tw-grid tw-gap-5'>
+              <div className=' tw-grid tw-gap-3 tw-justify-center'>
+                  <div className=' tw-justify-self-center'>
+                      <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" alt="" className=' !tw-w-28 !tw-h-28'/>
+                  </div>
+                  <div className=' tw-text-center tw-text-2xl tw-font-bold'>{selectedAction.name}</div>
+                  <Rating className=' tw-justify-center' value={selectedAction.rating} readOnly cancel={false}></Rating>
+              </div>
+              <div className=' tw-flex tw-justify-between'>
+                <div>{selectedAction.price}</div>
+                <div className='tw-w-5 tw-h-5 tw-rounded-full' style={{backgroundColor: `${selectedAction.color_code}`}} />
+              </div>
+              <div className=' tw-flex tw-justify-between'>
+                <Tag value={`${selectedAction.stock == true? 'INSTOCK' : 'OUTOFSTOCK'}`} severity={getSeverity(selectedAction.stock)}></Tag>
+                <div>{selectedAction.available_quantity}</div>
+              </div>
+            </div>
+        </Dialog>
         <DataTable value={data}  selectionMode="checkbox"  selection={selectedRows}  onSelectionChange={(e) => setSelectedRows(e.value)} paginator header={header} rows={5} tableStyle={{ minWidth: '50rem', paddingInline: '40px' }} emptyMessage={`No ${sectionType} are available.`}>
             <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} body={<Skeleton shape="circle" size="4rem"/>}></Column>    
             { columns && columns.map((col,i) => {
