@@ -15,7 +15,11 @@ import { Tag } from 'primereact/tag';
 import { Rating } from 'primereact/rating';
 import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import { Toast } from 'primereact/toast';
-
+import { Image } from 'primereact/image';
+import { ColumnGroup } from 'primereact/columngroup';
+import { Row } from 'primereact/row';
+import { Accordion, AccordionTab } from 'primereact/accordion';
+        
 export default function GeneralDataTable() {
 
     const sectionType = useSelector((state) => state.leftMenu.leftMenu);
@@ -27,10 +31,17 @@ export default function GeneralDataTable() {
     const [globalFilter, setGlobalFilter] = useState('');
     const [selectedRows, setSelectedRows] = useState([]);
     const menuRight = useRef(null);
-    const [selectedAction, setSeletedAction] = useState({});
+    const [selectedActionRecord, setSelectedActionRecord] = useState({});
     const [data,setData]= useState();
     const [dialogVisible, setDialogVisible] = useState(false);
     const toast = useRef(null);
+    const [selectedAction, setSelectedAction] = useState("");
+    const order_delivery_events = [
+        { status: 'Ordered', date: '15/10/2020 10:30', icon: 'pi pi-shopping-cart', color: '#9C27B0', image: 'game-controller.jpg' },
+        { status: 'Processing', date: '15/10/2020 14:00', icon: 'pi pi-cog', color: '#673AB7' },
+        { status: 'Shipped', date: '15/10/2020 16:15', icon: 'pi pi-shopping-cart', color: '#FF9800' },
+        { status: 'Delivered', date: '16/10/2020 10:00', icon: 'pi pi-check', color: '#607D8B' }
+    ];
 
     const data_test = {
       "products": [
@@ -317,165 +328,464 @@ export default function GeneralDataTable() {
     ],
       "orders": [
         {
-            "order_id": "ORD001",
-            "product_image": "image_url_1",
-            "product_name": "Product 1",
-            "ordered_date": "2024-05-12",
-            "total_amount": "$50.00",
-            "status": "Shipped"
-        },
-        {
-            "order_id": "ORD002",
-            "product_image": "image_url_2",
-            "product_name": "Product 2",
-            "ordered_date": "2024-05-11",
-            "total_amount": "$35.00",
-            "status": "Pending"
-        },
-        {
-            "order_id": "ORD003",
-            "product_image": "image_url_3",
-            "product_name": "Product 3",
-            "ordered_date": "2024-05-10",
-            "total_amount": "$75.00",
-            "status": "Delivered"
-        },
-        {
-            "order_id": "ORD004",
-            "product_image": "image_url_4",
-            "product_name": "Product 4",
-            "ordered_date": "2024-05-09",
-            "total_amount": "$90.00",
-            "status": "Cancelled"
-        },
-        {
-            "order_id": "ORD005",
-            "product_image": "image_url_5",
-            "product_name": "Product 5",
-            "ordered_date": "2024-05-08",
-            "total_amount": "$120.00",
-            "status": "Shipped"
-        },
-        {
-            "order_id": "ORD006",
-            "product_image": "image_url_6",
-            "product_name": "Product 6",
-            "ordered_date": "2024-05-07",
-            "total_amount": "$25.00",
-            "status": "Pending"
-        },
-        {
-            "order_id": "ORD007",
-            "product_image": "image_url_7",
-            "product_name": "Product 7",
-            "ordered_date": "2024-05-06",
-            "total_amount": "$80.00",
-            "status": "Delivered"
-        },
-        {
-            "order_id": "ORD008",
-            "product_image": "image_url_8",
-            "product_name": "Product 8",
-            "ordered_date": "2024-05-05",
-            "total_amount": "$65.00",
-            "status": "Shipped"
-        },
-        {
-            "order_id": "ORD009",
-            "product_image": "image_url_9",
-            "product_name": "Product 9",
-            "ordered_date": "2024-05-04",
-            "total_amount": "$110.00",
-            "status": "Pending"
-        },
-        {
-            "order_id": "ORD010",
-            "product_image": "image_url_10",
-            "product_name": "Product 10",
-            "ordered_date": "2024-05-03",
-            "total_amount": "$150.00",
-            "status": "Delivered"
-        },
-        {
-            "order_id": "ORD011",
-            "product_image": "image_url_11",
-            "product_name": "Product 11",
-            "ordered_date": "2024-05-02",
-            "total_amount": "$200.00",
-            "status": "Cancelled"
-        },
-        {
-            "order_id": "ORD012",
-            "product_image": "image_url_12",
-            "product_name": "Product 12",
-            "ordered_date": "2024-05-01",
-            "total_amount": "$95.00",
-            "status": "Shipped"
-        },
-        {
-            "order_id": "ORD013",
-            "product_image": "image_url_13",
-            "product_name": "Product 13",
-            "ordered_date": "2024-04-30",
-            "total_amount": "$45.00",
-            "status": "Delivered"
-        },
-        {
-            "order_id": "ORD014",
-            "product_image": "image_url_14",
-            "product_name": "Product 14",
-            "ordered_date": "2024-04-29",
-            "total_amount": "$85.00",
-            "status": "Pending"
-        },
-        {
-            "order_id": "ORD015",
-            "product_image": "image_url_15",
-            "product_name": "Product 15",
-            "ordered_date": "2024-04-28",
-            "total_amount": "$60.00",
-            "status": "Shipped"
-        },
-        {
-            "order_id": "ORD016",
-            "product_image": "image_url_16",
-            "product_name": "Product 16",
-            "ordered_date": "2024-04-27",
-            "total_amount": "$70.00",
-            "status": "Cancelled"
-        },
-        {
-            "order_id": "ORD017",
-            "product_image": "image_url_17",
-            "product_name": "Product 17",
-            "ordered_date": "2024-04-26",
-            "total_amount": "$40.00",
-            "status": "Delivered"
-        },
-        {
-            "order_id": "ORD018",
-            "product_image": "image_url_18",
-            "product_name": "Product 18",
-            "ordered_date": "2024-04-25",
-            "total_amount": "$55.00",
-            "status": "Pending"
-        },
-        {
-            "order_id": "ORD019",
-            "product_image": "image_url_19",
-            "product_name": "Product 19",
-            "ordered_date": "2024-04-24",
-            "total_amount": "$105.00",
-            "status": "Shipped"
-        },
-        {
-            "order_id": "ORD020",
-            "product_image": "image_url_20",
-            "product_name": "Product 20",
-            "ordered_date": "2024-04-23",
-            "total_amount": "$125.00",
-            "status": "Delivered"
-        }
+        "order_no": "ORD000001",
+        "order_date": "2024-05-25 12:14:35",
+        "Order_Status": "Shipped",
+        "Customer_Name": "Customer 1",
+        "Email": "customer1@example.com",
+        "Phone": "+1234567891",
+        "Shipping_Address": "1231 Main Street, City, State, ZIP",
+        "Shipping_Method": "Standard",
+        "Estimated_Delivery_Date": "2024-05-29",
+        "Tracking_Number": "TRACK000001",
+        "Billing_Address": "1231 Main Street, City, State, ZIP",
+        "Payment_Method": "Credit Card",
+        "Card_Value": "VisaXXXXX1234",
+        "Products": [
+          {
+            "Product_Name": "Camera",
+            "Product_Image": "http://example.com/image.jpg",
+            "Quantity": 1,
+            "Price": 372.62,
+            "Total_Price": 372.62
+          },
+          {
+            "Product_Name": "Smartphone",
+            "Product_Image": "http://example.com/image.jpg",
+            "Quantity": 3,
+            "Price": 185.33,
+            "Total_Price": 555.99
+          }
+        ],
+        "Subtotal": 928.61,
+        "Shipping_Cost": 13.58,
+        "Tax": 74.29,
+        "Discounts": 5.96,
+        "Total_Amount": 1010.52
+      },
+      {
+        "order_no": "ORD000002",
+        "order_date": "2024-05-26 10:20:45",
+        "Order_Status": "Processing",
+        "Customer_Name": "Customer 2",
+        "Email": "customer2@example.com",
+        "Phone": "+1987654321",
+        "Shipping_Address": "456 Elm Street, City, State, ZIP",
+        "Shipping_Method": "Express",
+        "Estimated_Delivery_Date": "2024-05-28",
+        "Tracking_Number": "TRACK000002",
+        "Billing_Address": "456 Elm Street, City, State, ZIP",
+        "Payment_Method": "Credit Card",
+        "Card_Value": "MasterCardXXXXX5678",
+        "Products": [
+          {
+            "Product_Name": "Laptop",
+            "Product_Image": "http://example.com/image.jpg",
+            "Quantity": 2,
+            "Price": 899.99,
+            "Total_Price": 1799.98
+          }
+        ],
+        "Subtotal": 1799.98
+      },
+      {
+        "order_no": "ORD000003",
+        "order_date": "2024-05-27 14:30:22",
+        "Order_Status": "Shipped",
+        "Customer_Name": "Customer 3",
+        "Email": "customer3@example.com",
+        "Phone": "+1122334455",
+        "Shipping_Address": "789 Oak Avenue, City, State, ZIP",
+        "Shipping_Method": "Standard",
+        "Estimated_Delivery_Date": "2024-06-02",
+        "Tracking_Number": "TRACK000003",
+        "Billing_Address": "789 Oak Avenue, City, State, ZIP",
+        "Payment_Method": "PayPal",
+        "Card_Value": "N/A",
+        "Products": [
+          {
+            "Product_Name": "Headphones",
+            "Product_Image": "http://example.com/image.jpg",
+            "Quantity": 1,
+            "Price": 99.99,
+            "Total_Price": 99.99
+          }
+        ],
+        "Subtotal": 99.99,
+        "Shipping_Cost": 8.50,
+        "Tax": 8.00,
+        "Discounts": 0.00,
+        "Total_Amount": 116.49
+      },
+      {
+        "order_no": "ORD000004",
+        "order_date": "2024-05-28 09:45:18",
+        "Order_Status": "Delivered",
+        "Customer_Name": "Customer 4",
+        "Email": "customer4@example.com",
+        "Phone": "+9988776655",
+        "Shipping_Address": "101 Pine Street, City, State, ZIP",
+        "Shipping_Method": "Express",
+        "Estimated_Delivery_Date": "2024-05-30",
+        "Tracking_Number": "TRACK000004",
+        "Billing_Address": "101 Pine Street, City, State, ZIP",
+        "Payment_Method": "Debit Card",
+        "Card_Value": "VisaXXXXX9876",
+        "Products": [
+          {
+            "Product_Name": "Tablet",
+            "Product_Image": "http://example.com/image.jpg",
+            "Quantity": 1,
+            "Price": 349.99,
+            "Total_Price": 349.99
+          }
+        ],
+        "Subtotal": 349.99,
+        "Shipping_Cost": 15.00,
+        "Tax": 28.00,
+        "Discounts": 10.00,
+        "Total_Amount": 382.99
+      },
+      {
+        "order_no": "ORD000005",
+        "order_date": "2024-05-29 11:55:07",
+        "Order_Status": "Processing",
+        "Customer_Name": "Customer 5",
+        "Email": "customer5@example.com",
+        "Phone": "+1122334455",
+        "Shipping_Address": "456 Maple Avenue, City, State, ZIP",
+        "Shipping_Method": "Standard",
+        "Estimated_Delivery_Date": "2024-06-03",
+        "Tracking_Number": "",
+        "Billing_Address": "456 Maple Avenue, City, State, ZIP",
+        "Payment_Method": "Credit Card",
+        "Card_Value": "AmexXXXXX2468",
+        "Products": [
+          {
+            "Product_Name": "Printer",
+            "Product_Image": "http://example.com/image.jpg",
+            "Quantity": 2,
+            "Price": 129.99,
+            "Total_Price": 259.98
+          }
+        ],
+        "Subtotal": 259.98,
+        "Shipping_Cost": 10.00,
+        "Tax": 20.80,
+        "Discounts": 0.00,
+        "Total_Amount": 290.78
+      },
+      {
+        "order_no": "ORD000006",
+        "order_date": "2024-05-30 08:10:15",
+        "Order_Status": "Shipped",
+        "Customer_Name": "Customer 6",
+        "Email": "customer6@example.com",
+        "Phone": "+1122334455",
+        "Shipping_Address": "789 Cedar Street, City, State, ZIP",
+        "Shipping_Method": "Express",
+        "Estimated_Delivery_Date": "2024-06-01",
+        "Tracking_Number": "TRACK000006",
+        "Billing_Address": "789 Cedar Street, City, State, ZIP",
+        "Payment_Method": "Credit Card",
+        "Card_Value": "DiscoverXXXXX1357",
+        "Products": [
+          {
+            "Product_Name": "Monitor",
+            "Product_Image": "http://example.com/image.jpg",
+            "Quantity": 1,
+            "Price": 199.99,
+            "Total_Price": 199.99
+          }
+        ],
+        "Subtotal": 199.99,
+        "Shipping_Cost": 20.00,
+        "Tax": 16.00,
+        "Discounts": 5.00,
+        "Total_Amount": 230.99
+      },
+      {
+        "order_no": "ORD000007",
+        "order_date": "2024-05-31 13:20:30",
+        "Order_Status": "Processing",
+        "Customer_Name": "Customer 7",
+        "Email": "customer7@example.com",
+        "Phone": "+1122334455",
+        "Shipping_Address": "101 Oak Street, City, State, ZIP",
+        "Shipping_Method": "Standard",
+        "Estimated_Delivery_Date": "2024-06-05",
+        "Tracking_Number": "",
+        "Billing_Address": "101 Oak Street, City, State, ZIP",
+        "Payment_Method": "PayPal",
+        "Card_Value": "N/A",
+        "Products": [
+          {
+            "Product_Name": "Keyboard",
+            "Product_Image": "http://example.com/image.jpg",
+            "Quantity": 1,
+            "Price": 49.99,
+            "Total_Price": 49.99
+          },
+          {
+            "Product_Name": "Mouse",
+            "Product_Image": "http://example.com/image.jpg",
+            "Quantity": 1,
+            "Price": 29.99,
+            "Total_Price": 29.99
+          }
+        ],
+        "Subtotal": 79.98,
+        "Shipping_Cost": 5.00,
+        "Tax": 6.40,
+        "Discounts": 0.00,
+        "Total_Amount": 91.38
+      },
+      {
+        "order_no": "ORD000008",
+        "order_date": "2024-06-01 09:45:18",
+        "Order_Status": "Delivered",
+        "Customer_Name": "Customer 8",
+        "Email": "customer8@example.com",
+        "Phone": "+1122334455",
+        "Shipping_Address": "789 Pine Street, City, State, ZIP",
+        "Shipping_Method": "Express",
+        "Estimated_Delivery_Date": "2024-06-03",
+        "Tracking_Number": "TRACK000008",
+        "Billing_Address": "789 Pine Street, City, State, ZIP",
+        "Payment_Method": "Debit Card",
+        "Card_Value": "MasterCardXXXXX4567",
+        "Products": [
+          {
+            "Product_Name": "External Hard Drive",
+            "Product_Image": "http://example.com/image.jpg",
+            "Quantity": 1,
+            "Price": 79.99,
+            "Total_Price": 79.99
+          }
+        ],
+        "Subtotal": 79.99,
+        "Shipping_Cost": 8.00,
+        "Tax": 6.40,
+        "Discounts": 0.00,
+        "Total_Amount": 94.39
+      },
+      {
+        "order_no": "ORD000009",
+        "order_date": "2024-06-02 11:55:07",
+        "Order_Status": "Processing",
+        "Customer_Name": "Customer 9",
+        "Email": "customer9@example.com",
+        "Phone": "+1122334455",
+        "Shipping_Address": "456 Walnut Street, City, State, ZIP",
+        "Shipping_Method": "Standard",
+        "Estimated_Delivery_Date": "2024-06-07",
+        "Tracking_Number": "",
+        "Billing_Address": "456 Walnut Street, City, State, ZIP",
+        "Payment_Method": "Credit Card",
+        "Card_Value": "VisaXXXXX2468",
+        "Products": [
+          {
+            "Product_Name": "Wireless Router",
+            "Product_Image": "http://example.com/image.jpg",
+            "Quantity": 1,
+            "Price": 69.99,
+            "Total_Price": 69.99
+          }
+        ],
+        "Subtotal": 69.99,
+        "Shipping_Cost": 7.00,
+        "Tax": 5.60,
+        "Discounts": 0.00,
+        "Total_Amount": 82.59
+      },
+      {
+        "order_no": "ORD000010",
+        "order_date": "2024-06-03 15:30:45",
+        "Order_Status": "Shipped",
+        "Customer_Name": "Customer 10",
+        "Email": "customer10@example.com",
+        "Phone": "+1122334455",
+        "Shipping_Address": "101 Maple Street, City, State, ZIP",
+        "Shipping_Method": "Express",
+        "Estimated_Delivery_Date": "2024-06-05",
+        "Tracking_Number": "TRACK000010",
+        "Billing_Address": "101 Maple Street, City, State, ZIP",
+        "Payment_Method": "Credit Card",
+        "Card_Value": "AmexXXXXX7890",
+        "Products": [
+          {
+            "Product_Name": "Smart Watch",
+            "Product_Image": "http://example.com/image.jpg",
+            "Quantity": 1,
+            "Price": 149.99,
+            "Total_Price": 149.99
+          }
+        ],
+        "Subtotal": 149.99,
+        "Shipping_Cost": 12.00,
+        "Tax": 12.00,
+        "Discounts": 0.00,
+        "Total_Amount": 173.99
+      },
+      {
+        "order_no": "ORD000011",
+        "order_date": "2024-06-04 09:45:18",
+        "Order_Status": "Delivered",
+        "Customer_Name": "Customer 11",
+        "Email": "customer11@example.com",
+        "Phone": "+1122334455",
+        "Shipping_Address": "789 Elm Street, City, State, ZIP",
+        "Shipping_Method": "Standard",
+        "Estimated_Delivery_Date": "2024-06-08",
+        "Tracking_Number": "TRACK000011",
+        "Billing_Address": "789 Elm Street, City, State, ZIP",
+        "Payment_Method": "Debit Card",
+        "Card_Value": "VisaXXXXX6547",
+        "Products": [
+          {
+            "Product_Name": "Wireless Earbuds",
+            "Product_Image": "http://example.com/image.jpg",
+            "Quantity": 1,
+            "Price": 89.99,
+            "Total_Price": 89.99
+          },
+          {
+            "Product_Name": "Bluetooth Speaker",
+            "Product_Image": "http://example.com/image.jpg",
+            "Quantity": 1,
+            "Price": 59.99,
+            "Total_Price": 59.99
+          }
+        ],
+        "Subtotal": 149.98,
+        "Shipping_Cost": 10.00,
+        "Tax": 12.00,
+        "Discounts": 5.00,
+        "Total_Amount": 166.98
+      },
+      {
+        "order_no": "ORD000012",
+        "order_date": "2024-06-05 11:55:07",
+        "Order_Status": "Processing",
+        "Customer_Name": "Customer 12",
+        "Email": "customer12@example.com",
+        "Phone": "+1122334455",
+        "Shipping_Address": "456 Oak Street, City, State, ZIP",
+        "Shipping_Method": "Standard",
+        "Estimated_Delivery_Date": "2024-06-10",
+        "Tracking_Number": "",
+        "Billing_Address": "456 Oak Street, City, State, ZIP",
+        "Payment_Method": "Credit Card",
+        "Card_Value": "DiscoverXXXXX2468",
+        "Products": [
+          {
+            "Product_Name": "Digital Camera",
+            "Product_Image": "http://example.com/image.jpg",
+            "Quantity": 1,
+            "Price": 279.99,
+            "Total_Price": 279.99
+          }
+        ],
+        "Subtotal": 279.99,
+        "Shipping_Cost": 15.00,
+        "Tax": 22.40,
+        "Discounts": 0.00,
+        "Total_Amount": 317.39
+      },
+      {
+        "order_no": "ORD000013",
+        "order_date": "2024-06-06 14:30:22",
+        "Order_Status": "Shipped",
+        "Customer_Name": "Customer 13",
+        "Email": "customer13@example.com",
+        "Phone": "+1122334455",
+        "Shipping_Address": "789 Cedar Street, City, State, ZIP",
+        "Shipping_Method": "Express",
+        "Estimated_Delivery_Date": "2024-06-07",
+        "Tracking_Number": "TRACK000013",
+        "Billing_Address": "789 Cedar Street, City, State, ZIP",
+        "Payment_Method": "Credit Card",
+        "Card_Value": "MasterCardXXXXX7532",
+        "Products": [
+          {
+            "Product_Name": "Fitness Tracker",
+            "Product_Image": "http://example.com/image.jpg",
+            "Quantity": 1,
+            "Price": 129.99,
+            "Total_Price": 129.99
+          },
+          {
+            "Product_Name": "Yoga Mat",
+            "Product_Image": "http://example.com/image.jpg",
+            "Quantity": 1,
+            "Price": 39.99,
+            "Total_Price": 39.99
+          }
+        ],
+        "Subtotal": 169.98,
+        "Shipping_Cost": 20.00,
+        "Tax": 13.60,
+        "Discounts": 0.00,
+        "Total_Amount": 203.58
+      },
+      {
+        "order_no": "ORD000014",
+        "order_date": "2024-06-07 09:45:18",
+        "Order_Status": "Delivered",
+        "Customer_Name": "Customer 14",
+        "Email": "customer14@example.com",
+        "Phone": "+1122334455",
+        "Shipping_Address": "101 Pine Street, City, State, ZIP",
+        "Shipping_Method": "Standard",
+        "Estimated_Delivery_Date": "2024-06-11",
+        "Tracking_Number": "TRACK000014",
+        "Billing_Address": "101 Pine Street, City, State, ZIP",
+        "Payment_Method": "Debit Card",
+        "Card_Value": "VisaXXXXX3579",
+        "Products": [
+          {
+            "Product_Name": "Gaming Mouse",
+            "Product_Image": "http://example.com/image.jpg",
+            "Quantity": 1,
+            "Price": 49.99,
+            "Total_Price": 49.99
+          }
+        ],
+        "Subtotal": 49.99,
+        "Shipping_Cost": 5.00,
+        "Tax": 4.00,
+        "Discounts": 0.00,
+        "Total_Amount": 58.99
+      },
+      {
+        "order_no": "ORD000015",
+        "order_date": "2024-06-08 11:55:07",
+        "Order_Status": "Processing",
+        "Customer_Name": "Customer 15",
+        "Email": "customer15@example.com",
+        "Phone": "+1122334455",
+        "Shipping_Address": "456 Elm Street, City, State, ZIP",
+        "Shipping_Method": "Standard",
+        "Estimated_Delivery_Date": "2024-06-12",
+        "Tracking_Number": "",
+        "Billing_Address": "456 Elm Street, City, State, ZIP",
+        "Payment_Method": "Credit Card",
+        "Card_Value": "AmexXXXXX3698",
+        "Products": [
+          {
+            "Product_Name": "Wireless Keyboard",
+            "Product_Image": "http://example.com/image.jpg",
+            "Quantity": 1,
+            "Price": 59.99,
+            "Total_Price": 59.99
+          }
+        ],
+        "Subtotal": 59.99,
+        "Shipping_Cost": 7.00,
+        "Tax": 4.80,
+        "Discounts": 0.00,
+        "Total_Amount": 71.79
+      },
       ],
     
       "customers": [
@@ -793,19 +1103,19 @@ export default function GeneralDataTable() {
             name: "Image"
           },
           {
-            field: "product_name",
-            name: "Order"
+            field: "Customer_Name",
+            name: "Customer"
           },
           {
-            field: "ordered_date",
+            field: "order_date",
             name: "Date"
           },
           {
-            field: "total_amount",
+            field: "Total_Amount",
             name: "Total"
           },
           {
-            field: "status",
+            field: "Order_Status",
             name: "Status"
           },
           {
@@ -823,6 +1133,11 @@ export default function GeneralDataTable() {
             label: 'View Details',
             action: 'order_view_details',
             command: (event) => handleActionClick('order_view_details')
+          },
+          {
+            label: 'View Delivery Status',
+            action: 'view_delivery_details',
+            command: (event) => handleActionClick('view_delivery_details')
           }
         ]
       },
@@ -887,7 +1202,7 @@ export default function GeneralDataTable() {
           },
           {
             field: "customer_address",
-            name: "Shipping Address"
+            name: "Shipping_Address"
           },
           {
             field: "",
@@ -1015,16 +1330,21 @@ export default function GeneralDataTable() {
 
     useEffect(() => {
       console.log("sectionType useEffect : ",sectionType);
-      if(sectionType != 'products'){
-        if(sectionType == "customers"){
-          setData(data_test.customers);
-          setLoading(false);
-        }else{
-          setLoading(true);
-        }
-      }else{
+      setLoading(false);
+      if(sectionType == 'products'){
         setData(data_test.products);
-        setLoading(false);
+        
+        // if(sectionType == "customers"){
+        //   setData(data_test.customers);
+        //   setLoading(false);
+        // }else{
+          
+        // }
+      }else if(sectionType == "orders"){
+        setData(data_test.orders);
+      } else{
+        setLoading(true);
+        
       }
     },[sectionType])
 
@@ -1047,6 +1367,50 @@ export default function GeneralDataTable() {
             reject
         });
     };
+
+    const orderStatusSeverity = (status) => {
+      switch (status){
+        case 'Ordered' : 
+            return 'info';
+
+        case 'Processing' : 
+            return 'warning';  
+
+        case 'Shipped' : 
+            return 'secondary';
+
+        case 'Delivered' : 
+            return 'success'; 
+
+        case 'Cancelled' : 
+            return 'danger'; 
+
+        default:
+            return 'danger';
+      }
+    }
+
+    const orderStatusIcon = (status) => {
+      switch (status){
+        case 'Ordered' : 
+            return 'pi pi-shopping-cart';
+
+        case 'Processing' : 
+            return 'pi pi-cog';  
+
+        case 'Shipped' : 
+            return 'pi pi-truck';
+
+        case 'Delivered' : 
+            return 'pi pi-check'; 
+
+        case 'Cancelled' : 
+            return 'pi pi-times'; 
+
+        default:
+            return 'pi pi-times';
+      }
+    }
     
     const getSeverity = (stock) => {
       switch (stock) {
@@ -1178,16 +1542,16 @@ export default function GeneralDataTable() {
 
     const handleAction = (event, selected_data) => {
         menuRight.current.toggle(event);
-        setSeletedAction(selected_data);
+        setSelectedActionRecord(selected_data);
       }
     
-      const rederCustomTemplate = (rowData, colIndex) => {
+      const renderCustomTemplate = (rowData, colIndex) => {
         let id = getId(rowData);
           if (colIndex === 0) {
             if(sectionType == "customers"){
                 return  <Avatar label={rowData.avatar_name} size="large" className=' tw-text-lg ' />
             }else{
-                return <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" alt={`product_img_${rowData.id}`} className=' tw-w-9 tw-h-9'/>
+                return <Image src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" alt={`product_img_${rowData.id}`} imageClassName=' !tw-w-9 !tw-h-9' width="250" preview />
             }
           }else{
             let actions = getActions();
@@ -1201,9 +1565,10 @@ export default function GeneralDataTable() {
       }
     
       const handleActionClick = (action) => {
+        setSelectedAction(action);
         if (action === 'product_edit') {
             // Navigate to product/:id for Edit or View actions
-            navigate(`/productDetails?id=${selectedAction.product_id}`);
+            navigate(`/productDetails?id=${selectedActionRecord.product_id}`);
         } else if (action === 'product_view') {
             setDialogVisible(true);
         }else if (action === 'product_delete') {
@@ -1219,7 +1584,10 @@ export default function GeneralDataTable() {
         }else if (action === 'order_change_status') {
            // open a popup which allows admin to change the status of the order
         } else if (action === 'order_view_details') {
+          setDialogVisible(true);
           // open a popup which shows the details of order like customer details, product size, color, 
+        }else if(action === 'view_delivery_details'){
+
         }else if (action === 'customer_edit') {
             
         }else if (action === 'reply_review') {
@@ -1235,11 +1603,132 @@ export default function GeneralDataTable() {
         navigate("/productDetails");
     }
 
+    const viewOrder = (
+      <Accordion activeIndex={0}>
+          <AccordionTab header="Order Information">
+              <div>
+                <label htmlFor="">Order No</label>
+                <div> {selectedActionRecord.order_no} </div>
+              </div>
+              <div>
+                <label htmlFor="">Order Date</label>
+                <div> {selectedActionRecord.order_date} </div>
+              </div>
+              <div>
+                <label htmlFor="">Order Status</label>
+                <Tag severity={orderStatusSeverity(selectedActionRecord.Order_Status)} value={selectedActionRecord.Order_Status} icon={orderStatusIcon(selectedActionRecord.Order_Status)} rounded></Tag>
+              </div>
+          </AccordionTab>
+          <AccordionTab header="Customer Information">
+              <div>
+                <label htmlFor="">Customer Name</label>
+                <div>{selectedActionRecord.Customer_Name}</div>
+              </div>
+              <div>
+                <label htmlFor="">Email</label>
+                <div>{selectedActionRecord.Email}</div>
+              </div>
+              <div>
+                <label htmlFor="">Phone</label>
+                <div>{selectedActionRecord.Phone}</div>
+              </div>
+          </AccordionTab>
+          <AccordionTab header="Shipping Information">
+              <div>
+                <label htmlFor="">Shipping Address</label>
+                <div>{selectedActionRecord.Shipping_Address}</div>
+              </div>
+              <div>
+                <label htmlFor="">Shipping_Method</label>
+                <div>{selectedActionRecord.Shipping_Method}</div>
+              </div>
+              <div>
+                <label htmlFor="">Estimated_Delivery_Date</label>
+                <div>{selectedActionRecord.Estimated_Delivery_Date}</div>
+              </div>
+              <div>
+                <label htmlFor="">Tracking_Number</label>
+                <div>{selectedActionRecord.Tracking_Number}</div>
+              </div>
+          </AccordionTab>
+          <AccordionTab header="Billing Information">
+              <div>
+                <label htmlFor="">Billing_Address</label>
+                <div>{selectedActionRecord.Billing_Address}</div>
+              </div>
+              <div>
+                <label htmlFor="">Payment_Method</label>
+                <div>{selectedActionRecord.Payment_Method}</div>
+              </div>
+              <div>
+                <label htmlFor="">Card_Value</label>
+                <div>{selectedActionRecord.Card_Value}</div>
+              </div>
+          </AccordionTab>
+          <AccordionTab header="Order Items">
+              <p className="m-0">
+                  At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti
+                  quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt
+                  mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.
+                  Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
+              </p>
+          </AccordionTab>
+          <AccordionTab header="Pricing Summary">
+              <div>
+                <label htmlFor="">Subtotal</label>
+                <div>{selectedActionRecord.Subtotal}</div>
+              </div>
+              <div>
+                <label htmlFor="">Shipping_Cost</label>
+                <div>{selectedActionRecord.Shipping_Cost}</div>
+              </div>
+              <div>
+                <label htmlFor="">Tax</label>
+                <div>{selectedActionRecord.Tax}</div>
+              </div>
+              <div>
+                <label htmlFor="">Discounts</label>
+                <div>{selectedActionRecord.Discounts}</div>
+              </div>
+              <div>
+                <label htmlFor="">Total_Amount</label>
+                <div>{selectedActionRecord.Total_Amount}</div>
+              </div>
+          </AccordionTab>
+      </Accordion>
+    );
+
+    const viewOrderDeviveryDetails = (
+      <div>
+
+      </div>
+    );
+
+    const viewProduct = (
+        <div className=' tw-grid tw-gap-5'>
+            <div className=' tw-grid tw-gap-3 tw-justify-center'>
+                <div className=' tw-justify-self-center'>
+                    <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" alt="" className=' !tw-w-28 !tw-h-28'/>
+                </div>
+                <div className=' tw-text-center tw-text-2xl tw-font-bold'>{selectedActionRecord.name}</div>
+                <Rating className=' tw-justify-center' value={selectedActionRecord.rating} readOnly cancel={false}></Rating>
+            </div>
+            <div className=' tw-flex tw-justify-between'>
+                <div>{selectedActionRecord.price}</div>
+                <div className='tw-w-5 tw-h-5 tw-rounded-full' style={{backgroundColor: `${selectedActionRecord.color_code}`}} />
+            </div>
+            <div className=' tw-flex tw-justify-between'>
+                <Tag value={`${selectedActionRecord.stock == true? 'INSTOCK' : 'OUTOFSTOCK'}`} severity={getSeverity(selectedActionRecord.stock)}></Tag>
+                <div>{selectedActionRecord.available_quantity}</div>
+            </div>
+        </div>
+    );
+
     const dialogHeader = (
       <div className=' tw-flex tw-justify-between'>
           <div className=' tw-flex tw-gap-3 tw-items-center'>
             <i className="pi pi-tag"></i>
-            <div className=' tw-text-lg'>{selectedAction.category}</div>
+            <div className=' tw-text-lg'>{selectedActionRecord.category}</div>
           </div>
       </div>
     );
@@ -1264,39 +1753,32 @@ export default function GeneralDataTable() {
         
       );
 
+      const footerGroup = (
+        <ColumnGroup>
+            <Row>
+                <Column footer="Totals:" colSpan={6} className=' tw-text-right'/>
+                <Column footer="$506,202" />
+            </Row>
+        </ColumnGroup>
+    );
+
   return (
     <div className='data_table  tw-p-10'>
         <Toast ref={toast} />
         <ConfirmDialog />
-        <Dialog header={dialogHeader} visible={dialogVisible} className=' tw-w-80' onHide={() => {if (!dialogVisible) return; setDialogVisible(false); }} resizable={false} draggable={false}>
-            <div className=' tw-grid tw-gap-5'>
-              <div className=' tw-grid tw-gap-3 tw-justify-center'>
-                  <div className=' tw-justify-self-center'>
-                      <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" alt="" className=' !tw-w-28 !tw-h-28'/>
-                  </div>
-                  <div className=' tw-text-center tw-text-2xl tw-font-bold'>{selectedAction.name}</div>
-                  <Rating className=' tw-justify-center' value={selectedAction.rating} readOnly cancel={false}></Rating>
-              </div>
-              <div className=' tw-flex tw-justify-between'>
-                <div>{selectedAction.price}</div>
-                <div className='tw-w-5 tw-h-5 tw-rounded-full' style={{backgroundColor: `${selectedAction.color_code}`}} />
-              </div>
-              <div className=' tw-flex tw-justify-between'>
-                <Tag value={`${selectedAction.stock == true? 'INSTOCK' : 'OUTOFSTOCK'}`} severity={getSeverity(selectedAction.stock)}></Tag>
-                <div>{selectedAction.available_quantity}</div>
-              </div>
-            </div>
+        <Dialog header={dialogHeader} visible={dialogVisible} className={`${selectedAction == 'product_view'? 'tw-w-80' : ' tw-w-4/5'}`} onHide={() => {if (!dialogVisible) return; setDialogVisible(false); }} resizable={false} draggable={false}>
+            {selectedAction == 'product_view' ? viewProduct : (selectedAction == 'view_delivery_details') ? viewOrderDeviveryDetails : viewOrder}
         </Dialog>
-        <DataTable value={data}  selectionMode="checkbox"  selection={selectedRows}  onSelectionChange={(e) => setSelectedRows(e.value)} paginator header={header} rows={5} tableStyle={{ minWidth: '50rem', paddingInline: '40px' }} emptyMessage={`No ${sectionType} are available.`}>
+        <DataTable value={data}  selectionMode="checkbox"  selection={selectedRows}  onSelectionChange={(e) => setSelectedRows(e.value)} paginator header={header} rows={5} tableStyle={{ minWidth: '50rem', paddingInline: '40px' }} emptyMessage={`No ${sectionType} are available.`} footerColumnGroup={sectionType == 'orders' ? footerGroup : ''}>
             <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} body={<Skeleton shape="circle" size="4rem"/>}></Column>    
             { columns && columns.map((col,i) => {
                     if(i === 0 || i === columns?.length - 1 ){
                         return(
-                            <Column key={`${sectionType}_${col.name}`} field={col.field} header={col.name}  body={(rowData) => rederCustomTemplate(rowData, i)} ></Column>
+                            <Column key={`${sectionType}_${col.name}`} field={col.field} header={col.name}  body={(rowData) => renderCustomTemplate(rowData, i)} ></Column>
                         )
                     }else{
                         return(
-                            <Column key={`${sectionType}_${col.name}`} field={col.field} header={col.name} body={loading ? <Skeleton /> : ''}></Column>
+                            <Column key={`${sectionType}_${col.name}`} field={col.field} header={col.name} body={loading ? <Skeleton /> : ''} sortable></Column>
                         )
                     }
                     
