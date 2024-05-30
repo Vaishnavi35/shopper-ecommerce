@@ -160,6 +160,12 @@ export default function ProductDetails() {
     );
 };
 
+const thumbnailImageList = (file, props) => {
+  return (
+      <img alt={file.name} role="presentation" src={file.objectURL} className=' !tw-w-64 !tw-h-64'/>
+  );
+};
+
 const emptyTemplate = () => {
   return (
       <div className="tw-flex tw-items-center tw-gap-x-2">
@@ -234,7 +240,7 @@ const emptyTemplate = () => {
                       )
                     })
                   }
-                  <div>${product.price}</div>
+                  <div className='tw-text-right'>${product.price}</div>
             </div>
         </div>
       );
@@ -279,6 +285,13 @@ const emptyTemplate = () => {
                             )}
                           </div>
                           <div className=' tw-grid'>
+                              <label htmlFor="">SKU</label>
+                              <input type="text" {...register("sku",{required: true})} defaultValue={""} className='tw-border-2 tw-border-[#E6E7E8] tw-rounded-lg'/>
+                              {errors.sku?.type == "required" && (
+                                <p className=' p-error'>SKU is required.</p>
+                              )}
+                          </div>
+                          <div className=' tw-grid'>
                               <label htmlFor="">Stock status</label>
                               <Controller name='stock_status' control={control} rules={{required: "Stock status is required."}} defaultValue={""} render={({field}) => (
                                   <Dropdown {...field}  options={stock_status_list} optionLabel="name" placeholder="Select stock status" className="  tw-border-2 tw-h-11 tw-border-[#E6E7E8] tw-rounded-lg" />
@@ -287,10 +300,17 @@ const emptyTemplate = () => {
                               
                           </div>
                           <div className=' tw-grid'>
-                              <label htmlFor="">SKU</label>
-                              <input type="text" {...register("sku",{required: true})} defaultValue={""} className='tw-border-2 tw-border-[#E6E7E8] tw-rounded-lg'/>
-                              {errors.sku?.type == "required" && (
-                                <p className=' p-error'>SKU is required.</p>
+                              <label htmlFor="">Thumbnail Image</label>
+                              <Controller name='thumbnail' control={control} defaultValue={""} rules={{required: "Thumbnail Image is required."}} render={({field}) => (
+                                  <FileUpload name={field.name} customUpload  url="/api/upload" accept="image/*" maxFileSize={1000000} itemTemplate={thumbnailImageList} emptyTemplate={emptyTemplate} chooseOptions={chooseOptions} uploadOptions={uploadOptions} cancelOptions={cancelOptions} onSelect={(e) => field.onChange(e.files)}
+                                    onRemove={(e) => {
+                                      field.onChange("");
+                                    }}
+                                    onClear={() => field.onChange("")}/>
+                                  )} 
+                              />
+                              {errors.image && (
+                                  <p className=' p-error'>{errors.image.message}</p>
                               )}
                           </div>
                           <div className=''>
@@ -308,10 +328,10 @@ const emptyTemplate = () => {
                     </StepperPanel>
                     <StepperPanel>
                       <div  className=' tw-grid tw-gap-4'>
-                        <div className=' tw-grid'>
+                        <div className=' tw-grid product_image'>
                             <label htmlFor="">Images</label>
-                            <Controller name='image[]' control={control} defaultValue={[]} rules={{required: "Image is required."}} render={({field}) => (
-                                <FileUpload ref={fileUploadRef} name={field.name} multiple  url="/api/upload" accept="image/*" maxFileSize={1000000} itemTemplate={imageList} emptyTemplate={emptyTemplate} chooseOptions={chooseOptions} uploadOptions={uploadOptions} cancelOptions={cancelOptions} onSelect={(e) => field.onChange(e.files)}
+                            <Controller name='image[]'  control={control} defaultValue={[]} rules={{required: "Image is required."}} render={({field}) => (
+                                <FileUpload ref={fileUploadRef} name={field.name}  multiple  url="/api/upload" accept="image/*" maxFileSize={1000000} itemTemplate={imageList} emptyTemplate={emptyTemplate} chooseOptions={chooseOptions} uploadOptions={uploadOptions} cancelOptions={cancelOptions} onSelect={(e) => field.onChange(e.files)}
                                   onRemove={(e) => {
                                     const updatedFiles = field.value.filter(file => !e.files.includes(file));
                                     field.onChange(updatedFiles);
