@@ -20,8 +20,10 @@ import { DataView } from 'primereact/dataview';
 import { InputNumber } from 'primereact/inputnumber';
 import { Carousel } from 'primereact/carousel';
 import { useSearchParams } from 'react-router-dom';
+import { apiIntegration } from '../customHook/apiIntegration';
 
 export default function ProductDetails() {
+  const baseURL = "/products";
   const [searchParams] = useSearchParams();
   const [id, setId] = useState(searchParams.get("id") || 0);
   console.log("id : ",id);
@@ -51,6 +53,10 @@ export default function ProductDetails() {
     setProducts([...products, data]);
     const files = fileUploadRef.current.getFiles(); // Retrieve selected files
       console.log(files);
+  }
+
+  const addProducts = () => {
+    const {data, loading, error} = apiIntegration({url : `${baseURL}/insertProducts`, type : "POST", params : products})
   }
 
   const addColor = () => {
@@ -450,7 +456,7 @@ const emptyTemplate = () => {
           { products && products.length > 0 && 
               <div className=' tw-w-full tw-px-5'>
                 <DataView value={products} listTemplate={listProducts} />
-                <Button type='button' label="Add Product(s)" className=' tw-float-right tw-mt-10 tw-h-10 tw-w-32 shopper-bgcolor tw-text-white tw-rounded-md  tw-text-sm tw-font-medium' />
+                <Button type='button' label="Add Product(s)" onClick={addProducts} className=' tw-float-right tw-mt-10 tw-h-10 tw-w-32 shopper-bgcolor tw-text-white tw-rounded-md  tw-text-sm tw-font-medium' />
               </div>
           }
         </div>
