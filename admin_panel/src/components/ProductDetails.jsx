@@ -46,6 +46,7 @@ export default function ProductDetails() {
     { name: 'In Stock', code: 'I' },
     { name: 'Out of Stock', code: 'O' },
   ];
+  const {data, loading, error, fetchData} = apiIntegration()
 
   const productSubmit = (data) => {
     console.log("data : ", data);
@@ -56,7 +57,16 @@ export default function ProductDetails() {
   }
 
   const addProducts = () => {
-    const {data, loading, error} = apiIntegration({url : `${baseURL}/insertProducts`, type : "POST", params : products})
+    let val = {
+        httpType : 'POST',
+        apiURL : `${baseURL}/insertProducts`,
+        params : products
+    }
+    fetchData(val);
+
+    console.log(" data : ",data);
+    console.log(" loading : ",loading);
+    console.log(" error : ",error);
   }
 
   const addColor = () => {
