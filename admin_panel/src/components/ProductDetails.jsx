@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useCallback} from 'react';
 
 import { IconField } from 'primereact/iconfield';
 import { InputIcon } from 'primereact/inputicon';
@@ -23,7 +23,7 @@ import { useSearchParams } from 'react-router-dom';
 import { apiIntegration } from '../customHook/apiIntegration';
 
 export default function ProductDetails() {
-  const baseURL = "/products";
+  const baseURL = "products";
   const [searchParams] = useSearchParams();
   const [id, setId] = useState(searchParams.get("id") || 0);
   console.log("id : ",id);
@@ -31,7 +31,10 @@ export default function ProductDetails() {
   const {register, handleSubmit, control, setValue, watch, formState: { errors, isValid, isSubmitting }, getValues} = useForm({
     mode: "onSubmit",
     defaultValues: {
-      colors: [],
+      colors: {
+        color: "",
+        name: ""
+    },
       category: ""
     }
   });
@@ -39,7 +42,10 @@ export default function ProductDetails() {
   const fileUploadRef = useRef(null);
   const selectedCategory = watch('category');
   const [subCategoryOptions, setSubCategoryOptions] = useState([]);
-  const colors = watch('colors', []); // Watch the colors array
+  const colors = watch('colors', {
+    color: "",
+    name: ""
+  }); // Watch the colors array
   const [uploadedImage, setUploadedImage] = useState(null);
   const [products, setProducts] = useState([]);
   const stock_status_list = [
@@ -74,16 +80,17 @@ export default function ProductDetails() {
     let selected_color = getValues('colorPicker');
     let colors = getValues('colors');
     let color_name = getValues("color_name");
-    colorExist = colors && colors.some((color) => color.color === selected_color);
-    if(selected_color && color_name && !colorExist){
+    // colorExist = colors && colors.some((color) => color.color === selected_color);
+    // colorExist = colors && colors.color === selected_color;
+    if(colors && (colors.color != selected_color || colors.name != color_name)){
       let color = {
         name : color_name,
         color : selected_color
       }
-      setValue('colors', [...colors, color]);
+      setValue('colors', color);
     }
     console.log(" color :", colors);
-  }
+  };
 
   useEffect(() => {
     setSubCategoryOptions(subCategories[selectedCategory] || [])
@@ -243,18 +250,16 @@ const emptyTemplate = () => {
             </div>
             <div>
                   {
-                    product?.colors?.map((val, index) => {
-                      return(
-                        <div className=' tw-flex'>
-                          <div key={`product_color_list_${val}`} className=' tw-w-5 tw-h-5 tw-mr-3 tw-rounded-full'
+                    product?.colors && (
+                      <div className=' tw-flex'>
+                          <div className=' tw-w-5 tw-h-5 tw-mr-3 tw-rounded-full'
                               style={{
-                                backgroundColor: `#${val.color}`,
+                                backgroundColor: `#${colors.color}`,
                               }}
                             />
-                            #{val.name}
+                            #{colors.name}
                         </div>
-                      )
-                    })
+                    )
                   }
                   <div className='tw-text-right'>${product.price}</div>
             </div>
@@ -386,20 +391,18 @@ const emptyTemplate = () => {
                             )}
                         </div>
                         <Button type='button' label="Add Color" onClick={addColor} className='tw-h-10  tw-w-32 shopper-bgcolor tw-text-white tw-rounded-md  tw-text-sm tw-font-medium' />
-                        {colors.length > 0 && <div>
-                            <ul className=' tw-grid tw-gap-2'>
-                                {getValues('colors').map((val, index) => (
-                                    <li key={`color_${val.color}`} style={{ display: 'flex', alignItems: 'center' }}>
-                                        <div className=' tw-w-5 tw-h-5 tw-mr-3 tw-rounded-full'
-                                          style={{
-                                            backgroundColor: `#${val.color}`,
-                                          }}
-                                        />
-                                        #{val.name}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>}
+                        {
+                          getValues("colors").color && getValues("colors").name && (
+                            <div className=' tw-flex tw-items-center'>
+                                <div className=' tw-w-5 tw-h-5 tw-mr-3 tw-rounded-full'
+                                    style={{
+                                      backgroundColor: `#${getValues("colors").color}`,
+                                    }}
+                                  />
+                                  #{getValues("colors").name}
+                              </div>
+                          )
+                        }
                         <div className=' tw-grid'>
                             <label htmlFor="">Sizes</label>
                             <Controller

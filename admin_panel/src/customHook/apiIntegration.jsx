@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 
 export const apiIntegration = () => {
-    const host = process.env.REACT_APP_API_URL || "http://localhost:3000";
+    const host = process.env.REACT_APP_API_URL || "http://localhost:3000/";
     console.log("host : ",host);
     
 
