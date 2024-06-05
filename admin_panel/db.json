@@ -3,7 +3,7 @@
     {
       "product_id": 1,
       "image": "https://example.com/product1.jpg",
-      "name": "Product 1",
+      "name": "Product  1",
       "SKU": "SKU001",
       "price": "$19.99",
       "category": "Clothing",
