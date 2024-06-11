@@ -63,10 +63,12 @@ export default function ProductDetails() {
   }
 
   const addProducts = () => {
+    let apiParams = products;
+    apiParams.map((val,index) => val.stock_status = apiParams[index].stock_status.code);
     let val = {
         httpType : 'POST',
         apiURL : `${baseURL}/insertProducts`,
-        params : products
+        params : apiParams
     }
     fetchData(val);
 
