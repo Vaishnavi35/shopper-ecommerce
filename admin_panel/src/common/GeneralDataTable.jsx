@@ -21,18 +21,20 @@ import { Row } from 'primereact/row';
 import { Accordion, AccordionTab } from 'primereact/accordion';
         
 export default function GeneralDataTable() {
-
+    
+    const baseURL = "products";
     const sectionType = useSelector((state) => state.leftMenu.leftMenu);
     console.log("sectionType : ",sectionType);
     const navigate = useNavigate();
-    const [loading,setLoading] = useState(false);
+    const [staticLoading,setStaticLoading] = useState(false);
     
     // const {data, loading, error} = apiIntegration({ url: "http://localhost:3000/orders" });
+    const {data, loading, error, fetchData} = apiIntegration()
     const [globalFilter, setGlobalFilter] = useState('');
     const [selectedRows, setSelectedRows] = useState([]);
     const menuRight = useRef(null);
     const [selectedActionRecord, setSelectedActionRecord] = useState({});
-    const [data,setData]= useState();
+    const [staticData,setStaticData]= useState();
     const [dialogVisible, setDialogVisible] = useState(false);
     const toast = useRef(null);
     const [selectedAction, setSelectedAction] = useState("");
@@ -1330,20 +1332,28 @@ export default function GeneralDataTable() {
 
     useEffect(() => {
       console.log("sectionType useEffect : ",sectionType);
-      setLoading(false);
+      setStaticLoading(false);
       if(sectionType == 'products'){
-        setData(data_test.products);
+        let val = {
+            httpType : 'POST',
+            apiURL : `${baseURL}/getProducts`,
+        }
+        fetchData(val);
+        console.log(" data : ",data);
+        console.log(" loading : ",loading);
+        console.log(" error : ",error);
+        setStaticData(data_test.products);
         
         // if(sectionType == "customers"){
-        //   setData(data_test.customers);
-        //   setLoading(false);
+        //   setStaticData(data_test.customers);
+        //   setStaticLoading(false);
         // }else{
           
         // }
       }else if(sectionType == "orders"){
-        setData(data_test.orders);
+        setStaticData(data_test.orders);
       } else{
-        setLoading(true);
+        setStaticLoading(true);
         
       }
     },[sectionType])
@@ -1769,7 +1779,7 @@ export default function GeneralDataTable() {
         <Dialog header={dialogHeader} visible={dialogVisible} className={`${selectedAction == 'product_view'? 'tw-w-80' : ' tw-w-4/5'}`} onHide={() => {if (!dialogVisible) return; setDialogVisible(false); }} resizable={false} draggable={false}>
             {selectedAction == 'product_view' ? viewProduct : (selectedAction == 'view_delivery_details') ? viewOrderDeviveryDetails : viewOrder}
         </Dialog>
-        <DataTable value={data}  selectionMode="checkbox"  selection={selectedRows}  onSelectionChange={(e) => setSelectedRows(e.value)} paginator header={header} rows={5} tableStyle={{ minWidth: '50rem', paddingInline: '40px' }} emptyMessage={`No ${sectionType} are available.`} footerColumnGroup={sectionType == 'orders' ? footerGroup : ''}>
+        <DataTable value={staticData}  selectionMode="checkbox"  selection={selectedRows}  onSelectionChange={(e) => setSelectedRows(e.value)} paginator header={header} rows={5} tableStyle={{ minWidth: '50rem', paddingInline: '40px' }} emptyMessage={`No ${sectionType} are available.`} footerColumnGroup={sectionType == 'orders' ? footerGroup : ''}>
             <Column selectionMode="multiple" headerStyle={{ width: '3rem' }} body={<Skeleton shape="circle" size="4rem"/>}></Column>    
             { columns && columns.map((col,i) => {
                     if(i === 0 || i === columns?.length - 1 ){
@@ -1778,7 +1788,7 @@ export default function GeneralDataTable() {
                         )
                     }else{
                         return(
-                            <Column key={`${sectionType}_${col.name}`} field={col.field} header={col.name} body={loading ? <Skeleton /> : ''} sortable></Column>
+                            <Column key={`${sectionType}_${col.name}`} field={col.field} header={col.name} body={staticLoading ? <Skeleton /> : ''} sortable></Column>
                         )
                     }
                     

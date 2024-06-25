@@ -62,6 +62,17 @@ export default function ProductDetails() {
       console.log(files);
   }
 
+  const addProductSUbmit = () => {
+    console.log("register : ",register);
+    console.log("control : ",control);
+    console.log("errors : ",errors);
+    console.log("control _formValues : ",control._formValues);
+    const formValues = control._formValues;
+    if(formValues.title && formValues.category && formValues.sub_category && formValues.sku && formValues.stock_status && formValues.thumbnail && formValues.description){
+      stepperRef.current.nextCallback()
+    }
+  }
+
   const addProducts = () => {
     let apiParams = products;
     apiParams.map((val,index) => val.stock_status = apiParams[index].stock_status.code);
@@ -117,8 +128,8 @@ export default function ProductDetails() {
       "color": "Blue"
     };
 
-    setValue("title", data.name);
-    setValue("quantity", data.available_quantity)
+    // setValue("title", data.name);
+    // setValue("quantity", data.available_quantity)
   },[id]);
 
   const renderEditorHeader = (
@@ -282,10 +293,12 @@ const emptyTemplate = () => {
                       <div className=' tw-grid tw-gap-4'>
                           <div className=' tw-grid'>
                             <label htmlFor="">Title</label>
-                            <input type="text" {...register("title", {required: "Title is required."})} defaultValue={""} className='tw-border-2 tw-border-[#E6E7E8] tw-rounded-lg'/>
-                            {errors.title?.type == "required" && (
-                              <p className=' p-error'> {errors.title.message} </p>
-                            )}
+                            <input type="text" {...register("title", {required: true})} defaultValue={""} className='tw-border-2 tw-border-[#E6E7E8] tw-rounded-lg'/>
+                            {
+                              errors.title?.type == "required" && (
+                              <p className=' p-error'> Title is required. </p>
+                            )
+                          }
                           </div>
                           <div className=' tw-grid'>
                             <label htmlFor="">Category</label>
@@ -320,7 +333,9 @@ const emptyTemplate = () => {
                                   <Dropdown {...field}  options={stock_status_list} optionLabel="name" placeholder="Select stock status" className="  tw-border-2 tw-h-11 tw-border-[#E6E7E8] tw-rounded-lg" />
                                 )} 
                               />
-                              
+                              {errors.stock_status && (
+                                <p className=' p-error'>{errors.stock_status.message}</p>
+                              )}
                           </div>
                           <div className=' tw-grid'>
                               <label htmlFor="">Thumbnail Image</label>
@@ -332,21 +347,21 @@ const emptyTemplate = () => {
                                     onClear={() => field.onChange("")}/>
                                   )} 
                               />
-                              {errors.image && (
-                                  <p className=' p-error'>{errors.image.message}</p>
+                              {errors.thumbnail && (
+                                  <p className=' p-error'>{errors.thumbnail.message}</p>
                               )}
                           </div>
-                          <div className=''>
+                          <div className=' tw-grid'>
                               <label htmlFor="">Description</label>
                               <Controller name='description' control={control} rules={{required: "Description is required."}} defaultValue={""} render={({field}) => (
-                                      <Editor className=' tw-h-40 tw-max-w-[675px]'  {...field} headerTemplate={renderEditorHeader}/>
+                                      <Editor className=' tw-h-40 tw-max-w-[675px]' value={field.value} onTextChange ={(e) => {field.onChange(e.htmlValue); console.log("eidtor value : ",field.value);}} headerTemplate={renderEditorHeader}/>
                                     )} 
                                 />
                                 {errors.description && (
-                                  <p className=' p-error'>{errors.description.message}</p>
+                                  <p className=' p-error tw-mt-14'>{errors.description.message}</p>
                                 )}
                           </div>
-                          <Button type='button' label="Next" className=' tw-mt-20 tw-h-10  tw-w-32'  onClick={() => stepperRef.current.nextCallback()} />
+                          <Button type='submit' onClick={addProductSUbmit} label="Next" className=' tw-mt-20 tw-h-10  tw-w-32'/>
                         </div>
                     </StepperPanel>
                     <StepperPanel>
@@ -391,6 +406,13 @@ const emptyTemplate = () => {
                             {errors.color_name && (
                                 <p className=' p-error'>{errors.color_name.message}</p>
                             )}
+                            <label htmlFor="">Title</label>
+                            <input type="text" {...register("title", {required: true})} defaultValue={""} className='tw-border-2 tw-border-[#E6E7E8] tw-rounded-lg'/>
+                            {
+                              errors.title?.type == "required" && (
+                              <p className=' p-error'> Title is required. </p>
+                            )
+                          }
                         </div>
                         <Button type='button' label="Add Color" onClick={addColor} className='tw-h-10  tw-w-32 shopper-bgcolor tw-text-white tw-rounded-md  tw-text-sm tw-font-medium' />
                         {
