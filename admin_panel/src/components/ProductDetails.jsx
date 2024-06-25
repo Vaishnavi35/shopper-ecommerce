@@ -6,7 +6,7 @@ import { InputText } from "primereact/inputtext";
 import { useForm, Controller} from "react-hook-form"
 import { Editor } from 'primereact/editor';
 import { Dropdown } from 'primereact/dropdown';
-import { categories, subCategories } from "../../util";
+// import { categories, subCategories } from "../../util";
 import { Button } from 'primereact/button';
 import { Chips } from 'primereact/chips';
 import { ColorPicker } from 'primereact/colorpicker';
