@@ -106,6 +106,19 @@ export default function ProductDetails() {
   };
 
   useEffect(() => {
+    let val = {
+      httpType : 'GET',
+      apiURL : `${baseURL}/getCategories`
+  }
+  fetchData(val);
+  console.log(" data : ",data);
+    console.log(" loading : ",loading);
+    console.log(" error : ",error);
+    categories = data?.categories;
+    subCategories = data?.sub_categories;
+  });
+
+  useEffect(() => {
     setSubCategoryOptions(subCategories[selectedCategory] || [])
   },[selectedCategory, setValue]);
 
