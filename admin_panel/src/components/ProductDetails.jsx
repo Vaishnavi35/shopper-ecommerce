@@ -38,6 +38,7 @@ export default function ProductDetails() {
       category: ""
     }
   });
+  const [categories, setCategories] = useState([]);
   const stepperRef = useRef(null);
   const fileUploadRef = useRef(null);
   const selectedCategory = watch('category');
@@ -114,13 +115,24 @@ export default function ProductDetails() {
   console.log(" data : ",data);
     console.log(" loading : ",loading);
     console.log(" error : ",error);
-    categories = data?.categories;
-    subCategories = data?.sub_categories;
+    setCategories(data?.categories);
   });
 
   useEffect(() => {
-    setSubCategoryOptions(subCategories[selectedCategory] || [])
+    let val = {
+      httpType : 'GET',
+      apiURL : `${baseURL}/getSubCategories`
+  }
+  fetchData(val);
+  console.log(" data : ",data);
+    console.log(" loading : ",loading);
+    console.log(" error : ",error);
+    setSubCategoryOptions(data?.sub_categories || [])
   },[selectedCategory, setValue]);
+
+  const setSelectedCategory = (val) => {
+    console.log("selected valu : ",val);
+  }
 
   useEffect(() => {
     console.log("errors " , errors);
@@ -316,7 +328,7 @@ const emptyTemplate = () => {
                           <div className=' tw-grid'>
                             <label htmlFor="">Category</label>
                             <Controller name='category' control={control} rules={{required: "Category is required."}} defaultValue={""} render={({field}) => (
-                                  <Dropdown {...field}  options={categories} optionLabel="value" placeholder="Select category" className="  tw-border-2 tw-h-11 tw-border-[#E6E7E8] tw-rounded-lg" />
+                                  <Dropdown {...field}  options={categories} onChange={(e) => setSelectedCategory(e.value)} optionLabel="value" placeholder="Select category" className="  tw-border-2 tw-h-11 tw-border-[#E6E7E8] tw-rounded-lg" />
                               )} 
                             />
                             {errors.category && (
