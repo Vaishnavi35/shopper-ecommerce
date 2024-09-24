@@ -21,13 +21,20 @@ import { InputNumber } from 'primereact/inputnumber';
 import { Carousel } from 'primereact/carousel';
 import { useSearchParams } from 'react-router-dom';
 import { apiIntegration } from '../customHook/apiIntegration';
+import { useAPIIntegration } from '../customHook/useAPIIntegration';
 
 export default function ProductDetails() {
+  const {data, loading, error, fetchData} = useAPIIntegration();
   const baseURL = "products";
   const [searchParams] = useSearchParams();
   const [id, setId] = useState(searchParams.get("id") || 0);
   console.log("id : ",id);
-
+  console.log(" data : ", data);
+  const categories_exist = data?.categories?.length > 0;
+  const categories = data?.categories || [];
+  const subCategoryOptions = data?.sub_categories || [];
+  console.log(" subCategoryOptions : ", subCategoryOptions);
+  console.log(" categories : ", categories);
   const {register, handleSubmit, control, setValue, watch, formState: { errors, isValid, isSubmitting }, getValues} = useForm({
     mode: "onSubmit",
     defaultValues: {
@@ -38,11 +45,11 @@ export default function ProductDetails() {
       category: ""
     }
   });
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
   const stepperRef = useRef(null);
   const fileUploadRef = useRef(null);
   const selectedCategory = watch('category');
-  const [subCategoryOptions, setSubCategoryOptions] = useState([]);
+  // const [subCategoryOptions, setSubCategoryOptions] = useState([]);
   const colors = watch('colors', {
     color: "",
     name: ""
@@ -53,7 +60,7 @@ export default function ProductDetails() {
     { name: 'In Stock', code: 'I' },
     { name: 'Out of Stock', code: 'O' },
   ];
-  const {data, loading, error, fetchData} = apiIntegration()
+  
 
   const productSubmit = (data) => {
     console.log("data : ", data);
@@ -106,56 +113,84 @@ export default function ProductDetails() {
     console.log(" color :", colors);
   };
 
+  useCallback(() => {
+    
+  })
+
   useEffect(() => {
+    // const fetchCat = async() => {
+      let val = {
+        httpType : 'GET',
+        apiURL : `${baseURL}/getCategories`
+      }
+       fetchData(val);
+       console.log(" data : ", data);
+        console.log(" loading : ", loading);
+        console.log(" error : ", error);
+        console.log(" categories : ", data?.categories);
+        // setCategories(data?.data?.categories || []);
+    // }
+    // console.log("data after : ",data);
+  },[]);
+
+//   useEffect(() => {
+//     if (data?.data?.categories) {
+        
+//     }
+// }, [data]);
+
+  const getCategories = async() => {
     let val = {
       httpType : 'GET',
       apiURL : `${baseURL}/getCategories`
+    }
+    await fetchData(val);
+    console.log(" data : ",data);
+      console.log(" loading : ",loading);
+      console.log(" error : ",error);
+      console.log(" categories : ",data?.categories);
+      // setCategories(data?.data?.categories);
   }
-  fetchData(val);
-  console.log(" data : ",data);
-    console.log(" loading : ",loading);
-    console.log(" error : ",error);
-    setCategories(data?.categories);
-  });
-
-  useEffect(() => {
-    let val = {
-      httpType : 'GET',
-      apiURL : `${baseURL}/getSubCategories`
-  }
-  fetchData(val);
-  console.log(" data : ",data);
-    console.log(" loading : ",loading);
-    console.log(" error : ",error);
-    setSubCategoryOptions(data?.sub_categories || [])
-  },[selectedCategory, setValue]);
+  // useEffect(() => {
+    
+  // },[selectedCategory, setValue]);
 
   const setSelectedCategory = (val) => {
     console.log("selected valu : ",val);
+    console.log("set values : ",setValue);
+    let params = {
+      httpType : 'GET',
+      apiURL : `${baseURL}/getSubCategories`
+  }
+  fetchData(params);
+  console.log(" data : ",data);
+    console.log(" loading : ",loading);
+    console.log(" error : ",error);
+    // setSubCategoryOptions(data?.sub_categories || [])
   }
 
-  useEffect(() => {
-    console.log("errors " , errors);
-  },[errors]);
+  // useEffect(() => {
+  //   console.log("errors " , errors);
+  // },[errors]);
 
-  useEffect(() => {
-    console.log("id " , id);
-    let data = {
-      "product_id": 1,
-      "image": "https://example.com/product1.jpg",
-      "name": "Product 1",
-      "SKU": "SKU001",
-      "price": "$19.99",
-      "category": "Clothing",
-      "stock": true,
-      "available_quantity": 50,
-      "size": "M",
-      "color": "Blue"
-    };
+  // useEffect(() => {
+  //   console.log("id " , id);
+  //   let data = {
+  //     "product_id": 1,
+  //     "image": "https://example.com/product1.jpg",
+  //     "name": "Product 1",
+  //     "SKU": "SKU001",
+  //     "price": "$19.99",
+  //     "category": "Clothing",
+  //     "stock": true,
+  //     "available_quantity": 50,
+  //     "size": "M",
+  //     "color": "Blue"
+  //   };
 
-    // setValue("title", data.name);
-    // setValue("quantity", data.available_quantity)
-  },[id]);
+  //   // setValue("title", data.name);
+  //   // setValue("quantity", data.available_quantity)
+  // },[id]);
 
   const renderEditorHeader = (
       <span className="ql-formats">
@@ -328,7 +363,7 @@ const emptyTemplate = () => {
                           <div className=' tw-grid'>
                             <label htmlFor="">Category</label>
                             <Controller name='category' control={control} rules={{required: "Category is required."}} defaultValue={""} render={({field}) => (
-                                  <Dropdown {...field}  options={categories} onChange={(e) => setSelectedCategory(e.value)} optionLabel="value" placeholder="Select category" className="  tw-border-2 tw-h-11 tw-border-[#E6E7E8] tw-rounded-lg" />
+                                  <Dropdown {...field}  options={categories || []} onChange={(e) => setSelectedCategory(e.value)} optionLabel="value" placeholder="Select category" className="  tw-border-2 tw-h-11 tw-border-[#E6E7E8] tw-rounded-lg" />
                               )} 
                             />
                             {errors.category && (

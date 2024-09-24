@@ -1335,7 +1335,7 @@ export default function GeneralDataTable() {
       setStaticLoading(false);
       if(sectionType == 'products'){
         let val = {
-            httpType : 'POST',
+            httpType : 'GET',
             apiURL : `${baseURL}/getProducts`,
         }
         fetchData(val);

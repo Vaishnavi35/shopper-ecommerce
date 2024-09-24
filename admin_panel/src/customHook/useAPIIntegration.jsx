@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from "axios";
 
-export const apiIntegration = () => {
+export const useAPIIntegration = () => {
     const host = process.env.REACT_APP_API_URL || "http://localhost:3000/";
     console.log("host : ",host);
     
@@ -30,13 +30,13 @@ export const apiIntegration = () => {
                 setData(response.data);
             }else{
                 response = await axios.get(`${host}${apiURL}`);
-                setLoading(false); 
+                
                 setData(response.data);
             }
             
             console.log("data : ", response);
         } catch (error) {
-            setLoading(false); 
+            
             setError(error);
             console.error("error : ",error);
         }finally{
@@ -44,9 +44,6 @@ export const apiIntegration = () => {
         }
     },[]);
 
-    useEffect(() => {
-        console.log("data in api integration : ",data);
-    },[data])
 
     if (loading) {
         console.log("data fetching ...");
