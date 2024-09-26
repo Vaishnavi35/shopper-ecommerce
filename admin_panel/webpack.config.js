@@ -5,7 +5,9 @@ const deps = require("./package.json").dependencies;
 const path = require("path");
 module.exports = (_, argv) => ({
   output: {
-    publicPath: "http://localhost:8080/",
+    path: path.resolve(__dirname, "public"), // Output directory
+    filename: "bundle.js", // Output file name
+    publicPath: "/", // Set to "/" for proper relative pathing in Vercel
   },
 
   resolve: {
